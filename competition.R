@@ -52,7 +52,7 @@ myseeds <- list(c(123,234,345), c(456,567,678), c(789,890,901),
                 c(135,246,357), c(468,579,680), c(791,802,913),
                 c(975,864,753), 54321)
 
-trCtrl <- trainControl(method="repeatedcv", seeds=myseeds)
+trCtrl <- trainControl(method = "repeatedcv", seeds = myseeds, classProbs = TRUE)
 
 library(randomForest)
 
@@ -64,20 +64,41 @@ if(file.exists(mod)) {
     saveRDS(modelRF, mod)
 }
 
+modelGLM <- train(Party ~ ., method = "glm", data = train.proc,
+                  trControl = trCtrl)
+
 # boosting ---------------------------------------------
 
 library(gbm)
-modelGBM <- train(Party ~ ., method="gbm", data=train.proc, verbose=FALSE,
-                  trControl=trCtrl)
+modelGBM <- train(Party ~ ., method = "gbm", data = train.proc, verbose = FALSE,
+                  trControl = trCtrl)
 
 # lda --------------------------------------------------
 
-modelLDA <- train(Party ~ ., method="lda", data=train.proc, trControl=trCtrl)
+modelLDA <- train(Party ~ ., method = "lda", data = train.proc,
+                  trControl = trCtrl)
+
+# bagging ----------------------------------------------
+
+trCtrl2 <- trainControl(method = "none",
+                        classProbs = TRUE, allowParallel = FALSE)
+
+train.bag <- dplyr::select(train.proc, -Party)
+modelBag <- train(x = train.bag, y = as.factor(train.data$Party),
+                  method = "treebag", trControl = trCtrl)
+
+# svm --------------------------------------------------
+
+modelSVM <- train(Party ~ ., method = "svmRadial", data = train.proc,
+                  trControl = trCtrl)
 
 # confusion matrix -------------------------------------
 
 predRF <- predict(modelRF, newdata = valid.proc)
 cmRF <- confusionMatrix(predRF, valid.data$Party)
+
+predGLM <- predict(modelGLM, newdata = valid.proc)
+cmGLM <- confusionMatrix(predGLM, valid.data$Party)
 
 predGBM <- predict(modelGBM, newdata = valid.proc)
 cmGBM <- confusionMatrix(predGBM, valid.data$Party)
@@ -85,15 +106,36 @@ cmGBM <- confusionMatrix(predGBM, valid.data$Party)
 predLDA <- predict(modelLDA, newdata = valid.proc)
 cmLDA <- confusionMatrix(predLDA, valid.data$Party)
 
-predDF <- data.frame(predRF, predGBM, predLDA, Party = valid.data$Party)
-modStack <- train(Party ~ ., data = predDF, method = "rf")
-predStack <- predict(modStack, newdata = valid.proc)
+predBag <- predict(modelBag, newdata = valid.proc)
+cmBag <- confusionMatrix(predBag, valid.data$Party)
+
+PredSVM <- predict(modelSVM, newdata = valid.proc)
+cmSVM <- confusionMatrix(PredSVM, valid.data$Party)
+
+# predDF <- data.frame(predRF, predGBM, predLDA, Party = valid.data$Party)
+# modStack <- train(Party ~ ., data = predDF, method = "rf")
+# predStack <- predict(modStack, newdata = valid.proc)
+# cmStack <- confusionMatrix(predStack, valid.data$Party)
+
+# treebag, rpart, glm, knn, svmRadial
+
+library(caretEnsemble)
+
+models <- caretList(Party ~ ., data = train.proc, trControl = trCtrl,
+                    methodList = c("glm", "gbm", "lda", "rf", "svmRadial"))
+stack <- caretStack(models, method = "glm")
+
+predStack <- predict(stack, newdata = valid.proc)
 cmStack <- confusionMatrix(predStack, valid.data$Party)
 
 # test data --------------------------------------------
 
-predTest <- predict(modStack, newdata = test.proc)
+# testRF <- predict(modelRF, newdata = test.proc)
+# testGBM <- predict(modelGBM, newdata = test.proc)
+# testLDA <- predict(modelLDA, newdata = test.proc)
 
-test.submit <- data_frame(USER_ID = test.data$USER_ID, Predictions = predTest)
+predTest <- predict(stack, newdata = test.proc)
+
+test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = predTest)
 
 write_csv(test.submit, "submission.csv")
