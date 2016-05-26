@@ -24,8 +24,17 @@ inTrain <- createDataPartition(y = training$Party, p = 0.75, list = FALSE)
 train.data <- training[inTrain, ]
 valid.data <- training[-inTrain, ]
 
+# impute -----------------------------------------------
+
+# library(mice)
+
+# train.imp <- mice(train.data, m = 2)
+
+# with(data = train.imp, exp = glm(Party ~ YOB, family = "binomial"))
+# comp <- complete(train.imp)
+
 # preproccess data -------------------------------------
-train.set <- select(train.data, -USER_ID, -Party)
+train.set <- dplyr::select(train.data, -USER_ID, -Party)
 train.dv <- dummyVars(~ ., data = train.set)
 train.dvp <- predict(train.dv, newdata = train.set) %>% as_data_frame()
 
@@ -36,12 +45,12 @@ pre.proc <- preProcess(train.dvp, outcome = train.data$Party,
 train.proc <- predict(pre.proc, train.dvp)
 train.result <- as.factor(train.data$Party)
 
-valid.set <- select(valid.data, -USER_ID, -Party)
+valid.set <- dplyr::select(valid.data, -USER_ID, -Party)
 valid.dvp <- predict(train.dv, newdata = valid.set) %>% as_data_frame()
 valid.proc <- predict(pre.proc, valid.dvp)
 valid.result <- as.factor(valid.data$Party)
 
-test.set <- select(testing, -USER_ID)
+test.set <- dplyr::select(testing, -USER_ID)
 test.dvp <- predict(train.dv, newdata = test.set) %>% as_data_frame()
 test.proc <- predict(pre.proc, test.dvp)
 
@@ -54,8 +63,8 @@ myseeds <- list(c(123,234,345), c(456,567,678), c(789,890,901),
 
 trCtrl <- trainControl(method = "repeatedcv", seeds = myseeds, classProbs = TRUE)
 
-library(randomForest)
-library(gbm)
+# library(randomForest)
+# library(gbm)
 
 # mod <- "modelRF.Rds"
 # if(file.exists(mod)) {
@@ -68,15 +77,22 @@ library(gbm)
 
 # modelGLM <- train(x = train.proc, y = train.result, method = "glm",
 #                   trControl = trCtrl)
+library(C50)
 
-# modelGBM <- train(x = train.proc, y = train.result, method = "gbm",
-#                   verbose = FALSE, trControl = trCtrl)
+myseeds2 <- list(c(123,234,345,456), c(456,567,678,789), c(789,890,901,012),
+                c(987,876,765,654), c(654,543,432,321), c(321,210,109,098),
+                c(135,246,357,468), c(468,579,680,802), c(791,802,913,135),
+                c(975,864,753,642), 54321)
+trCtrl2 <- trainControl(method = "repeatedcv", seeds = myseeds2, classProbs = TRUE)
 
-# modelLDA <- train(x = train.proc, y = train.result, method = "lda",
-#                   trControl = trCtrl)
+modelGBM <- train(x = train.proc, y = train.result, method = "C5.0",
+                  verbose = FALSE, trControl = trCtrl2)
 
-# modelBag <- train(x = train.proc, y = train.result, method = "treebag",
-#                   trControl = trCtrl)
+modelLDA <- train(x = train.proc, y = train.result, method = "lda",
+                  trControl = trCtrl2)
+
+modelBag <- train(x = train.proc, y = train.result, method = "treebag",
+                  trControl = trCtrl2)
 
 # modelSVM <- train(x = train.proc, y = train.result, method = "svmRadial",
 #                   trControl = trCtrl)
@@ -89,15 +105,15 @@ library(gbm)
 # predGLM <- predict(modelGLM, newdata = valid.proc)
 # cmGLM <- confusionMatrix(predGLM, valid.data$Party)
 #
-# predGBM <- predict(modelGBM, newdata = valid.proc)
-# cmGBM <- confusionMatrix(predGBM, valid.data$Party)
+predGBM <- predict(modelGBM, newdata = valid.proc)
+cmGBM <- confusionMatrix(predGBM, valid.data$Party)
 #
-# predLDA <- predict(modelLDA, newdata = valid.proc)
-# cmLDA <- confusionMatrix(predLDA, valid.data$Party)
-#
-# predBag <- predict(modelBag, newdata = valid.proc)
-# cmBag <- confusionMatrix(predBag, valid.data$Party)
-#
+predLDA <- predict(modelLDA, newdata = valid.proc)
+cmLDA <- confusionMatrix(predLDA, valid.data$Party)
+
+predBag <- predict(modelBag, newdata = valid.proc)
+cmBag <- confusionMatrix(predBag, valid.data$Party)
+
 # PredSVM <- predict(modelSVM, newdata = valid.proc)
 # cmSVM <- confusionMatrix(PredSVM, valid.data$Party)
 
@@ -107,8 +123,12 @@ library(gbm)
 
 library(caretEnsemble)
 
-models <- caretList(x = train.proc, y = train.result, trControl = trCtrl,
-                    methodList = c("glm", "treebag", "lda", "treebag", "rf", "svmRadial"))
+# models <- caretList(x = train.proc, y = train.result, trControl = trCtrl,
+#                     methodList = c("glm", "gbm", "lda", "treebag", "rf", "svmRadial"))
+#
+models <- caretList(x = train.proc, y = train.result, trControl = trCtrl2,
+                    methodList = c("glm", "C5.0", "rf", "svmRadial"))
+
 stack <- caretStack(models, method = "glm")
 
 predStack <- predict(stack, newdata = valid.proc)
@@ -124,4 +144,5 @@ predTest <- predict(stack, newdata = test.proc)
 
 test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = predTest)
 
-write_csv(test.submit, "submission.csv")
+mod <- str_replace_all(as.character(Sys.time()), "-|:| ", "")
+write_csv(test.submit, paste0("submission_", mod, ".csv"))
