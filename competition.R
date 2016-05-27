@@ -94,7 +94,7 @@ myseeds2 <- list(c(123,234,345,456), c(456,567,678,789), c(789,890,901,012),
                 c(135,246,357,468), c(468,579,680,802), c(791,802,913,135),
                 c(975,864,753,642), 54321)
 trCtrl2 <- trainControl(method = "repeatedcv", seeds = myseeds2, classProbs = TRUE)
-trCtrl3 <- trainControl(method = "LOOCV", number = 25, repeats = 25, classProbs = TRUE)
+trCtrl3 <- trainControl(method = "LOOCV", number = 10, repeats = 10, classProbs = TRUE)
 
 modelGBM <- train(x = train.proc, y = train.result, method = "C5.0",
                   verbose = FALSE, trControl = trCtrl3)
