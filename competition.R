@@ -12,7 +12,7 @@ library(mice)
 library(doParallel)
 registerDoParallel()
 
-income <- c("under 25", "25-50", "50-74", "75-100", "100-150", "Over 150")
+income <- c("under 25", "25-50", "50-74", "75-100", "100-150", "over 150")
 education <- c("Current K-12", "High School Diploma", "Current Undergraduate",
                "Associate's Degree", "Bachelor's Degree", "Master's Degree",
                "Doctoral Degree")
@@ -84,7 +84,7 @@ train.data %>%
     geom_bar(stat = "identity", position = "dodge") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-train.data %>%
+orig <- train.data %>%
     select(USER_ID, Party, Income) %>%
     filter(!is.na(Income)) %>%
     group_by(USER_ID, Party) %>%
@@ -93,8 +93,23 @@ train.data %>%
     group_by(Party) %>%
     summarize_each(funs(mean), -USER_ID) %>%
     gather(Income, Percent, -Party) %>%
+    mutate(Set = "orig")
+
+imp <- train.mice.data %>%
+    select(USER_ID, Party, Income) %>%
+    filter(!is.na(Income)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(Income, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(Income, Percent, -Party) %>%
+    mutate(Set = "imp")
+
+bind_rows(orig, imp) %>%
     ggplot(aes(x = Income, y = Percent, fill = Party)) +
     geom_bar(stat = "identity", position = "dodge") +
+    facet_grid(. ~ Set) +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 train.data %>%
@@ -151,7 +166,20 @@ myseeds <- list(c(123,234,345), c(456,567,678), c(789,890,901),
                 c(135,246,357), c(468,579,680), c(791,802,913),
                 c(975,864,753), 54321)
 
-trCtrl <- trainControl(method = "repeatedcv", seeds = myseeds, classProbs = TRUE)
+trCtrl <- trainControl(method = "repeatedcv", classProbs = TRUE)
+
+modelAB <- train(Party ~ ., data = train.data[, -1], method = "adaboost", trControl = trCtrl, na.action = na.pass)
+predAB <- predict(modelAB, newdata = valid.data[, -c(1,7)])
+cmAB <- confusionMatrix(predAB, valid.data$Party)
+saveRDS(modelAB, "model_adaboost.Rds")
+
+mod <- ranger(Party ~ ., train.data[, -1])
+
+modelRngr <- train(x = train.data[, -1], y = train.data$Party, method = "ranger", trControl = trCtrl, na.action = na.pass)
+predRngr <- predict(modelRngr, newdata = valid.data[, -c(1,7)])
+cmRngr <- confusionMatrix(predRngr, valid.data$Party)
+
+modelRF <- train(Party ~ ., data = train.data[, -1], method = "rf", trControl = trCtrl, na.action = na.pass)
 
 # http://stats.stackexchange.com/questions/95212/improve-classification-with-many-categorical-variables
 # AdaBoost
