@@ -7,6 +7,7 @@ library(tibble)
 library(tidyr)
 library(stringr)
 library(caret)
+library(mice)
 
 library(doParallel)
 registerDoParallel()
@@ -33,6 +34,38 @@ testing <- read_csv("test2016.csv") %>%
 inTrain <- createDataPartition(y = training$Party, p = 0.75, list = FALSE)
 train.data <- training[inTrain, ]
 valid.data <- training[-inTrain, ]
+
+# impute -----------------------------------------------
+
+get_impute <- function(file.save, set, method = NULL) {
+    if (file.exists(file.save)) {
+        imp <- readRDS(file.save)
+    } else {
+        if (!is.null(method)) {
+            imp <- mice(set, method = method)
+        } else {
+            imp <- mice(set)
+        }
+    }
+    imp
+}
+
+train.mice <- get_impute("train_mice.Rds", train.data)
+train.mice.data <- complete(train.mice)
+
+valid.mice <- get_impute("valid_mice.Rds", valid.data, train.mice$method)
+valid.mice.data <- complete(valid.mice)
+
+test.mice <- get_impute("test_mice.Rds", valid.data, train.mice$method)
+test.mice.data <- complete(test.mice)
+
+# modLME <- glmer(Party ~ ., data = train.mice.data[, -1], family = "binomial")
+
+# with(data = train.mice, exp = glm(Party ~ YOB + Income, family = "binomial"))
+# comp <- complete(train.imp)
+
+# library(missForest)
+# train.imp <- missForest(train.data[, 8])
 
 # visualization ----------------------------------------
 
@@ -89,22 +122,6 @@ train.data %>%
     ggplot(aes(x = EducationLevel, y = Percent, fill = Party)) +
     geom_bar(stat = "identity", position = "dodge") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-# impute -----------------------------------------------
-
-library(mice)
-train.mice <- mice(train.data)
-saveRDS(train.mice, "train_mice.Rds")
-
-train.mice.data <- complete(train.mice)
-# modLME <- glmer(Party ~ ., data = train.mice.data[, -1], family = "binomial")
-
-with(data = train.mice, exp = glm(Party ~ YOB + Income, family = "binomial"))
-# comp <- complete(train.imp)
-
-# library(missForest)
-# train.imp <- missForest(train.data[, 8])
-
 
 # preproccess data -------------------------------------
 train.set <- dplyr::select(train.data, -USER_ID, -Party)
