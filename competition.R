@@ -4,33 +4,102 @@ library(readr)
 library(plyr)
 library(dplyr)
 library(tibble)
+library(tidyr)
 library(stringr)
 library(caret)
 
 library(doParallel)
 registerDoParallel()
 
+income <- c("under 25", "25-50", "50-74", "75-100", "100-150", "Over 150")
+education <- c("Current K-12", "High School Diploma", "Current Undergraduate",
+               "Associate's Degree", "Bachelor's Degree", "Master's Degree",
+               "Doctoral Degree")
 # get training and testing data
 training <- read_csv("train2016.csv") %>%
-    mutate(Income = str_replace_all(Income, "\\$|,[0-9]{3}", ""))
-    # mutate_each(funs(factor), -USER_ID, -YOB)
+    mutate(Income = str_replace_all(Income, "\\$|,[0-9]{3}", ""),
+           Income = str_replace_all(Income, " - ", "-")) %>%
+    mutate_each(funs(factor), -USER_ID, -YOB, -Income, -EducationLevel) %>%
+    mutate(Income = ordered(Income, levels = income),
+           EducationLevel = ordered(EducationLevel, levels = education))
 
 testing <- read_csv("test2016.csv") %>%
-    mutate(Income = str_replace_all(Income, "\\$|,[0-9]{3}", ""))
-    # mutate_each(funs(factor), -USER_ID, -YOB)
+    mutate(Income = str_replace_all(Income, "\\$|,[0-9]{3}", "")) %>%
+    mutate_each(funs(factor), -USER_ID, -YOB, -Income, -EducationLevel) %>%
+    mutate(Income = ordered(Income, levels = income),
+           EducationLevel = ordered(EducationLevel, levels = education))
 
 # create validation set from training data
 inTrain <- createDataPartition(y = training$Party, p = 0.75, list = FALSE)
 train.data <- training[inTrain, ]
 valid.data <- training[-inTrain, ]
 
+# visualization ----------------------------------------
+
+# featurePlot(train.data[, 2], train.data$Party, plot = "box")
+library(ggplot2)
+train.data %>%
+    select(USER_ID, Party, Gender) %>%
+    filter(!is.na(Gender)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(Gender, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(Gender, Percent, -Party) %>%
+    ggplot(aes(x = Gender, y = Percent, fill = Party)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+train.data %>%
+    select(USER_ID, Party, Income) %>%
+    filter(!is.na(Income)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(Income, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(Income, Percent, -Party) %>%
+    ggplot(aes(x = Income, y = Percent, fill = Party)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+train.data %>%
+    select(USER_ID, Party, HouseholdStatus) %>%
+    filter(!is.na(HouseholdStatus)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(HouseholdStatus, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(HouseholdStatus, Percent, -Party) %>%
+    ggplot(aes(x = HouseholdStatus, y = Percent, fill = Party)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+train.data %>%
+    select(USER_ID, Party, EducationLevel) %>%
+    filter(!is.na(EducationLevel)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(EducationLevel, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(EducationLevel, Percent, -Party) %>%
+    ggplot(aes(x = EducationLevel, y = Percent, fill = Party)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
 # impute -----------------------------------------------
 
-# library(mice)
+library(mice)
+train.mice <- mice(train.data)
+saveRDS(train.mice, "train_mice.Rds")
 
-# train.imp <- mice(train.data, m = 2)
+train.mice.data <- complete(train.mice)
+# modLME <- glmer(Party ~ ., data = train.mice.data[, -1], family = "binomial")
 
-# with(data = train.imp, exp = glm(Party ~ YOB, family = "binomial"))
+with(data = train.mice, exp = glm(Party ~ YOB + Income, family = "binomial"))
 # comp <- complete(train.imp)
 
 # library(missForest)
