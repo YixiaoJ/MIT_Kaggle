@@ -168,14 +168,22 @@ myseeds <- list(c(123,234,345), c(456,567,678), c(789,890,901),
 
 trCtrl <- trainControl(method = "repeatedcv", classProbs = TRUE)
 
+# 0.6024
 modelAB <- train(Party ~ ., data = train.data[, -1], method = "adaboost", trControl = trCtrl, na.action = na.pass)
-predAB <- predict(modelAB, newdata = valid.data[, -c(1,7)])
+predAB <- predict(modelAB, newdata = valid.data[, -c(1, 7)], na.action = na.pass)
 cmAB <- confusionMatrix(predAB, valid.data$Party)
 saveRDS(modelAB, "model_adaboost.Rds")
 
+# 0.6147
+modelC50 <- train(Party ~ ., data = train.data[, -1], method = "C5.0", na.action = na.pass,
+                  verbose = FALSE, trControl = trCtrl)
+predC50 <- predict(modelC50, newdata = valid.data[, -c(1, 7)], na.action = na.pass)
+cmC50 <- confusionMatrix(predC50, valid.data$Party)
+
+
 mod <- ranger(Party ~ ., train.data[, -1])
 
-modelRngr <- train(x = train.data[, -1], y = train.data$Party, method = "ranger", trControl = trCtrl, na.action = na.pass)
+modelRngr <- train(Party ~ ., data = train.data[, -1], method = "ranger", trControl = trCtrl, na.action = na.pass)
 predRngr <- predict(modelRngr, newdata = valid.data[, -c(1,7)])
 cmRngr <- confusionMatrix(predRngr, valid.data$Party)
 
