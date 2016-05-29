@@ -155,6 +155,8 @@ train.set$Party <- train.data$Party
 valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
 
+library(ggplot2)
+
 
 # set.seed(1235)
 # pre.proc <- preProcess(train.set, outcome = train.data$Party, method = "bagImpute")
@@ -188,9 +190,29 @@ for(i in 1:50) seeds[[i]] <- sample.int(1000, 22)
 seeds[[51]] <- sample.int(1000, 1)
 
 # trCtrl <- trainControl(method = "repeatedcv", classProbs = TRUE)
-trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds, classProbs = TRUE, returnResamp = "all")
+trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
+                       classProbs = TRUE, returnResamp = "all")
 
 # individual models ------------------------------------
+
+modelGLM <- train(Party ~ ., data = train.nz[, -1], method = "glm",
+                  na.action = na.pass, trControl = trCtrl, tuneLength = 5,
+                  preProcess = "knnImpute")
+predGLM <- predict(modelGLM, newdata = valid.set[, -1], na.action = na.pass)
+cmGLM <- confusionMatrix(predGLM, valid.data$Party)
+cmGLM
+
+featurePlot(x = train.set[, 16], y = train.data$Party,
+            plot = "density", auto.key = list(columns = 2))
+
+nz <- nearZeroVar(train.set[, -108], freqCut = 85/15)
+train.nz <- train.set[, -nz]
+
+hc <- cor(train.nz[, -100], use = "na.or.complete")
+hc <- findCorrelation(hc, cutoff = 0.5)
+train.hc <- train.nz[, -hc]
+
+# remove Q123464 (9); Q122771 (13); Q122120 (14), Q121699 (15), Q121700 (16)
 
 # 0.6024
 modelAB <- train(Party ~ ., data = train.data[, -1], method = "adaboost", trControl = trCtrl, na.action = na.pass)
