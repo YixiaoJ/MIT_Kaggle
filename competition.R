@@ -240,6 +240,8 @@ predC50 <- predict(modelC50, newdata = valid.set[, -1], na.action = na.pass)
 cmC50 <- confusionMatrix(predC50, valid.data$Party)
 cmC50
 
+saveRDS(modelC50, "submit_model_2.Rds")
+
 # knn imputing
 modelC50k <- train(Party ~ ., data = train.set[, -1], method = "C5.0",
                    na.action = na.pass, trControl = trCtrl, tuneLength = 20,
@@ -297,13 +299,15 @@ mycontrol <- trainControl(method = "repeatedcv",
                           summaryFunction = fourStats)
 
 set.seed(949)
-mod1 <- train(Party ~ ., data = train.data[, -1],
+mod1 <- train(Party ~ ., data = train.set[, -1],
               method = my_mod,
               ## Minimize the distance to the perfect model
               metric = "Dist",
               maximize = FALSE,
-              tuneGrid=mygrid,
-              trControl = mycontrol)
+              tuneGrid = mygrid,
+              trControl = mycontrol,
+              na.action = na.pass,
+              preProcess = "BoxCox")
 
 pred.mod1 <- predict(mod1, newdata = valid.mice.data[, -c(1, 7)], na.action = na.pass)
 cm.mod1 <- confusionMatrix(pred.mod1, valid.data$Party)
@@ -423,7 +427,8 @@ cmStack <- confusionMatrix(predStack, valid.comp$Party)
 # testGBM <- predict(modelGBM, newdata = test.proc)
 # testLDA <- predict(modelLDA, newdata = test.proc)
 
-predTest <- predict(stack, newdata = test.proc)
+# predTest <- predict(stack, newdata = test.proc)
+predTest <- predict(modelC50, newdata = test.set, na.action = na.pass)
 
 test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = predTest)
 
