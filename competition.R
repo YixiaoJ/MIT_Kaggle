@@ -31,7 +31,7 @@ testing <- read_csv("test2016.csv") %>%
            EducationLevel = ordered(EducationLevel, levels = education))
 
 # create validation set from training data
-inTrain <- createDataPartition(y = training$Party, p = 0.75, list = FALSE)
+inTrain <- createDataPartition(y = training$Party, p = 0.9, list = FALSE)
 train.data <- training[inTrain, ]
 valid.data <- training[-inTrain, ]
 
@@ -139,27 +139,34 @@ train.data %>%
     geom_bar(stat = "identity", position = "dodge") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+# baseline model ---------------------------------------
+
+baseline <- table(valid.data$Party)
+baseline[1] / nrow(valid.data)
+
 # preproccess data -------------------------------------
 # train.set <- dplyr::select(train.data, -USER_ID, -Party)
 train.dv <- dummyVars(~ ., data = train.data[, -7])
 train.dvp <- predict(train.dv, newdata = train.data[, -7]) %>% as_data_frame()
 
+library(purrr)
+train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
 set.seed(1235)
-pre.proc <- preProcess(train.dvp, outcome = train.data$Party, method = "knnImpute")
+pre.proc <- preProcess(train.set, outcome = train.data$Party, method = "bagImpute")
 
-train.proc <- predict(pre.proc, train.dvp)
+train.proc <- predict(pre.proc, newdata = train.set)
 train.proc$Party <- train.data$Party
 # train.result <- as.factor(train.data$Party)
 
-# valid.set <- dplyr::select(valid.data, -USER_ID, -Party)
-valid.dvp <- predict(train.dv, newdata = valid.data[, -7]) %>% as_data_frame()
-valid.proc <- predict(pre.proc, valid.dvp)
-valid.proc$Party <- valid.data$Party
+valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
+# valid.dvp <- predict(train.dv, newdata = valid.data[, -7]) %>% as_data_frame()
+valid.proc <- predict(pre.proc, valid.set)
+# valid.proc$Party <- valid.data$Party
 # valid.result <- as.factor(valid.data$Party)
 
-# test.set <- dplyr::select(testing, -USER_ID)
-test.dvp <- predict(train.dv, newdata = testing) %>% as_data_frame()
-test.proc <- predict(pre.proc, test.dvp)
+test.set <- dmap_if(testing, is.factor, as.numeric)
+# test.dvp <- predict(train.dv, newdata = testing) %>% as_data_frame()
+test.proc <- predict(pre.proc, test.set)
 
 
 # myseeds <- list(c(123,234,345), c(456,567,678), c(789,890,901),
@@ -176,7 +183,7 @@ for(i in 1:50) seeds[[i]] <- sample.int(1000, 22)
 seeds[[51]] <- sample.int(1000, 1)
 
 # trCtrl <- trainControl(method = "repeatedcv", classProbs = TRUE)
-trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds)
+trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds, classProbs = TRUE)
 
 # individual models ------------------------------------
 
@@ -186,16 +193,34 @@ predAB <- predict(modelAB, newdata = valid.data[, -c(1, 7)], na.action = na.pass
 cmAB <- confusionMatrix(predAB, valid.data$Party)
 saveRDS(modelAB, "model_adaboost.Rds")
 
+modelAB <- train(Party ~ ., data = train.proc[, -1], method = "adaboost", na.action = na.pass, trControl = trCtrl)
+predAB <- predict(modelAB, newdata = valid.proc[, -1], na.action = na.pass)
+cmAB <- confusionMatrix(predAB, valid.data$Party)
+cmAB
+
+
 # 0.6147
 trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds, returnResamp = "all")
-trGrid <- expand.grid(.winnow = c(TRUE, FALSE), .trials = c(1, 5, 10, 15, 20), .model = "tree")
 modelC50 <- train(Party ~ ., data = train.data[, -1], method = "C5.0", na.action = na.pass, trControl = trCtrl, tuneGrid = trGrid)
 predC50 <- predict(modelC50, newdata = valid.data[, -c(1, 7)], na.action = na.pass)
 cmC50 <- confusionMatrix(predC50, valid.data$Party)
 cmC50
 
-xyplot(modelC50, type = c("g", "p", "smooth"))
-plot(modelC50)
+# 0.6403
+modelC50b <- train(Party ~ ., data = train.proc[, -1], method = "C5.0", na.action = na.pass, trControl = trCtrl)
+predC50b <- predict(modelC50b, newdata = valid.proc[, -1], na.action = na.pass)
+cmC50b <- confusionMatrix(predC50b, valid.data$Party)
+cmC50b
+
+trGrid <- expand.grid(.winnow = c(TRUE, FALSE), .trials = c(1, 5, 10, 15, 20), .model = "tree")
+modelC50b2 <- train(Party ~ ., data = train.proc[, -1], method = "C5.0", na.action = na.pass, trControl = trCtrl, tuneGrid = trGrid)
+predC50b2 <- predict(modelC50b2, newdata = valid.proc[, -1], na.action = na.pass)
+cmC50b2 <- confusionMatrix(predC50b2, valid.data$Party)
+cmC50b2
+
+
+xyplot(modelC50b2, type = c("g", "p", "smooth"))
+plot(modelC50b)
 # 0.624
 modelC50i <- train(Party ~ ., data = train.mice.data[, -1], method = "C5.0", trControl = trCtrl, tuneGrid = trGrid)
 predC50i <- predict(modelC50i, newdata = valid.mice.data[, -c(1, 7)])
@@ -210,6 +235,14 @@ modelC50p <- train(Party ~ ., data = train.proc[, -1], method = "C5.0", trContro
 predC50p <- predict(modelC50p, newdata = valid.proc[, -c(1, 224)])
 cmC50p <- confusionMatrix(predC50p, valid.data$Party)
 cmC50p
+
+# select filter ----------------------------------------
+
+filterCtrl <- sbfControl(functions = rfSBF, method = "repeatedcv", repeats = 5)
+set.seed(10)
+rfWithFilter <- sbf(Party ~ ., data = train.proc[, -1], sbfControl = filterCtrl, na.action = na.pass)
+
+predRFwF <- predict(rfWithFilter, newdata = valid.mice.data[, -1])
 
 # custom -----------------------------------------------
 source("custom_C50.R")
@@ -248,6 +281,7 @@ cmRngr <- confusionMatrix(predRngr, valid.data$Party)
 modelRngrp <- train(Party ~ ., data = train.proc[, -1], method = "ranger", trControl = trCtrl, na.action = na.pass)
 predRngrp <- predict(modelRngrp, newdata = valid.proc[, -c(1, 224)])
 cmRngrp <- confusionMatrix(predRngrp, valid.data$Party)
+cmRngrp
 
 # 0.6118
 modelLDA <- train(Party ~ ., data = train.mice.data[, -1], method = "lda", trControl = trCtrl)
