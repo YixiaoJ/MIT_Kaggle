@@ -155,6 +155,8 @@ train.set$Party <- train.data$Party
 valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
 
+train.set[is.na(train.set)] <- 0
+valid.set[is.na(valid.set)] <- 0
 
 # set.seed(1235)
 # pre.proc <- preProcess(train.set, outcome = train.data$Party, method = "bagImpute")
@@ -225,13 +227,6 @@ cmC50b
 
 trGrid <- expand.grid(.winnow = FALSE, .trials = c(1, 5, 10, 20, 30), .model = c("tree", "rules"))
 
-# no imputing
-modelC50 <- train(Party ~ ., data = train.set[, -1], method = "C5.0",
-                  na.action = na.pass, trControl = trCtrl, tuneLength = 20)
-predC50 <- predict(modelC50, newdata = valid.set[, -1], na.action = na.pass)
-cmC50 <- confusionMatrix(predC50, valid.data$Party)
-cmC50
-
 # no imputing, box-cox
 modelC50 <- train(Party ~ ., data = train.set[, -1], method = "C5.0",
                   na.action = na.pass, trControl = trCtrl, tuneLength = 5,
@@ -242,13 +237,13 @@ cmC50
 
 saveRDS(modelC50, "submit_model_2.Rds")
 
-# knn imputing
-modelC50k <- train(Party ~ ., data = train.set[, -1], method = "C5.0",
-                   na.action = na.pass, trControl = trCtrl, tuneLength = 20,
-                   preProcess = "knnImpute")
-predC50k <- predict(modelC50k, newdata = valid.set[, -1], na.action = na.pass)
-cmC50k <- confusionMatrix(predC50k, valid.data$Party)
-cmC50k
+# knn
+modelKNN <- train(Party ~ ., data = train.set[, -1], method = "knn",
+                  na.action = na.pass, trControl = trCtrl, tuneLength = 10,
+                  preProcess = "knnImpute")
+predKNN <- predict(modelKNN, newdata = valid.set[, -1], na.action = na.pass)
+cmKNN <- confusionMatrix(predKNN, valid.data$Party)
+cmKNN
 
 # bag imputing
 modelC50b <- train(Party ~ ., data = train.set[, -1], method = "C5.0",
@@ -309,9 +304,12 @@ mod1 <- train(Party ~ ., data = train.set[, -1],
               na.action = na.pass,
               preProcess = "BoxCox")
 
-pred.mod1 <- predict(mod1, newdata = valid.mice.data[, -c(1, 7)], na.action = na.pass)
+pred.mod1 <- predict(mod1, newdata = valid.set[, -1], na.action = na.pass)
 cm.mod1 <- confusionMatrix(pred.mod1, valid.data$Party)
 cm.mod1
+
+xyplot(mod1, type = c("g", "p", "smooth"))
+plot(mod1)
 
 # 0.6305
 modelRngr <- train(Party ~ ., data = train.mice.data[, -1], method = "ranger", trControl = trCtrl, na.action = na.pass)
