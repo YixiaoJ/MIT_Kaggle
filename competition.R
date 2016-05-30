@@ -150,9 +150,9 @@ baseline[1] / nrow(valid.data)
 # train.dvp <- predict(train.dv, newdata = train.data[, -7]) %>% as_data_frame()
 
 library(purrr)
-train.set <- dmap_if(train.mice.data[, -7], is.factor, as.numeric)
-train.set$Party <- train.mice.data$Party
-valid.set <- dmap_if(valid.mice.data[, -7], is.factor, as.numeric)
+train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
+train.set$Party <- train.data$Party
+valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
 
 train.set[is.na(train.set)] <- 0
@@ -160,15 +160,16 @@ valid.set[is.na(valid.set)] <- 0
 
 nz <- nearZeroVar(train.set[, -108], freqCut = 85/15)
 train.nz <- train.set[, -nz]
+valid.nz <- valid.set[, -nz]
 
-hcor <- cor(train.set[, -108], use = "na.or.complete")
+hcor <- cor(train.nz[, -100], use = "na.or.complete")
 hc <- findCorrelation(hcor, cutoff = 0.7)
-train.hc <- train.set[, -hc]
-valid.hc <- valid.set[, -hc]
+train.hc <- train.nz[, -hc]
+valid.hc <- valid.nz[, -hc]
 
-prep <- preProcess(train.set, method = "pca", pcaComp = 5)
-train.prep <- predict(prep, train.set)
-valid.prep <- predict(prep, valid.set)
+prep <- preProcess(train.hc, method = c("knnImpute", "pca"), pcaComp = 5)
+train.prep <- predict(prep, train.hc)
+valid.prep <- predict(prep, valid.hc)
 
 # set.seed(1235)
 # pre.proc <- preProcess(train.set, outcome = train.data$Party, method = "bagImpute")
@@ -210,10 +211,9 @@ trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
 train.try <- bind_cols(train.set, train.prep[, -1])
 valid.try <- bind_cols(valid.set, valid.prep)
 
-modelGLM <- train(Party ~ ., data = train.try[, -1], method = "glm",
-                  trControl = trCtrl)
-predGLM <- predict(modelGLM, newdata = valid.try)
-cmGLM <- confusionMatrix(predGLM, valid.mice.data$Party)
+modelGLM <- train(Party ~ ., data = train.prep, method = "glm", trControl = trCtrl)
+predGLM <- predict(modelGLM, newdata = valid.prep, na.action = na.pass)
+cmGLM <- confusionMatrix(predGLM, valid.data$Party)
 cmGLM
 
 featurePlot(x = train.set[, 16], y = train.data$Party,
