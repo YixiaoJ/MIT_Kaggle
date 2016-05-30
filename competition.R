@@ -55,6 +55,16 @@ train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
 valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
 
+# remove invalid YOB
+train.set$YOB[train.set$YOB > 2005 | train.set$YOB < 1910] <- NA
+
+cc(train.data)
+tmp <- filter(train.data, EducationLevel == "Current K-12", HouseholdStatus != "Single (no kids)")
+tmp <- md.pattern(train.data)
+
+checkConditionalX(train.set, train.party)
+nearZeroVar(train.set, freqCut = 90/10)
+
 # impute -----------------------------------------------
 
 get_impute <- function(file.save, set, method = NULL) {
@@ -80,51 +90,60 @@ valid.data.m <- complete(valid.mice)
 test.mice <- get_impute("test_mice.Rds", test.set, train.mice$method)
 test.data.m <- complete(test.mice)
 
+# train.set.m <- dmap_if(train.data.m, is.factor, as.numeric)
+# valid.set.m <- dmap_if(valid.data.m, is.factor, as.numeric)
+# test.set.m <- dmap_if(test.data.m, is.factor, as.numeric)
+
+
 # visualization ----------------------------------------
 
-# featurePlot(train.data[, 2], train.data$Party, plot = "box")
-# library(ggplot2)
-# train.data %>%
-#     select(USER_ID, Party, Gender) %>%
-#     filter(!is.na(Gender)) %>%
-#     group_by(USER_ID, Party) %>%
-#     mutate(value = TRUE) %>%
-#     spread(Gender, value, fill = FALSE) %>%
-#     group_by(Party) %>%
-#     summarize_each(funs(mean), -USER_ID) %>%
-#     gather(Gender, Percent, -Party) %>%
-#     ggplot(aes(x = Gender, y = Percent, fill = Party)) +
-#     geom_bar(stat = "identity", position = "dodge") +
-#     theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#
-# orig <- train.data %>%
-#     select(USER_ID, Party, Income) %>%
-#     filter(!is.na(Income)) %>%
-#     group_by(USER_ID, Party) %>%
-#     mutate(value = TRUE) %>%
-#     spread(Income, value, fill = FALSE) %>%
-#     group_by(Party) %>%
-#     summarize_each(funs(mean), -USER_ID) %>%
-#     gather(Income, Percent, -Party) %>%
-#     mutate(Set = "orig")
-#
-# imp <- train.mice.data %>%
-#     select(USER_ID, Party, Income) %>%
-#     filter(!is.na(Income)) %>%
-#     group_by(USER_ID, Party) %>%
-#     mutate(value = TRUE) %>%
-#     spread(Income, value, fill = FALSE) %>%
-#     group_by(Party) %>%
-#     summarize_each(funs(mean), -USER_ID) %>%
-#     gather(Income, Percent, -Party) %>%
-#     mutate(Set = "imp")
-#
-# bind_rows(orig, imp) %>%
-#     ggplot(aes(x = Income, y = Percent, fill = Party)) +
-#     geom_bar(stat = "identity", position = "dodge") +
-#     facet_grid(. ~ Set) +
-#     theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#
+featurePlot(train.data.m[, 2], train.data$Party, plot = "box")
+featurePlot(train.data.m[, 3], as.numeric(train.data$Party), plot = "pairs", jitter = TRUE, auto.key = list(columns = 2))
+
+library(ggplot2)
+train.data %>%
+    select(USER_ID, Party, Gender) %>%
+    filter(!is.na(Gender)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(Gender, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(Gender, Percent, -Party) %>%
+    ggplot(aes(x = Gender, y = Percent, fill = Party)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+orig <- train.data %>%
+    select(USER_ID, Party, Income) %>%
+    mutate(Income = as.numeric(Income)) %>%
+    filter(!is.na(Income)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(Income, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(Income, Percent, -Party) %>%
+    mutate(Set = "orig")
+
+imp <- train.data.m %>%
+    mutate(Party = train.party) %>%
+    select(USER_ID, Party, Income) %>%
+    filter(!is.na(Income)) %>%
+    group_by(USER_ID, Party) %>%
+    mutate(value = TRUE) %>%
+    spread(Income, value, fill = FALSE) %>%
+    group_by(Party) %>%
+    summarize_each(funs(mean), -USER_ID) %>%
+    gather(Income, Percent, -Party) %>%
+    mutate(Set = "imp")
+
+bind_rows(orig, imp) %>%
+    ggplot(aes(x = Income, y = Percent, fill = Party)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    facet_grid(. ~ Set) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
 # train.data %>%
 #     select(USER_ID, Party, HouseholdStatus) %>%
 #     filter(!is.na(HouseholdStatus)) %>%
@@ -151,9 +170,23 @@ test.data.m <- complete(test.mice)
 #     geom_bar(stat = "identity", position = "dodge") +
 #     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+select(train.data, USER_ID, EducationLevelO = EducationLevel) %>%
+    mutate(EducationLevelO = as.numeric(EducationLevelO)) %>%
+    inner_join(train.data.m[c("USER_ID", "EducationLevel")], by = "USER_ID") %>%
+    ggplot() +
+    geom_density(aes(x = EducationLevelO), color = "blue") +
+    geom_density(aes(x = EducationLevel))
+
+select(train.data, USER_ID, IncomeO = Income) %>%
+    mutate(IncomeO = as.numeric(IncomeO)) %>%
+    inner_join(train.data.m[c("USER_ID", "Income")], by = "USER_ID") %>%
+    ggplot() +
+    geom_density(aes(x = IncomeO), color = "blue") +
+    geom_density(aes(x = Income))
+
 # baseline model ---------------------------------------
 
-baseline <- table(valid.data$Party)
+baseline <- table(valid.party)
 baseline[1] / nrow(valid.data)
 
 # preproccess data -------------------------------------
@@ -162,10 +195,6 @@ baseline[1] / nrow(valid.data)
 # train.dvp <- predict(train.dv, newdata = train.data[, -7]) %>% as_data_frame()
 
 
-train.set.m <- dmap_if(train.mice.data[, -7], is.factor, as.numeric)
-train.set.m$Party <- train.mice.data$Party
-valid.set.m <- dmap_if(valid.mice.data[, -7], is.factor, as.numeric)
-test.set.m <- dmap_if(test.mice.data, is.factor, as.numeric)
 
 # distance <- dist(train.set, method = "euclidean")
 # cluster <- hclust(distance, method = "ward.D")
