@@ -76,3 +76,19 @@ valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
 
 rm(tmp)
 
+# use preprocess with resampling
+
+# knn <- preProcess(train.set, method = "knnImpute")
+# train.set.knn <- predict(knn, newdata = train.set)
+#
+# dv.knn <- preProcess(train.dv, method = "knnImpute")
+# train.dv.knn <- predict(dv.knn, newdata = train.dv)
+#
+# names(train.dv) <- make.names(names(train.dv))
+# names(valid.dv) <- make.names(names(valid.dv))
+#
+# bag <- preProcess(train.set, method = "bagImpute")
+# train.set.bag <- predict(bag, newdata = train.set)
+#
+# dv.bag <- preProcess(train.dv, method = "bagImpute")
+# train.dv.bag <- predict(dv.bag, newdata = train.dv)
