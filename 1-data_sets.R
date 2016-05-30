@@ -3,6 +3,7 @@
 library(readr)
 library(plyr)
 library(dplyr)
+library(tibble)
 library(stringr)
 library(caret)
 library(purrr)
@@ -37,19 +38,41 @@ valid.data <- training[-inTrain, ]
 
 # remove invalid YOB
 train.data$YOB[train.data$YOB > 2005 | train.data$YOB < 1910] <- NA
-
-train.na <- train.data %>%
-    mutate_each(funs(is.na), -USER_ID, -Party)
-
-names(train.na[, -1]) <- paste(names(train.na[, -1]), "NA", sep = "_")
-
-train.set <- inner_join(train.data, train.na, by = c(""))
+valid.data$YOB[valid.data$YOB > 2005 | valid.data$YOB < 1910] <- NA
 
 # make outcome vectors
 train.party <- train.data$Party
 valid.party <- valid.data$Party
 
+# make vars indicating presence of NA
+train.na <- train.data[, -7] %>%
+    mutate_each(funs(is.na), -USER_ID)
+
+names(train.na)[-1] <- paste(names(train.na)[-1], "NA", sep = "_")
+
+valid.na <- valid.data[, -7] %>%
+    mutate_each(funs(is.na), -USER_ID)
+
+names(valid.na)[-1] <- paste(names(valid.na)[-1], "NA", sep = "_")
+
 # convert factors to numeric
 train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
 valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
+
+# use unordered levels
+tmp <- train.data %>%
+    mutate(Income = factor(Income, ordered = FALSE),
+           EducationLevel = factor(EducationLevel, ordered = FALSE))
+
+dv <- dummyVars(~ ., data = tmp[, -7])
+train.dv <- predict(dv, newdata = tmp[, -7]) %>% as_data_frame()
+
+tmp <- valid.data %>%
+    mutate(Income = factor(Income, ordered = FALSE),
+           EducationLevel = factor(EducationLevel, ordered = FALSE))
+
+valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
+
+rm(tmp)
+
