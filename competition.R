@@ -351,9 +351,10 @@ xyplot(mod1, type = c("g", "p", "smooth"))
 plot(mod1)
 
 # 0.6305
-modelRngr <- train(Party ~ ., data = train.mice.data[, -1], method = "ranger", trControl = trCtrl, na.action = na.pass)
-predRngr <- predict(modelRngr, newdata = valid.mice.data[, -c(1, 7)], na.action = na.pass)
+modelRngr <- train(Party ~ ., data = train.set[, -1], method = "ranger", trControl = trCtrl, na.action = na.pass)
+predRngr <- predict(modelRngr, newdata = valid.set[, -1], na.action = na.pass)
 cmRngr <- confusionMatrix(predRngr, valid.data$Party)
+cmRngr
 
 # 0.6111
 modelRngrp <- train(Party ~ ., data = train.proc[, -1], method = "ranger", trControl = trCtrl, na.action = na.pass)
