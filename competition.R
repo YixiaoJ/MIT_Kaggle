@@ -5,6 +5,7 @@ library(plyr)
 library(dplyr)
 library(tibble)
 library(tidyr)
+library(purrr)
 library(stringr)
 library(caret)
 library(mice)
@@ -16,6 +17,7 @@ income <- c("under 25", "25-50", "50-74", "75-100", "100-150", "over 150")
 education <- c("Current K-12", "High School Diploma", "Current Undergraduate",
                "Associate's Degree", "Bachelor's Degree", "Master's Degree",
                "Doctoral Degree")
+
 # get training and testing data
 training <- read_csv("train2016.csv") %>%
     mutate(Income = str_replace_all(Income, "\\$|,[0-9]{3}", ""),
@@ -30,10 +32,28 @@ testing <- read_csv("test2016.csv") %>%
     mutate(Income = ordered(Income, levels = income),
            EducationLevel = ordered(EducationLevel, levels = education))
 
-# create validation set from training data
-inTrain <- createDataPartition(y = training$Party, p = 0.85, list = FALSE)
-train.data <- training[inTrain, ]
-valid.data <- training[-inTrain, ]
+# train / validate sets --------------------------------
+
+train.file <- "train_data.Rds"
+valid.file <- "valid_data.Rds"
+
+if (file.exists(train.file) & file.exists(valid.file)) {
+    train.data <- readRDS(train.file)
+    valid.data <- readRDS(valid.file)
+} else {
+    inTrain <- createDataPartition(y = training$Party, p = 0.85, list = FALSE)
+    train.data <- training[inTrain, ]
+    valid.data <- training[-inTrain, ]
+    saveRDS(train.data, train.file)
+    saveRDS(valid.data, valid.file)
+}
+
+train.party <- train.data$Party
+valid.party <- valid.data$Party
+
+train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
+valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
+test.set <- dmap_if(testing, is.factor, as.numeric)
 
 # impute -----------------------------------------------
 
@@ -51,93 +71,85 @@ get_impute <- function(file.save, set, method = NULL) {
     imp
 }
 
-train.mice <- get_impute("train_mice.Rds", train.data)
-train.mice.data <- complete(train.mice)
+train.mice <- get_impute("train_mice.Rds", train.set)
+train.data.m <- complete(train.mice)
 
-valid.mice <- get_impute("valid_mice.Rds", valid.data, train.mice$method)
-valid.mice.data <- complete(valid.mice)
+valid.mice <- get_impute("valid_mice.Rds", valid.set, train.mice$method)
+valid.data.m <- complete(valid.mice)
 
-test.mice <- get_impute("test_mice.Rds", valid.data, train.mice$method)
-test.mice.data <- complete(test.mice)
-
-# modLME <- glmer(Party ~ ., data = train.mice.data[, -1], family = "binomial")
-
-# with(data = train.mice, exp = glm(Party ~ YOB + Income, family = "binomial"))
-# comp <- complete(train.imp)
-
-# library(missForest)
-# train.imp <- missForest(train.data[, 8])
+test.mice <- get_impute("test_mice.Rds", test.set, train.mice$method)
+test.data.m <- complete(test.mice)
 
 # visualization ----------------------------------------
 
 # featurePlot(train.data[, 2], train.data$Party, plot = "box")
-library(ggplot2)
-train.data %>%
-    select(USER_ID, Party, Gender) %>%
-    filter(!is.na(Gender)) %>%
-    group_by(USER_ID, Party) %>%
-    mutate(value = TRUE) %>%
-    spread(Gender, value, fill = FALSE) %>%
-    group_by(Party) %>%
-    summarize_each(funs(mean), -USER_ID) %>%
-    gather(Gender, Percent, -Party) %>%
-    ggplot(aes(x = Gender, y = Percent, fill = Party)) +
-    geom_bar(stat = "identity", position = "dodge") +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-orig <- train.data %>%
-    select(USER_ID, Party, Income) %>%
-    filter(!is.na(Income)) %>%
-    group_by(USER_ID, Party) %>%
-    mutate(value = TRUE) %>%
-    spread(Income, value, fill = FALSE) %>%
-    group_by(Party) %>%
-    summarize_each(funs(mean), -USER_ID) %>%
-    gather(Income, Percent, -Party) %>%
-    mutate(Set = "orig")
-
-imp <- train.mice.data %>%
-    select(USER_ID, Party, Income) %>%
-    filter(!is.na(Income)) %>%
-    group_by(USER_ID, Party) %>%
-    mutate(value = TRUE) %>%
-    spread(Income, value, fill = FALSE) %>%
-    group_by(Party) %>%
-    summarize_each(funs(mean), -USER_ID) %>%
-    gather(Income, Percent, -Party) %>%
-    mutate(Set = "imp")
-
-bind_rows(orig, imp) %>%
-    ggplot(aes(x = Income, y = Percent, fill = Party)) +
-    geom_bar(stat = "identity", position = "dodge") +
-    facet_grid(. ~ Set) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-train.data %>%
-    select(USER_ID, Party, HouseholdStatus) %>%
-    filter(!is.na(HouseholdStatus)) %>%
-    group_by(USER_ID, Party) %>%
-    mutate(value = TRUE) %>%
-    spread(HouseholdStatus, value, fill = FALSE) %>%
-    group_by(Party) %>%
-    summarize_each(funs(mean), -USER_ID) %>%
-    gather(HouseholdStatus, Percent, -Party) %>%
-    ggplot(aes(x = HouseholdStatus, y = Percent, fill = Party)) +
-    geom_bar(stat = "identity", position = "dodge") +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-train.data %>%
-    select(USER_ID, Party, EducationLevel) %>%
-    filter(!is.na(EducationLevel)) %>%
-    group_by(USER_ID, Party) %>%
-    mutate(value = TRUE) %>%
-    spread(EducationLevel, value, fill = FALSE) %>%
-    group_by(Party) %>%
-    summarize_each(funs(mean), -USER_ID) %>%
-    gather(EducationLevel, Percent, -Party) %>%
-    ggplot(aes(x = EducationLevel, y = Percent, fill = Party)) +
-    geom_bar(stat = "identity", position = "dodge") +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+# library(ggplot2)
+# train.data %>%
+#     select(USER_ID, Party, Gender) %>%
+#     filter(!is.na(Gender)) %>%
+#     group_by(USER_ID, Party) %>%
+#     mutate(value = TRUE) %>%
+#     spread(Gender, value, fill = FALSE) %>%
+#     group_by(Party) %>%
+#     summarize_each(funs(mean), -USER_ID) %>%
+#     gather(Gender, Percent, -Party) %>%
+#     ggplot(aes(x = Gender, y = Percent, fill = Party)) +
+#     geom_bar(stat = "identity", position = "dodge") +
+#     theme(axis.text.x = element_text(angle = 45, hjust = 1))
+#
+# orig <- train.data %>%
+#     select(USER_ID, Party, Income) %>%
+#     filter(!is.na(Income)) %>%
+#     group_by(USER_ID, Party) %>%
+#     mutate(value = TRUE) %>%
+#     spread(Income, value, fill = FALSE) %>%
+#     group_by(Party) %>%
+#     summarize_each(funs(mean), -USER_ID) %>%
+#     gather(Income, Percent, -Party) %>%
+#     mutate(Set = "orig")
+#
+# imp <- train.mice.data %>%
+#     select(USER_ID, Party, Income) %>%
+#     filter(!is.na(Income)) %>%
+#     group_by(USER_ID, Party) %>%
+#     mutate(value = TRUE) %>%
+#     spread(Income, value, fill = FALSE) %>%
+#     group_by(Party) %>%
+#     summarize_each(funs(mean), -USER_ID) %>%
+#     gather(Income, Percent, -Party) %>%
+#     mutate(Set = "imp")
+#
+# bind_rows(orig, imp) %>%
+#     ggplot(aes(x = Income, y = Percent, fill = Party)) +
+#     geom_bar(stat = "identity", position = "dodge") +
+#     facet_grid(. ~ Set) +
+#     theme(axis.text.x = element_text(angle = 45, hjust = 1))
+#
+# train.data %>%
+#     select(USER_ID, Party, HouseholdStatus) %>%
+#     filter(!is.na(HouseholdStatus)) %>%
+#     group_by(USER_ID, Party) %>%
+#     mutate(value = TRUE) %>%
+#     spread(HouseholdStatus, value, fill = FALSE) %>%
+#     group_by(Party) %>%
+#     summarize_each(funs(mean), -USER_ID) %>%
+#     gather(HouseholdStatus, Percent, -Party) %>%
+#     ggplot(aes(x = HouseholdStatus, y = Percent, fill = Party)) +
+#     geom_bar(stat = "identity", position = "dodge") +
+#     theme(axis.text.x = element_text(angle = 45, hjust = 1))
+#
+# train.data %>%
+#     select(USER_ID, Party, EducationLevel) %>%
+#     filter(!is.na(EducationLevel)) %>%
+#     group_by(USER_ID, Party) %>%
+#     mutate(value = TRUE) %>%
+#     spread(EducationLevel, value, fill = FALSE) %>%
+#     group_by(Party) %>%
+#     summarize_each(funs(mean), -USER_ID) %>%
+#     gather(EducationLevel, Percent, -Party) %>%
+#     ggplot(aes(x = EducationLevel, y = Percent, fill = Party)) +
+#     geom_bar(stat = "identity", position = "dodge") +
+#     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # baseline model ---------------------------------------
 
@@ -149,39 +161,67 @@ baseline[1] / nrow(valid.data)
 # train.dv <- dummyVars(~ ., data = train.data[, -7])
 # train.dvp <- predict(train.dv, newdata = train.data[, -7]) %>% as_data_frame()
 
-library(purrr)
-train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
-train.set$Party <- train.data$Party
-valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
-test.set <- dmap_if(testing, is.factor, as.numeric)
 
-distance <- dist(train.set, method = "euclidean")
-cluster <- hclust(distance, method = "ward.D")
-plot(cluster)
-clustTrain <- cutree(cluster, k = 5)
-lapply(seq_along(1:5), function(i) sum(clustTrain == i))
+train.set.m <- dmap_if(train.mice.data[, -7], is.factor, as.numeric)
+train.set.m$Party <- train.mice.data$Party
+valid.set.m <- dmap_if(valid.mice.data[, -7], is.factor, as.numeric)
+test.set.m <- dmap_if(test.mice.data, is.factor, as.numeric)
 
-train.set$Cluster <- clustTrain
+# distance <- dist(train.set, method = "euclidean")
+# cluster <- hclust(distance, method = "ward.D")
+# plot(cluster)
+# clustTrain <- cutree(cluster, k = 5)
+# lapply(seq_along(1:5), function(i) sum(clustTrain == i))
+# train.set$Cluster <- clustTrain
 
-train.zero <- train.set
-valid.zero <- valid.set
+# library(biclust)
+# biclst <- biclust(as.matrix(train.set.m[, -108]), method = BCrepBimax())
+# summary(biclst)
+#
+# biclust.train <- predict(biclst, train.set.m[, -108])
 
-train.set[is.na(train.set)] <- 0
-valid.set[is.na(valid.set)] <- 0
+# train.zero <- train.set
+# valid.zero <- valid.set
+#
+# train.set[is.na(train.set)] <- 0
+# valid.set[is.na(valid.set)] <- 0
 
 nz <- nearZeroVar(train.set[, -108], freqCut = 85/15)
 train.nz <- train.set[, -nz]
 valid.nz <- valid.set[, -nz]
+
+nz.m <- nearZeroVar(train.set.m[, -108], freqCut = 85/15)
+train.nz.m <- train.set.m[, -nz.m]
+valid.nz.m <- valid.set.m[, -nz.m]
 
 hcor <- cor(train.nz[, -100], use = "na.or.complete")
 hc <- findCorrelation(hcor, cutoff = 0.7)
 train.hc <- train.nz[, -hc]
 valid.hc <- valid.nz[, -hc]
 
-prep <- preProcess(train.hc, method = c("knnImpute", "pca"), pcaComp = 5)
-train.prep <- predict(prep, train.hc)
-valid.prep <- predict(prep, valid.hc)
+hcor.m <- cor(train.nz.m[, -102], use = "na.or.complete")
+hc.m <- findCorrelation(hcor.m, cutoff = 0.7)
+train.hc.m <- train.nz.m[, -hc.m]
+valid.hc.m <- valid.nz.m[, -hc.m]
 
+# pc <- prcomp(~ ., train.hc.m[, -101], scale. = TRUE)
+# plot(pc, type = "l")
+# comp <- data.frame(pc$x[, 1:8])
+# will use first 8 PCA components based on plot
+
+prep <- preProcess(train.hc.m, method = "pca", pcaComp = 8)
+train.prep.m <- predict(prep, train.hc.m)
+valid.prep.m <- predict(prep, valid.hc.m)
+
+wss <- (nrow(train.prep.m) - 1) * sum(apply(train.prep.m[, -1], 2, var))
+for (i in 2:15) {
+    wss[i] <- sum(kmeans(train.prep.m[, -1], centers = i, nstart = 25, iter.max = 1000)$withinss)
+}
+plot(1:15, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")
+
+kmc <- kmeans(train.prep.m[, -1], 10, nstart = 25, iter.max = 1000)
+sort(table(kmc$cluster))
+clust <- names(sort(table(kmc$cluster)))
 # set.seed(1235)
 # pre.proc <- preProcess(train.set, outcome = train.data$Party, method = "bagImpute")
 #
@@ -222,9 +262,9 @@ trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
 train.try <- bind_cols(train.set, train.prep[, -1])
 valid.try <- bind_cols(valid.set, valid.prep)
 
-modelGLM <- train(Party ~ ., data = train.prep, method = "glm", trControl = trCtrl)
-predGLM <- predict(modelGLM, newdata = valid.prep, na.action = na.pass)
-cmGLM <- confusionMatrix(predGLM, valid.data$Party)
+modelGLM <- train(Party ~ ., data = train.prep.m, method = "glm", trControl = trCtrl)
+predGLM <- predict(modelGLM, newdata = valid.prep.m, na.action = na.pass)
+cmGLM <- confusionMatrix(predGLM, valid.mice.data$Party)
 cmGLM
 
 featurePlot(x = train.set[, 16], y = train.data$Party,
@@ -264,7 +304,7 @@ predC50b <- predict(modelC50b, newdata = valid.proc[, -1], na.action = na.pass)
 cmC50b <- confusionMatrix(predC50b, valid.data$Party)
 cmC50b
 
-trGrid <- expand.grid(.winnow = FALSE, .trials = c(1, 5, 10, 20, 30), .model = c("tree", "rules"))
+trGrid <- expand.grid(.winnow = c(TRUE, FALSE), .trials = c(1, 5, 10, 15, 20, 25), .model = c("tree", "rules"))
 
 # no imputing, box-cox
 modelC50 <- train(Party ~ ., data = train.set[, -1], method = "C5.0",
@@ -275,6 +315,17 @@ cmC50 <- confusionMatrix(predC50, valid.data$Party)
 cmC50
 
 saveRDS(modelC50, "submit_model_2.Rds")
+
+modelC50 <- train(Party ~ ., data = train.prep.m, method = "C5.0", trControl = trCtrl, tuneGrid = trGrid)
+predC50 <- predict(modelC50, newdata = valid.prep.m)
+cmC50 <- confusionMatrix(predC50, valid.mice.data$Party)
+cmC50
+
+modelGBM <- train(Party ~ ., data = train.prep.m, method = "gbm", trControl = trCtrl, tuneLength = 10)
+predGBM <- predict(modelGBM, newdata = valid.prep.m)
+cmGBM <- confusionMatrix(predGBM, valid.mice.data$Party)
+cmGBM
+
 
 # knn
 modelKNN <- train(Party ~ ., data = train.set[, -1], method = "knn",
