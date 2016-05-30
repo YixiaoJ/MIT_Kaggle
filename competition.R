@@ -150,10 +150,21 @@ baseline[1] / nrow(valid.data)
 # train.dvp <- predict(train.dv, newdata = train.data[, -7]) %>% as_data_frame()
 
 library(purrr)
-train.set <- dmap_if(train.mice.data[, -7], is.factor, as.numeric)
-train.set$Party <- train.mice.data$Party
-valid.set <- dmap_if(valid.mice.data[, -7], is.factor, as.numeric)
+train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
+train.set$Party <- train.data$Party
+valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
+
+distance <- dist(train.set, method = "euclidean")
+cluster <- hclust(distance, method = "ward.D")
+plot(cluster)
+clustTrain <- cutree(cluster, k = 5)
+lapply(seq_along(1:5), function(i) sum(clustTrain == i))
+
+train.set$Cluster <- clustTrain
+
+train.zero <- train.set
+valid.zero <- valid.set
 
 train.set[is.na(train.set)] <- 0
 valid.set[is.na(valid.set)] <- 0
