@@ -155,6 +155,17 @@ train.set$Party <- train.data$Party
 valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
 
+distance <- dist(train.set, method = "euclidean")
+cluster <- hclust(distance, method = "ward.D")
+plot(cluster)
+clustTrain <- cutree(cluster, k = 5)
+lapply(seq_along(1:5), function(i) sum(clustTrain == i))
+
+train.set$Cluster <- clustTrain
+
+train.zero <- train.set
+valid.zero <- valid.set
+
 train.set[is.na(train.set)] <- 0
 valid.set[is.na(valid.set)] <- 0
 
