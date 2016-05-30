@@ -38,6 +38,13 @@ valid.data <- training[-inTrain, ]
 # remove invalid YOB
 train.data$YOB[train.data$YOB > 2005 | train.data$YOB < 1910] <- NA
 
+train.na <- train.data %>%
+    mutate_each(funs(is.na), -USER_ID, -Party)
+
+names(train.na[, -1]) <- paste(names(train.na[, -1]), "NA", sep = "_")
+
+train.set <- inner_join(train.data, train.na, by = c(""))
+
 # make outcome vectors
 train.party <- train.data$Party
 valid.party <- valid.data$Party
