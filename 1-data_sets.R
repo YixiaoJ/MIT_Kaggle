@@ -39,7 +39,7 @@ valid.data <- training[-inTrain, ]
 # remove invalid YOB
 train.data$YOB[train.data$YOB > 2005 | train.data$YOB < 1910] <- NA
 valid.data$YOB[valid.data$YOB > 2005 | valid.data$YOB < 1910] <- NA
-testing$YOB[valid.data$YOB > 2005 | testing$YOB < 1910] <- NA
+testing$YOB[testing$YOB > 2005 | testing$YOB < 1910] <- NA
 
 # make outcome vectors
 train.party <- train.data$Party
