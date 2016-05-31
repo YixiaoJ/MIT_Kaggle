@@ -100,11 +100,11 @@ tmp <- valid.data %>%
 valid.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
 
 tmp <- testing %>%
-    mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
-    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB, -Party) %>%
-    mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
+    mutate_each(funs(as.character), -USER_ID, -YOB) %>%
+    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB) %>%
+    mutate_each(funs(as.factor), -USER_ID, -YOB)
 
-test.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
+test.dv2 <- predict(dv2, newdata = tmp) %>% as_data_frame()
 
 rm(tmp)
 
