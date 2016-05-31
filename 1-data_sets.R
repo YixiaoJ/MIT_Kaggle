@@ -74,6 +74,22 @@ tmp <- valid.data %>%
 
 valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
 
+# create an "Unknown" level for factor vars before converting to dummy vars
+tmp <- train.data %>%
+    mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
+    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB, -Party) %>%
+    mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
+
+dv2 <- dummyVars(~ ., data = tmp[, -7])
+train.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
+
+tmp <- valid.data %>%
+    mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
+    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB, -Party) %>%
+    mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
+
+valid.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
+
 rm(tmp)
 
 # use preprocess with resampling
