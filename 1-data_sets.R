@@ -92,6 +92,18 @@ valid.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
 
 rm(tmp)
 
+# high correlation -------------------------------------
+
+hcor <- cor(train.dv, use = "na.or.complete")
+hc <- findCorrelation(hcor)
+train.hc <- train.dv[, -hc]
+valid.hc <- valid.dv[, -hc]
+
+hcor2 <- cor(train.dv2, use = "na.or.complete")
+hc2 <- findCorrelation(hcor2)
+train.hc2 <- train.dv2[, -hc2]
+valid.hc2 <- valid.dv2[, -hc2]
+
 # use preprocess with resampling
 
 # knn <- preProcess(train.set, method = "knnImpute")
