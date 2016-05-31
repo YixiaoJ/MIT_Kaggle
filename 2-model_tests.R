@@ -17,3 +17,19 @@ trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
 # use parallel cores
 library(doParallel)
 registerDoParallel()
+
+
+run_pred <- function(model, data) {
+    predict(model, newdata = data[, -1], na.action = na.pass)
+}
+
+run_cm <- function(pred) {
+    confusionMatrix(pred, valid.party)
+}
+
+mods <- list(train.dv, train.hc)
+
+ctrl <- trainControl(number = 1, repeats = 1)
+
+tries <- map(mods, ~ train(x = .x[, -1], y = train.party, trainControl = ctrl,
+                           method = "glm", preProcess = "knnImpute"))
