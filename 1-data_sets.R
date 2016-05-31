@@ -60,6 +60,8 @@ train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
 valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
 test.set <- dmap_if(testing, is.factor, as.numeric)
 
+# dummy vars -------------------------------------------
+
 # use unordered levels
 tmp <- train.data %>%
     mutate(Income = factor(Income, ordered = FALSE),
@@ -103,6 +105,10 @@ hcor2 <- cor(train.dv2, use = "na.or.complete")
 hc2 <- findCorrelation(hcor2)
 train.hc2 <- train.dv2[, -hc2]
 valid.hc2 <- valid.dv2[, -hc2]
+
+lc <- findLinearCombos(train.hc2[, -2])
+train.lc <- train.hc2[, -lc$remove]
+valid.lc <- valid.hc2[, -lc$remove]
 
 # use preprocess with resampling
 
