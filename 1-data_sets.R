@@ -39,21 +39,22 @@ valid.data <- training[-inTrain, ]
 # remove invalid YOB
 train.data$YOB[train.data$YOB > 2005 | train.data$YOB < 1910] <- NA
 valid.data$YOB[valid.data$YOB > 2005 | valid.data$YOB < 1910] <- NA
+testing$YOB[valid.data$YOB > 2005 | testing$YOB < 1910] <- NA
 
 # make outcome vectors
 train.party <- train.data$Party
 valid.party <- valid.data$Party
 
 # make vars indicating presence of NA
-train.na <- train.data[, -7] %>%
-    mutate_each(funs(is.na), -USER_ID)
-
-names(train.na)[-1] <- paste(names(train.na)[-1], "NA", sep = "_")
-
-valid.na <- valid.data[, -7] %>%
-    mutate_each(funs(is.na), -USER_ID)
-
-names(valid.na)[-1] <- paste(names(valid.na)[-1], "NA", sep = "_")
+# train.na <- train.data[, -7] %>%
+#     mutate_each(funs(is.na), -USER_ID)
+#
+# names(train.na)[-1] <- paste(names(train.na)[-1], "NA", sep = "_")
+#
+# valid.na <- valid.data[, -7] %>%
+#     mutate_each(funs(is.na), -USER_ID)
+#
+# names(valid.na)[-1] <- paste(names(valid.na)[-1], "NA", sep = "_")
 
 # convert factors to numeric
 train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
@@ -76,6 +77,12 @@ tmp <- valid.data %>%
 
 valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
 
+tmp <- testing %>%
+    mutate(Income = factor(Income, ordered = FALSE),
+           EducationLevel = factor(EducationLevel, ordered = FALSE))
+
+test.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
+
 # create an "Unknown" level for factor vars before converting to dummy vars
 tmp <- train.data %>%
     mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
@@ -92,6 +99,13 @@ tmp <- valid.data %>%
 
 valid.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
 
+tmp <- testing %>%
+    mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
+    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB, -Party) %>%
+    mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
+
+test.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
+
 rm(tmp)
 
 # high correlation -------------------------------------
@@ -100,15 +114,18 @@ hcor <- cor(train.dv, use = "na.or.complete")
 hc <- findCorrelation(hcor)
 train.hc <- train.dv[, -hc]
 valid.hc <- valid.dv[, -hc]
+test.hc <- test.dv[, -hc]
 
 hcor2 <- cor(train.dv2, use = "na.or.complete")
 hc2 <- findCorrelation(hcor2)
 train.hc2 <- train.dv2[, -hc2]
 valid.hc2 <- valid.dv2[, -hc2]
+test.hc2 <- test.dv2[, -hc2]
 
 lc <- findLinearCombos(train.hc2[, -2])
 train.lc <- train.hc2[, -lc$remove]
 valid.lc <- valid.hc2[, -lc$remove]
+test.lc <- test.hc2[, -lc$remove]
 
 # use preprocess with resampling
 
