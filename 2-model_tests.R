@@ -21,42 +21,48 @@ trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
                        savePredictions = "final")
 
 
-run_pred <- function(model, data) {
-    predict(model, newdata = data[, -1], na.action = na.pass)
-}
-
-run_cm <- function(pred) {
-    confusionMatrix(pred, valid.party)
-}
-
-mods <- list(train.dv, train.hc)
-mthd <- list("lda", "gbm")
-prep <- c("knnImpute", "nzv")
-
-mod.cross <- list(x = mods, method = mthd, preProcess = prep)
-cross.df <- cross_d(mod.cross)
-
-test <- invoke("train", mods, y = train.party, method = "gbm", trControl = ctrl, preProcess = "nzv")
-
-ctrl <- trainControl(method = "none", number = 1, repeats = 1)
-
-tries <- map(mods, ~ train(x = .x[, -1], y = train.party, trControl = ctrl, method = "lda", preProcess = "knnImpute"))
-preds <- map(tries, predict)
-glm1 <- train(x = train.set[, -1], y = train.party, method = "glm", trControl = trCtrl, metric = "ROC",
-              preProcess = "knnImpute")
-
-try <- train(x = train.dv[, -1], y = train.party, trainControl = ctrl, method = "lda", preProcess = "knnImpute")
+# run_pred <- function(model, data) {
+#     predict(model, newdata = data[, -1], na.action = na.pass)
+# }
+#
+# run_cm <- function(pred) {
+#     confusionMatrix(pred, valid.party)
+# }
+#
+# mods <- list(train.dv, train.hc)
+# mthd <- list("lda", "gbm")
+# prep <- c("knnImpute", "nzv")
+#
+# mod.cross <- list(x = mods, method = mthd, preProcess = prep)
+# cross.df <- cross_d(mod.cross)
+#
+# test <- invoke("train", mods, y = train.party, method = "gbm", trControl = ctrl, preProcess = "nzv")
+#
+# ctrl <- trainControl(method = "none", number = 1, repeats = 1)
+#
+# tries <- map(mods, ~ train(x = .x[, -1], y = train.party, trControl = ctrl, method = "lda", preProcess = "knnImpute"))
+# preds <- map(tries, predict)
+# glm1 <- train(x = train.set[, -1], y = train.party, method = "glm", trControl = trCtrl, metric = "ROC",
+#               preProcess = "knnImpute")
+#
+# try <- train(x = train.dv[, -1], y = train.party, trainControl = ctrl, method = "lda", preProcess = "knnImpute")
 
 library(caretEnsemble)
 
 model <- "glm"
-m1 <- caretModelSpec(model, preProcess = "knnImpute")
-m2 <- caretModelSpec(model, preProcess = c("nzv", "knnImpute"))
-m3 <- caretModelSpec(model, preProcess = c("nzv", "knnImpute", "pca"))
+prep <- list("knnImpute", c("nzv", "knnImpute"), c("nzv", "knnImpute", "pca"))
+specs <- vector("list", length(prep))
 
-cl <- caretList(x = train.set[, -1], y = train.party,
-                tuneList = list(m1 = m1, m2 = m2, m3 = m3),
-                metric = "ROC", trControl = trCtrl)
+for (i in seq_along(specs)) {
+    specs[[i]] <- caretModelSpec(model, preProcess = prep[[i]])
+}
+
+names(specs) <- paste0("m", seq_along(specs))
+
+data <- train.set[, -1]
+cl <- caretList(x = data, y = train.party, metric = "ROC", trControl = trCtrl,
+                tuneList = specs)
 
 modelCor(resamples(cl))
-preds <- predict(cl, newdata = valid.set[, -1]) %>% as_data_frame()
+preds <- predict(cl, newdata = valid.set[, -1])
+predResp <- map(cl, predict, newdata = valid.set[, -1]) %>% as_data_frame()
