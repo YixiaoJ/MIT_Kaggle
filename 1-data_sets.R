@@ -164,7 +164,7 @@ hc2 <- findCorrelation(hcor2)
 # valid.hc4 <- valid.dv4[, -hc4]
 # test.hc4 <- test.dv4[, -hc4]
 
-lc <- findLinearCombos(train.dv2i[, -2])
+lc <- findLinearCombos(train.dv2i)
 # train.lc <- train.hc2[, -lc$remove]
 # valid.lc <- valid.hc2[, -lc$remove]
 # test.lc <- test.hc2[, -lc$remove]
