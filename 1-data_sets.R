@@ -154,9 +154,9 @@ test.dv2i <- complete(test.mice)
 
 hcor2 <- cor(train.dv2i, use = "na.or.complete")
 hc2 <- findCorrelation(hcor2)
-train.hc2 <- train.dv2i[, -hc2]
-valid.hc2 <- valid.dv2i[, -hc2]
-test.hc2 <- test.dv2i[, -hc2]
+# train.hc2 <- train.dv2i[, -hc2]
+# valid.hc2 <- valid.dv2i[, -hc2]
+# test.hc2 <- test.dv2i[, -hc2]
 
 # hcor4 <- cor(train.dv4, use = "na.or.complete")
 # hc4 <- findCorrelation(hcor4)
@@ -164,10 +164,10 @@ test.hc2 <- test.dv2i[, -hc2]
 # valid.hc4 <- valid.dv4[, -hc4]
 # test.hc4 <- test.dv4[, -hc4]
 
-lc <- findLinearCombos(train.hc2[, -2])
-train.lc <- train.hc2[, -lc$remove]
-valid.lc <- valid.hc2[, -lc$remove]
-test.lc <- test.hc2[, -lc$remove]
+lc <- findLinearCombos(train.dv2i[, -2])
+# train.lc <- train.hc2[, -lc$remove]
+# valid.lc <- valid.hc2[, -lc$remove]
+# test.lc <- test.hc2[, -lc$remove]
 
 # save data --------------------------------------------
 
