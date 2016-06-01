@@ -58,4 +58,5 @@ cl <- caretList(x = train.set[, -1], y = train.party,
                 tuneList = list(m1 = m1, m2 = m2, m3 = m3),
                 metric = "ROC", trControl = trCtrl)
 
+modelCor(resamples(cl))
 preds <- predict(cl, newdata = valid.set[, -1]) %>% as_data_frame()
