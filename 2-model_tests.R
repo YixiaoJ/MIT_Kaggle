@@ -2,6 +2,10 @@
 
 source("1-data_sets.R")
 
+# use parallel cores
+library(doParallel)
+registerDoParallel()
+
 # set seeds
 set.seed(123)
 seeds <- vector(mode = "list", length = 51)
@@ -15,10 +19,6 @@ trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
                        summaryFunction = twoClassSummary,
                        index = createMultiFolds(train.party, 10, 5),
                        savePredictions = "final")
-
-# use parallel cores
-library(doParallel)
-registerDoParallel()
 
 
 run_pred <- function(model, data) {
