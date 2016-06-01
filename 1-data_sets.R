@@ -71,17 +71,22 @@ tmp <- train.data %>%
 dv <- dummyVars(~ ., data = tmp[, -7])
 train.dv <- predict(dv, newdata = tmp[, -7]) %>% as_data_frame()
 
+dv3 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
+train.dv3 <- predict(dv3, newdata = tmp[, -7]) %>% as_data_frame()
+
 tmp <- valid.data %>%
     mutate(Income = factor(Income, ordered = FALSE),
            EducationLevel = factor(EducationLevel, ordered = FALSE))
 
 valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
+valid.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
 
 tmp <- testing %>%
     mutate(Income = factor(Income, ordered = FALSE),
            EducationLevel = factor(EducationLevel, ordered = FALSE))
 
 test.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
+test.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
 
 # create an "Unknown" level for factor vars before converting to dummy vars
 tmp <- train.data %>%
@@ -92,12 +97,16 @@ tmp <- train.data %>%
 dv2 <- dummyVars(~ ., data = tmp[, -7])
 train.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
 
+dv4 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
+train.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
+
 tmp <- valid.data %>%
     mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
     mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB, -Party) %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
 
 valid.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
+valid.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
 
 tmp <- testing %>%
     mutate_each(funs(as.character), -USER_ID, -YOB) %>%
@@ -105,6 +114,7 @@ tmp <- testing %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB)
 
 test.dv2 <- predict(dv2, newdata = tmp) %>% as_data_frame()
+test.dv4 <- predict(dv4, newdata = tmp) %>% as_data_frame()
 
 rm(tmp)
 
@@ -121,6 +131,12 @@ hc2 <- findCorrelation(hcor2)
 train.hc2 <- train.dv2[, -hc2]
 valid.hc2 <- valid.dv2[, -hc2]
 test.hc2 <- test.dv2[, -hc2]
+
+hcor4 <- cor(train.dv4, use = "na.or.complete")
+hc4 <- findCorrelation(hcor4)
+train.hc4 <- train.dv4[, -hc4]
+valid.hc4 <- valid.dv4[, -hc4]
+test.hc4 <- test.dv4[, -hc4]
 
 lc <- findLinearCombos(train.hc2[, -2])
 train.lc <- train.hc2[, -lc$remove]
