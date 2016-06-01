@@ -21,7 +21,7 @@ trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
                        savePredictions = "final")
 
 # function to run multiple sets of models
-run_models <- function(model, data, valid, prep = NULL, ctrl = trCtrl) {
+run_models <- function(model, data, valid, prep = NULL, ctrl = trCtrl, ...) {
     require(caretEnsemble)
     specs <- vector("list", length(prep))
 
@@ -32,7 +32,8 @@ run_models <- function(model, data, valid, prep = NULL, ctrl = trCtrl) {
     names(specs) <- paste0(model, seq_along(specs))
 
     cl <- caretList(x = data, y = train.party, metric = "ROC",
-                    trControl = ctrl, tuneList = specs)
+                    trControl = ctrl, tuneList = specs,
+                    continue_on_fail = TRUE, ...)
 
     cm <- map(cl, predict, newdata = valid) %>%
         map(confusionMatrix, valid.party)
