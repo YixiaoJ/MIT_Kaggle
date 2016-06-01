@@ -64,29 +64,29 @@ test.set <- dmap_if(testing, is.factor, as.numeric)
 # dummy vars -------------------------------------------
 
 # use unordered levels
-tmp <- train.data %>%
-    mutate(Income = factor(Income, ordered = FALSE),
-           EducationLevel = factor(EducationLevel, ordered = FALSE))
-
-dv <- dummyVars(~ ., data = tmp[, -7])
-train.dv <- predict(dv, newdata = tmp[, -7]) %>% as_data_frame()
-
-dv3 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
-train.dv3 <- predict(dv3, newdata = tmp[, -7]) %>% as_data_frame()
-
-tmp <- valid.data %>%
-    mutate(Income = factor(Income, ordered = FALSE),
-           EducationLevel = factor(EducationLevel, ordered = FALSE))
-
-valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
-valid.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
-
-tmp <- testing %>%
-    mutate(Income = factor(Income, ordered = FALSE),
-           EducationLevel = factor(EducationLevel, ordered = FALSE))
-
-test.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
-test.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
+# tmp <- train.data %>%
+#     mutate(Income = factor(Income, ordered = FALSE),
+#            EducationLevel = factor(EducationLevel, ordered = FALSE))
+#
+# dv <- dummyVars(~ ., data = tmp[, -7])
+# train.dv <- predict(dv, newdata = tmp[, -7]) %>% as_data_frame()
+#
+# dv3 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
+# train.dv3 <- predict(dv3, newdata = tmp[, -7]) %>% as_data_frame()
+#
+# tmp <- valid.data %>%
+#     mutate(Income = factor(Income, ordered = FALSE),
+#            EducationLevel = factor(EducationLevel, ordered = FALSE))
+#
+# valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
+# valid.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
+#
+# tmp <- testing %>%
+#     mutate(Income = factor(Income, ordered = FALSE),
+#            EducationLevel = factor(EducationLevel, ordered = FALSE))
+#
+# test.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
+# test.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
 
 # create an "Unknown" level for factor vars before converting to dummy vars
 tmp <- train.data %>%
@@ -97,8 +97,8 @@ tmp <- train.data %>%
 dv2 <- dummyVars(~ ., data = tmp[, -7])
 train.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
 
-dv4 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
-train.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
+# dv4 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
+# train.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
 
 tmp <- valid.data %>%
     mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
@@ -106,7 +106,7 @@ tmp <- valid.data %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
 
 valid.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
-valid.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
+# valid.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
 
 tmp <- testing %>%
     mutate_each(funs(as.character), -USER_ID, -YOB) %>%
@@ -114,48 +114,61 @@ tmp <- testing %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB)
 
 test.dv2 <- predict(dv2, newdata = tmp) %>% as_data_frame()
-test.dv4 <- predict(dv4, newdata = tmp) %>% as_data_frame()
+# test.dv4 <- predict(dv4, newdata = tmp) %>% as_data_frame()
 
 rm(tmp)
 
+# impute missing data for YOB variable
+library(mice)
+
+get_impute <- function(file.save, set, method = NULL) {
+    if (file.exists(file.save)) {
+        imp <- readRDS(file.save)
+    } else {
+        if (!is.null(method)) {
+            imp <- mice(set, method = method)
+        } else {
+            imp <- mice(set)
+        }
+        saveRDS(imp, file.save)
+    }
+    imp
+}
+
+train.mice <- get_impute("train_mice.Rds", train.dv2)
+train.dv2i <- complete(train.mice)
+
+valid.mice <- get_impute("valid_mice.Rds", valid.dv2, train.mice$method)
+valid.dv2i <- complete(valid.mice)
+
+test.mice <- get_impute("test_mice.Rds", test.dv2, train.mice$method)
+test.dv2i <- complete(test.mice)
+
 # high correlation -------------------------------------
 
-hcor <- cor(train.dv, use = "na.or.complete")
-hc <- findCorrelation(hcor)
-train.hc <- train.dv[, -hc]
-valid.hc <- valid.dv[, -hc]
-test.hc <- test.dv[, -hc]
+# hcor <- cor(train.dv, use = "na.or.complete")
+# hc <- findCorrelation(hcor)
+# train.hc <- train.dv[, -hc]
+# valid.hc <- valid.dv[, -hc]
+# test.hc <- test.dv[, -hc]
 
-hcor2 <- cor(train.dv2, use = "na.or.complete")
+hcor2 <- cor(train.dv2i, use = "na.or.complete")
 hc2 <- findCorrelation(hcor2)
-train.hc2 <- train.dv2[, -hc2]
-valid.hc2 <- valid.dv2[, -hc2]
-test.hc2 <- test.dv2[, -hc2]
+train.hc2 <- train.dv2i[, -hc2]
+valid.hc2 <- valid.dv2i[, -hc2]
+test.hc2 <- test.dv2i[, -hc2]
 
-hcor4 <- cor(train.dv4, use = "na.or.complete")
-hc4 <- findCorrelation(hcor4)
-train.hc4 <- train.dv4[, -hc4]
-valid.hc4 <- valid.dv4[, -hc4]
-test.hc4 <- test.dv4[, -hc4]
+# hcor4 <- cor(train.dv4, use = "na.or.complete")
+# hc4 <- findCorrelation(hcor4)
+# train.hc4 <- train.dv4[, -hc4]
+# valid.hc4 <- valid.dv4[, -hc4]
+# test.hc4 <- test.dv4[, -hc4]
 
 lc <- findLinearCombos(train.hc2[, -2])
 train.lc <- train.hc2[, -lc$remove]
 valid.lc <- valid.hc2[, -lc$remove]
 test.lc <- test.hc2[, -lc$remove]
 
-# use preprocess with resampling
+# save data --------------------------------------------
 
-# knn <- preProcess(train.set, method = "knnImpute")
-# train.set.knn <- predict(knn, newdata = train.set)
-#
-# dv.knn <- preProcess(train.dv, method = "knnImpute")
-# train.dv.knn <- predict(dv.knn, newdata = train.dv)
-#
-# names(train.dv) <- make.names(names(train.dv))
-# names(valid.dv) <- make.names(names(valid.dv))
-#
-# bag <- preProcess(train.set, method = "bagImpute")
-# train.set.bag <- predict(bag, newdata = train.set)
-#
-# dv.bag <- preProcess(train.dv, method = "bagImpute")
-# train.dv.bag <- predict(dv.bag, newdata = train.dv)
+
