@@ -9,7 +9,7 @@ registerDoParallel()
 # set seeds
 set.seed(123)
 seeds <- vector(mode = "list", length = 51)
-for(i in 1:50) seeds[[i]] <- sample.int(1000, 22)
+for(i in 1:50) seeds[[i]] <- sample.int(1000, 40)
 
 seeds[[51]] <- sample.int(1000, 1)
 
