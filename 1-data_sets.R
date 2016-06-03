@@ -105,6 +105,10 @@ train.set.n <- dmap_if(train.set, is.factor, as.numeric)
 dv <- dummyVars(~ ., data = train.set)
 train.dv <- predict(dv, newdata = train.set) %>% as_data_frame()
 
+train.set <- train.set %>%
+    mutate(Income = ordered(Income, levels = c("NA", income)),
+           EducationLevel = ordered(EducationLevel, levels = c("NA", education)))
+
 # repeat for validation set
 valid.set <- select(valid.data, -Party) %>%
     mutate_each(funs(str_replace_na), -USER_ID, -YOB) %>%
@@ -127,6 +131,10 @@ valid.set.n <- dmap_if(valid.set, is.factor, as.numeric)
 
 valid.dv <- predict(dv, newdata = valid.set) %>% as_data_frame()
 
+valid.set <- valid.set %>%
+    mutate(Income = ordered(Income, levels = c("NA", income)),
+           EducationLevel = ordered(EducationLevel, levels = c("NA", education)))
+
 # repeat for test set
 test.set <- testing %>%
     mutate_each(funs(str_replace_na), -USER_ID, -YOB) %>%
@@ -146,6 +154,10 @@ test.data.n <- dmap_if(test.data, is.factor, as.numeric)
 test.set.n <- dmap_if(test.set, is.factor, as.numeric)
 
 test.dv <- predict(dv, newdata = test.set) %>% as_data_frame()
+
+test.set <- test.set %>%
+    mutate(Income = ordered(Income, levels = c("NA", income)),
+           EducationLevel = ordered(EducationLevel, levels = c("NA", education)))
 
 # high correlation -------------------------------------
 
