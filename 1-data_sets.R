@@ -102,7 +102,7 @@ train.data.n <- dmap_if(train.data, is.factor, as.numeric)
 train.set.n <- dmap_if(train.set, is.factor, as.numeric)
 
 # make dummy variables for factor data
-dv <- dummyVars(~ ., data = train.set[, -c(1, 7)])
+dv <- dummyVars(~ ., data = train.set)
 train.dv <- predict(dv, newdata = train.set) %>% as_data_frame()
 
 # repeat for validation set
