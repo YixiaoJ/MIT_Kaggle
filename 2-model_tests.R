@@ -71,3 +71,34 @@ run_models <- function(data, valid, vars, models, tune = list(NULL), prep = list
 # preds <- predict(cl, newdata = valid.set[, -1])
 # predResp <- map(cl, predict, newdata = valid.set[, -1]) %>% as_data_frame()
 
+# library(mda)
+# library(earth)
+# train2 <- train.dv[, -c(1, hc.dv)]
+# train2$Party <- train.party
+#
+# names(train2) <- make.names(names(train2))
+# valid <- valid.dv[, -c(1, hc.dv)]
+# names(valid) <- make.names(names(valid))
+#
+# # mdl <- mda(Party ~ ., data = train2, subclasses = 3)
+# mdl <- fda(Party ~ ., data = train2, method = earth)
+# summary(mdl$fit)
+# pred <- predict(mdl, newdata = valid)
+# confusionMatrix(pred, valid.party)
+#
+# mdl <- train(Party ~ ., data = train2, method = "fda")
+# mdl3 <- train(x = train.dv[, -c(1, hc.dv)], y = train.party, method = "fda")
+# pred3 <- predict(mdl3, newdata = valid.dv[, -c(1, hc.dv)])
+# confusionMatrix(pred3, valid.party)
+#
+# vi <- varImp(mdl)
+# vars <- vi$importance %>% mutate(vars = rownames(vi$importance)) %>% filter(Overall > 0)
+#
+# train3 <- train2[, vars$vars]
+# train3$Party <- train.party
+# valid2 <- valid[, vars$vars]
+#
+# mdl2 <- train(Party ~ ., data = train3, method = "fda")
+#
+# pred2 <- predict(mdl2, newdata = valid2)
+# confusionMatrix(pred2, valid.party)
