@@ -7,6 +7,22 @@ library(tibble)
 library(stringr)
 library(caret)
 library(purrr)
+library(mice)
+
+# use saved imputed data set if it exists, else do imputing (slow)
+get_impute <- function(file.save, set, method = NULL) {
+    if (file.exists(file.save)) {
+        imp <- readRDS(file.save)
+    } else {
+        if (!is.null(method)) {
+            imp <- mice(set, method = method)
+        } else {
+            imp <- mice(set)
+        }
+        saveRDS(imp, file.save)
+    }
+    imp
+}
 
 # set ordered factor levels
 income <- c("under 25", "25-50", "50-74", "75-100", "100-150", "over 150")
@@ -45,130 +61,56 @@ testing$YOB[testing$YOB > 2005 | testing$YOB < 1910] <- NA
 train.party <- train.data$Party
 valid.party <- valid.data$Party
 
-# make vars indicating presence of NA
-# train.na <- train.data[, -7] %>%
-#     mutate_each(funs(is.na), -USER_ID)
-#
-# names(train.na)[-1] <- paste(names(train.na)[-1], "NA", sep = "_")
-#
-# valid.na <- valid.data[, -7] %>%
-#     mutate_each(funs(is.na), -USER_ID)
-#
-# names(valid.na)[-1] <- paste(names(valid.na)[-1], "NA", sep = "_")
-
 # convert factors to numeric
-train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
-valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
-test.set <- dmap_if(testing, is.factor, as.numeric)
+# train.set <- dmap_if(train.data[, -7], is.factor, as.numeric)
+# valid.set <- dmap_if(valid.data[, -7], is.factor, as.numeric)
+# test.set <- dmap_if(testing, is.factor, as.numeric)
 
-# dummy vars -------------------------------------------
-
-# use unordered levels
-# tmp <- train.data %>%
-#     mutate(Income = factor(Income, ordered = FALSE),
-#            EducationLevel = factor(EducationLevel, ordered = FALSE))
-#
-# dv <- dummyVars(~ ., data = tmp[, -7])
-# train.dv <- predict(dv, newdata = tmp[, -7]) %>% as_data_frame()
-#
-# dv3 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
-# train.dv3 <- predict(dv3, newdata = tmp[, -7]) %>% as_data_frame()
-#
-# tmp <- valid.data %>%
-#     mutate(Income = factor(Income, ordered = FALSE),
-#            EducationLevel = factor(EducationLevel, ordered = FALSE))
-#
-# valid.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
-# valid.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
-#
-# tmp <- testing %>%
-#     mutate(Income = factor(Income, ordered = FALSE),
-#            EducationLevel = factor(EducationLevel, ordered = FALSE))
-#
-# test.dv <- predict(dv, newdata = tmp) %>% as_data_frame()
-# test.dv3 <- predict(dv3, newdata = tmp) %>% as_data_frame()
+# feature processing -------------------------------------------
 
 # create an "Unknown" level for factor vars before converting to dummy vars
-tmp <- train.data %>%
-    mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
-    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB, -Party) %>%
-    mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
-
-dv2 <- dummyVars(~ ., data = tmp[, -7])
-train.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
-
-# dv4 <- dummyVars(~ ., data = tmp[, -7], fullRank = TRUE)
-# train.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
-
-tmp <- valid.data %>%
-    mutate_each(funs(as.character), -USER_ID, -YOB, -Party) %>%
-    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB, -Party) %>%
-    mutate_each(funs(as.factor), -USER_ID, -YOB, -Party)
-
-valid.dv2 <- predict(dv2, newdata = tmp[, -7]) %>% as_data_frame()
-# valid.dv4 <- predict(dv4, newdata = tmp[, -7]) %>% as_data_frame()
-
-tmp <- testing %>%
+train.set <- train.data %>%
+    select(-Party) %>%
     mutate_each(funs(as.character), -USER_ID, -YOB) %>%
     mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB) %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB)
 
-test.dv2 <- predict(dv2, newdata = tmp) %>% as_data_frame()
-# test.dv4 <- predict(dv4, newdata = tmp) %>% as_data_frame()
+# impute missing data (should only be YOB variable)
+train.mice <- get_impute("train_mice.Rds", train.set)
+train.set <- complete(train.mice)
 
-rm(tmp)
+# make dummy variables for factor data
+dv <- dummyVars(~ ., data = train.set)
+train.dv <- predict(dv, newdata = train.set) %>% as_data_frame()
 
-# impute missing data for YOB variable
-library(mice)
+# repeat for validation set
+valid.set <- valid.data %>%
+    select(-Party) %>%
+    mutate_each(funs(as.character), -USER_ID, -YOB) %>%
+    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB) %>%
+    mutate_each(funs(as.factor), -USER_ID, -YOB)
 
-get_impute <- function(file.save, set, method = NULL) {
-    if (file.exists(file.save)) {
-        imp <- readRDS(file.save)
-    } else {
-        if (!is.null(method)) {
-            imp <- mice(set, method = method)
-        } else {
-            imp <- mice(set)
-        }
-        saveRDS(imp, file.save)
-    }
-    imp
-}
+valid.mice <- get_impute("valid_mice.Rds", valid.set, train.mice$method)
+valid.set <- complete(valid.mice)
 
-train.mice <- get_impute("train_mice.Rds", train.dv2)
-train.dv2i <- complete(train.mice)
+valid.dv <- predict(dv, newdata = valid.set) %>% as_data_frame()
 
-valid.mice <- get_impute("valid_mice.Rds", valid.dv2, train.mice$method)
-valid.dv2i <- complete(valid.mice)
+# repeat for test set
+test.set <- testing %>%
+    mutate_each(funs(as.character), -USER_ID, -YOB) %>%
+    mutate_each(funs(ifelse(is.na(.), "Unknown", .)), -USER_ID, -YOB) %>%
+    mutate_each(funs(as.factor), -USER_ID, -YOB)
 
-test.mice <- get_impute("test_mice.Rds", test.dv2, train.mice$method)
-test.dv2i <- complete(test.mice)
+test.mice <- get_impute("test_mice.Rds", test.set, train.mice$method)
+test.set <- complete(test.mice)
+
+test.dv <- predict(dv, newdata = test.set) %>% as_data_frame()
 
 # high correlation -------------------------------------
 
-# hcor <- cor(train.dv, use = "na.or.complete")
-# hc <- findCorrelation(hcor)
-# train.hc <- train.dv[, -hc]
-# valid.hc <- valid.dv[, -hc]
-# test.hc <- test.dv[, -hc]
+hcor.set <- dmap_if(train.set, is.factor, as.numeric) %>%
+    cor(use = "na.or.complete")
+hc.set <- findCorrelation(hcor.set)
 
-hcor2 <- cor(train.dv2i, use = "na.or.complete")
-hc2 <- findCorrelation(hcor2)
-# train.hc2 <- train.dv2i[, -hc2]
-# valid.hc2 <- valid.dv2i[, -hc2]
-# test.hc2 <- test.dv2i[, -hc2]
-
-# hcor4 <- cor(train.dv4, use = "na.or.complete")
-# hc4 <- findCorrelation(hcor4)
-# train.hc4 <- train.dv4[, -hc4]
-# valid.hc4 <- valid.dv4[, -hc4]
-# test.hc4 <- test.dv4[, -hc4]
-
-lc <- findLinearCombos(train.dv2i)
-# train.lc <- train.hc2[, -lc$remove]
-# valid.lc <- valid.hc2[, -lc$remove]
-# test.lc <- test.hc2[, -lc$remove]
-
-# save data --------------------------------------------
-
-
+hcor.dv <- cor(train.dv, use = "na.or.complete")
+hc.dv <- findCorrelation(hcor.dv)
