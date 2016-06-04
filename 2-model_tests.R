@@ -4,7 +4,8 @@ source("1-data_sets.R")
 
 # use parallel cores
 library(doParallel)
-registerDoParallel()
+cl <- makePSOCKcluster(detectCores() - 2)
+registerDoParallel(cl)
 
 # set seeds
 set.seed(123)
@@ -14,11 +15,17 @@ for(i in 1:50) seeds[[i]] <- sample.int(1000, 40)
 seeds[[51]] <- sample.int(1000, 1)
 
 # set train control
-trCtrl <- trainControl(method = "repeatedcv", repeats = 5, seeds = seeds,
-                       classProbs = TRUE, returnResamp = "final",
-                       summaryFunction = twoClassSummary,
-                       index = createMultiFolds(train.party, 10, 5),
-                       savePredictions = "final")
+trCtrl <- trainControl(
+    method = "repeatedcv",
+    repeats = 5,
+    seeds = seeds,
+    classProbs = TRUE,
+    returnResamp = "final",
+    summaryFunction = twoClassSummary,
+    index = createMultiFolds(train.party, 10, 5),
+    savePredictions = "final",
+    verboseIter = TRUE
+)
 
 # function to run multiple sets of models
 #' @param data A data frame with training data

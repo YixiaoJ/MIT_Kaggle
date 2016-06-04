@@ -166,3 +166,10 @@ hc.set <- findCorrelation(hcor.set)
 
 hcor.dv <- cor(train.dv, use = "na.or.complete")
 hc.dv <- findCorrelation(hcor.dv)
+
+# party ------------------------------------------------
+
+# add party back to training data sets for formula use
+train.dv$Party <- train.party
+train.set$Party <- train.party
+train.set.n$Party <- train.party
