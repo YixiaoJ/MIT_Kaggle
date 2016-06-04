@@ -200,3 +200,6 @@ mdl <- train(
     trControl = trCtrl,
     metric = "ROC"
 )
+
+pred <- predict(mdl, valid.dv[, -c(1, hc.dv)])
+confusionMatrix(pred, valid.party)
