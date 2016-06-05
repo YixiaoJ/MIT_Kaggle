@@ -1,0 +1,39 @@
+---
+title: "Extreme Gradient Boosting"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+```{r}
+xgbGrid <- expand.grid(
+    nrounds = 1000, 
+    eta = c(0.01, 0.001, 0.0001), 
+    max_depth = c(2, 4, 6, 8, 10), 
+    gamma = 1, 
+    colsample_bytree = 1, 
+    min_child_weight = 1
+)
+```
+
+```{r}
+if (!file.exists("models/xgb_dv.Rds")) {
+    set.seed(1056)
+    xgb.dv <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "xgbTree",
+        trControl = ctrl,
+        metric = "ROC",
+        tuneGrid = xgbGrid
+    )
+    
+    saveRDS(xgb.dv, "models/xgb_dv.Rds")
+} else {
+    library(xgboost)
+    xgb.dv <- readRDS("models/xgb_dv.Rds")
+}
+```
+
