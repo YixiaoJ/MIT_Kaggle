@@ -1,0 +1,120 @@
+---
+title: "C5.0 Models"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+```{r}
+c50Grid <- expand.grid(
+    .winnow = c(TRUE, FALSE),
+    .trials = c(1:9, 1:10 * 10),
+    .model = c("tree", "rules")
+)
+
+set.seed(1056)
+c50.data <- train(
+    Party ~ .,
+    data = train.data[, -1],
+    method = "C5.0",
+    trControl = trCtrl,
+    na.action = na.pass,
+    metric = "ROC",
+    tuneGrid = c50Grid
+)
+```
+
+```{r}
+set.seed(1056)
+c50.set <- train(
+    Party ~ .,
+    data = train.set[, -1],
+    method = "C5.0",
+    trControl = trCtrl,
+    na.action = na.pass,
+    metric = "ROC",
+    tuneGrid = c50Grid
+)
+```
+
+```{r}
+set.seed(1056)
+c50.dv <- train(
+    Party ~ .,
+    data = train.dv[, -1],
+    method = "C5.0",
+    trControl = trCtrl,
+    na.action = na.pass,
+    metric = "ROC",
+    tuneGrid = c50Grid
+)
+```
+
+```{r}
+pred1 <- predict(c50.data, valid.data[, -7], na.action = na.pass)
+pred2 <- predict(c50.set, valid.set)
+pred3 <- predict(c50.dv, valid.dv)
+```
+
+```{r}
+confusionMatrix(pred1, valid.party)
+```
+
+```{r}
+confusionMatrix(pred2, valid.party)
+```
+
+```{r}
+confusionMatrix(pred3, valid.party)
+```
+
+```{r}
+vi1 <- varImp(c50.data)
+plot(vi1, top = 20)
+```
+
+```{r}
+vi2 <- varImp(c50.set)
+plot(vi2, top = 20)
+```
+
+```{r}
+vi3 <-varImp(c50.dv)
+plot(vi3, top = 20)
+```
+
+```{r}
+c50.vi1 <- data_frame(vars = rownames(vi1$importance), vi1 = vi1$importance$Overall) %>%
+    mutate(var.name = str_replace_all(vars, "([0-9]{5,6}).*", "\\1"),
+           var.name = str_replace_all(var.name, ".*HouseholdStatus.*", "HouseholdStatus"),
+           var.name = str_replace_all(var.name, ".*EducationLevel.*", "EducationLevel"),
+           var.name = str_replace_all(var.name, ".*Income.*", "Income"),
+           var.name = str_replace_all(var.name, ".*Gender.*", "Gender")) %>%
+    group_by(var.name) %>%
+    summarize(vi1 = max(vi1))
+
+c50.vi2 <- data_frame(vars = rownames(vi2$importance), vi2 = vi2$importance$Overall) %>%
+    mutate(var.name = str_replace_all(vars, "([0-9]{5,6}).*", "\\1"),
+           var.name = str_replace_all(var.name, ".*HouseholdStatus.*", "HouseholdStatus"),
+           var.name = str_replace_all(var.name, ".*EducationLevel.*", "EducationLevel"),
+           var.name = str_replace_all(var.name, ".*Income.*", "Income"),
+           var.name = str_replace_all(var.name, ".*Gender.*", "Gender")) %>%
+    group_by(var.name) %>%
+    summarize(vi2 = max(vi2))
+
+c50.vi3 <- data_frame(vars = rownames(vi3$importance), vi3 = vi3$importance$Overall) %>%
+    mutate(var.name = str_replace_all(vars, "\\..*", ""),
+           var.name = str_replace_all(var.name, "\\`", "")) %>%
+    group_by(var.name) %>%
+    summarize(vi3 = max(vi3))
+
+c50.vi <- inner_join(c50.vi1, c50.vi2, by = "var.name") %>%
+    inner_join(c50.vi3, by = "var.name")
+```
+
+```{r}
+keep <- filter(c50.vi, vi1 > 0 | vi2 > 0 | vi3 > 0)
+```
+
