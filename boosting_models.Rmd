@@ -7,7 +7,7 @@ output: html_notebook
 source("2-model_tests.R")
 ```
 
-## Extreme Gradient Boosting
+## eXtreme Gradient Boosting
 
 ```{r}
 xgbGrid <- expand.grid(
@@ -91,3 +91,32 @@ if (!file.exists("models/gbm_dv.Rds")) {
 }
 ```
 
+```{r}
+xgb.dv
+```
+
+```{r}
+gbm.set
+```
+
+```{r}
+gbm.dv
+```
+
+```{r}
+pred1 <- predict(xgb.dv, valid.dv[, -1])
+pred2 <- predict(gbm.set, valid.set[, -1])
+pred3 <- predict(gbm.dv, valid.dv[, -1])
+```
+
+```{r}
+confusionMatrix(pred1, valid.party)
+```
+
+```{r}
+confusionMatrix(pred2, valid.party)
+```
+
+```{r}
+confusionMatrix(pred3, valid.party)
+```
