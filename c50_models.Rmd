@@ -119,3 +119,31 @@ keep <- filter(c50.vi, vi1 > 0 | vi2 > 0 | vi3 > 0)
 keep
 ```
 
+```{r}
+library(tidyr)
+
+perf <- rbind(
+    getTrainPerf(c50.data), 
+    getTrainPerf(c50.set), 
+    getTrainPerf(c50.dv)
+)
+
+perf <- mutate(perf, set = c("data", "set", "dv")) %>%
+    unite(method, method, set) %>%
+    # group_by(method) %>%
+    gather(measure, val, -method)
+
+ggplot(perf, aes(x = method, y = val, color = measure)) +
+    geom_point()
+               
+```
+
+```{r}
+library(pROC)
+c50roc <- roc(
+    response = c50.data$pred$obs,
+    predictor = c50.data$pred$successful,
+    levels = rev(levels(c50.data$pred$obs))
+)
+```
+
