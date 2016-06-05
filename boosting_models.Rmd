@@ -1,5 +1,5 @@
 ---
-title: "Extreme Gradient Boosting"
+title: "Boosting"
 output: html_notebook
 ---
 
