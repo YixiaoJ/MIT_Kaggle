@@ -10,20 +10,6 @@ source("2-model_tests.R")
 ```
 
 ```{r}
-ctrl <- trainControl(
-    method = "cv",
-    number = 10,
-    seeds = seeds,
-    classProbs = TRUE,
-    returnResamp = "final",
-    summaryFunction = twoClassSummary,
-    index = createFolds(train.party, 10, TRUE, TRUE),
-    savePredictions = TRUE
-)
-```
-
-
-```{r}
 c50Grid <- expand.grid(
     .winnow = c(TRUE, FALSE),
     .trials = c(1:9, 1:10 * 10),
