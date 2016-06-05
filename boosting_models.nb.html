@@ -145,20 +145,95 @@ $(document).ready(function () {
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
+<pre class="r"><code></code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg+KAucOF4oCcZHBseXLDg8aSw4LCosODwqLDouKCrMWhw4LCrMODwqLDouKCrMW+w4LColxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PigLnDheKAnHBhY2thZ2U6cGx5csODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PCosOi4oKsxb7DgsKiOlxuXG4gICAgYXJyYW5nZSwgY291bnQsIGRlc2MsIGZhaWx3aXRoLCBpZCwgbXV0YXRlLCByZW5hbWUsIHN1bW1hcmlzZSxcbiAgICBzdW1tYXJpemVcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDg8aSw4LCosODwqLDouKCrMWhw4LCrMOD4oC5w4XigJxwYWNrYWdlOnN0YXRzw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg8Kiw6LigqzFvsOCwqI6XG5cbiAgICBmaWx0ZXIsIGxhZ1xuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PigLnDheKAnHBhY2thZ2U6YmFzZcODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PCosOi4oKsxb7DgsKiOlxuXG4gICAgaW50ZXJzZWN0LCBzZXRkaWZmLCBzZXRlcXVhbCwgdW5pb25cblxuXG5BdHRhY2hpbmcgcGFja2FnZTogw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg+KAucOF4oCcdGliYmxlw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg8Kiw6LigqzFvsOCwqJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDg8aSw4LCosODwqLDouKCrMWhw4LCrMOD4oC5w4XigJxwYWNrYWdlOmRwbHlyw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg8Kiw6LigqzFvsOCwqI6XG5cbiAgICBhc19kYXRhX2ZyYW1lLCBkYXRhX2ZyYW1lLCBkYXRhX2ZyYW1lXywgZnJhbWVfZGF0YSwgZ2xpbXBzZSxcbiAgICBrbml0X3ByaW50LnRydW5jX21hdCwgdGliYmxlLCB0cnVuY19tYXQsIHR5cGVfc3VtXG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogbGF0dGljZVxuTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBnZ3Bsb3QyXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDDg8aSw4LCosODwqLDouKCrMWhw4LCrMOD4oC5w4XigJxwdXJycsODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PCosOi4oKsxb7DgsKiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PigLnDheKAnHBhY2thZ2U6Y2FyZXTDg8aSw4LCosODwqLDouKCrMWhw4LCrMODwqLDouKCrMW+w4LCojpcblxuICAgIGxpZnRcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20gw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg+KAucOF4oCccGFja2FnZTpkcGx5csODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PCosOi4oKsxb7DgsKiOlxuXG4gICAgb3JkZXJfYnlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20gw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg+KAucOF4oCccGFja2FnZTpwbHlyw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg8Kiw6LigqzFvsOCwqI6XG5cbiAgICBjb21wYWN0XG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogUmNwcFxubWljZSAyLjI1IDIwMTUtMTEtMDlcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogZm9yZWFjaFxuZm9yZWFjaDogc2ltcGxlLCBzY2FsYWJsZSBwYXJhbGxlbCBwcm9ncmFtbWluZyBmcm9tIFJldm9sdXRpb24gQW5hbHl0aWNzXG5Vc2UgUmV2b2x1dGlvbiBSIGZvciBzY2FsYWJpbGl0eSwgZmF1bHQgdG9sZXJhbmNlIGFuZCBtb3JlLlxuaHR0cDovL3d3dy5yZXZvbHV0aW9uYW5hbHl0aWNzLmNvbVxuXG5BdHRhY2hpbmcgcGFja2FnZTogw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg+KAucOF4oCcZm9yZWFjaMODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PCosOi4oKsxb7DgsKiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20gw4PGksOCwqLDg8Kiw6LigqzFocOCwqzDg+KAucOF4oCccGFja2FnZTpwdXJycsODxpLDgsKiw4PCosOi4oKsxaHDgsKsw4PCosOi4oKsxb7DgsKiOlxuXG4gICAgYWNjdW11bGF0ZSwgd2hlblxuXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IGl0ZXJhdG9yc1xuTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBwYXJhbGxlbFxuIn0= -->
+<pre><code>
+Attaching package: ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“dplyrÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
+
+The following objects are masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:plyrÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:statsÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    filter, lag
+
+The following objects are masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:baseÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“tibbleÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
+
+The following objects are masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:dplyrÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    as_data_frame, data_frame, data_frame_, frame_data, glimpse,
+    knit_print.trunc_mat, tibble, trunc_mat, type_sum
+
+Loading required package: lattice
+Loading required package: ggplot2
+
+Attaching package: ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“purrrÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
+
+The following object is masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:caretÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    lift
+
+The following object is masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:dplyrÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    order_by
+
+The following object is masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:plyrÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    compact
+
+Loading required package: Rcpp
+mice 2.25 2015-11-09
+Loading required package: foreach
+foreach: simple, scalable parallel programming from Revolution Analytics
+Use Revolution R for scalability, fault tolerance and more.
+http://www.revolutionanalytics.com
+
+Attaching package: ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“foreachÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢
+
+The following objects are masked from ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“package:purrrÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢:
+
+    accumulate, when
+
+Loading required package: iterators
+Loading required package: parallel</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="extreme-gradient-boosting" class="section level2">
+<h2>Extreme Gradient Boosting</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>NA</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>xgbGrid &lt;- expand.grid(
-    nrounds = 1000, 
-    eta = c(0.01, 0.001, 0.0001), 
-    max_depth = c(2, 4, 6, 8, 10), 
-    gamma = 1, 
-    colsample_bytree = 1, 
-    min_child_weight = 1
+<pre class="r"><code>NA</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="stochastic-gradient-boosting" class="section level2">
+<h2>Stochastic Gradient Boosting</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>gbmGrid &lt;- expand.grid(
+    interaction.depth = c(1, 5, 9), # 3, 7
+    n.trees = (1:10) * 100, # (1:20)
+    shrinkage = 0.1, # 0.01
+    n.minobsinnode = 10 # 20
 )</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -166,28 +241,55 @@ $(document).ready(function () {
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>if (!file.exists(&quot;models/xgb_dv.Rds&quot;)) {
+<pre class="r"><code>
+if (!file.exists(&quot;models/gbm_set.Rds&quot;)) {
     set.seed(1056)
-    xgb.dv &lt;- train(
+    gbm.set &lt;- train(
         Party ~ .,
-        data = train.dv[, -1],
-        method = &quot;xgbTree&quot;,
+        data = train.set[, -1],
+        method = &quot;gbm&quot;,
         trControl = ctrl,
-        metric = &quot;ROC&quot;,
-        tuneGrid = xgbGrid
+        tuneGrid = gbmGrid,
+        metric = &quot;ROC&quot;
     )
     
-    saveRDS(xgb.dv, &quot;models/xgb_dv.Rds&quot;)
+    saveRDS(gbm.set, &quot;models/gbm_set.Rds&quot;)
+
 } else {
-    library(xgboost)
-    xgb.dv &lt;- readRDS(&quot;models/xgb_dv.Rds&quot;)
+    library(gbm)
+    gbm.set &lt;- readRDS(&quot;models/gbm_set.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>
+if (!file.exists(&quot;models/gbm_dv.Rds&quot;)) {
+    set.seed(1056)
+    gbm.dv &lt;- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = &quot;gbm&quot;,
+        trControl = ctrl,
+        tuneGrid = gbmGrid,
+        metric = &quot;ROC&quot;
+    )
+    
+    saveRDS(gbm.dv, &quot;models/gbm_dv.Rds&quot;)
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkJvb3N0aW5nIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQpzb3VyY2UoIjItbW9kZWxfdGVzdHMuUiIpDQpgYGANCg0KYGBge3J9DQp4Z2JHcmlkIDwtIGV4cGFuZC5ncmlkKA0KICAgIG5yb3VuZHMgPSAxMDAwLCANCiAgICBldGEgPSBjKDAuMDEsIDAuMDAxLCAwLjAwMDEpLCANCiAgICBtYXhfZGVwdGggPSBjKDIsIDQsIDYsIDgsIDEwKSwgDQogICAgZ2FtbWEgPSAxLCANCiAgICBjb2xzYW1wbGVfYnl0cmVlID0gMSwgDQogICAgbWluX2NoaWxkX3dlaWdodCA9IDENCikNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy94Z2JfZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIHhnYi5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJ4Z2JUcmVlIiwNCiAgICAgICAgdHJDb250cm9sID0gY3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVHcmlkID0geGdiR3JpZA0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKHhnYi5kdiwgIm1vZGVscy94Z2JfZHYuUmRzIikNCn0gZWxzZSB7DQogICAgbGlicmFyeSh4Z2Jvb3N0KQ0KICAgIHhnYi5kdiA8LSByZWFkUkRTKCJtb2RlbHMveGdiX2R2LlJkcyIpDQp9DQpgYGANCg0K</div>
+} else {
+    library(gbm)
+    gbm.dv &lt;- readRDS(&quot;models/gbm_dv.Rds&quot;)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkJvb3N0aW5nIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQpzb3VyY2UoIjItbW9kZWxfdGVzdHMuUiIpDQpgYGANCg0KIyMgRXh0cmVtZSBHcmFkaWVudCBCb29zdGluZw0KDQpgYGB7cn0NCnhnYkdyaWQgPC0gZXhwYW5kLmdyaWQoDQogICAgbnJvdW5kcyA9IDEwMDAsIA0KICAgIGV0YSA9IGMoMC4wMSwgMC4wMDEsIDAuMDAwMSksIA0KICAgIG1heF9kZXB0aCA9IGMoMiwgNCwgNiwgOCwgMTApLCANCiAgICBnYW1tYSA9IDEsIA0KICAgIGNvbHNhbXBsZV9ieXRyZWUgPSAxLCANCiAgICBtaW5fY2hpbGRfd2VpZ2h0ID0gMQ0KKQ0KYGBgDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL3hnYl9kdi5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgeGdiLmR2IDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5kdlssIC0xXSwNCiAgICAgICAgbWV0aG9kID0gInhnYlRyZWUiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSB4Z2JHcmlkDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMoeGdiLmR2LCAibW9kZWxzL3hnYl9kdi5SZHMiKQ0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KHhnYm9vc3QpDQogICAgeGdiLmR2IDwtIHJlYWRSRFMoIm1vZGVscy94Z2JfZHYuUmRzIikNCn0NCmBgYA0KDQojIyBTdG9jaGFzdGljIEdyYWRpZW50IEJvb3N0aW5nDQpgYGB7cn0NCmdibUdyaWQgPC0gZXhwYW5kLmdyaWQoDQogICAgaW50ZXJhY3Rpb24uZGVwdGggPSBjKDEsIDUsIDkpLCAjIDMsIDcNCiAgICBuLnRyZWVzID0gKDE6MTApICogMTAwLCAjICgxOjIwKQ0KICAgIHNocmlua2FnZSA9IDAuMSwgIyAwLjAxDQogICAgbi5taW5vYnNpbm5vZGUgPSAxMCAjIDIwDQopDQpgYGANCg0KYGBge3J9DQoNCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9nYm1fc2V0LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBnYm0uc2V0IDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5zZXRbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJnYm0iLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICB0dW5lR3JpZCA9IGdibUdyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMoZ2JtLnNldCwgIm1vZGVscy9nYm1fc2V0LlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShnYm0pDQogICAgZ2JtLnNldCA8LSByZWFkUkRTKCJtb2RlbHMvZ2JtX3NldC5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KDQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvZ2JtX2R2LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBnYm0uZHYgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICBtZXRob2QgPSAiZ2JtIiwNCiAgICAgICAgdHJDb250cm9sID0gY3RybCwNCiAgICAgICAgdHVuZUdyaWQgPSBnYm1HcmlkLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIg0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGdibS5kdiwgIm1vZGVscy9nYm1fZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KGdibSkNCiAgICBnYm0uZHYgPC0gcmVhZFJEUygibW9kZWxzL2dibV9kdi5SZHMiKQ0KfQ0KYGBgDQoNCg==</div>
 
 
 

@@ -7,6 +7,8 @@ output: html_notebook
 source("2-model_tests.R")
 ```
 
+## Extreme Gradient Boosting
+
 ```{r}
 xgbGrid <- expand.grid(
     nrounds = 1000, 
@@ -34,6 +36,58 @@ if (!file.exists("models/xgb_dv.Rds")) {
 } else {
     library(xgboost)
     xgb.dv <- readRDS("models/xgb_dv.Rds")
+}
+```
+
+## Stochastic Gradient Boosting
+```{r}
+gbmGrid <- expand.grid(
+    interaction.depth = c(1, 5, 9), # 3, 7
+    n.trees = (1:10) * 100, # (1:20)
+    shrinkage = 0.1, # 0.01
+    n.minobsinnode = 10 # 20
+)
+```
+
+```{r}
+
+if (!file.exists("models/gbm_set.Rds")) {
+    set.seed(1056)
+    gbm.set <- train(
+        Party ~ .,
+        data = train.set[, -1],
+        method = "gbm",
+        trControl = ctrl,
+        tuneGrid = gbmGrid,
+        metric = "ROC"
+    )
+    
+    saveRDS(gbm.set, "models/gbm_set.Rds")
+
+} else {
+    library(gbm)
+    gbm.set <- readRDS("models/gbm_set.Rds")
+}
+```
+
+```{r}
+
+if (!file.exists("models/gbm_dv.Rds")) {
+    set.seed(1056)
+    gbm.dv <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "gbm",
+        trControl = ctrl,
+        tuneGrid = gbmGrid,
+        metric = "ROC"
+    )
+    
+    saveRDS(gbm.dv, "models/gbm_dv.Rds")
+
+} else {
+    library(gbm)
+    gbm.dv <- readRDS("models/gbm_dv.Rds")
 }
 ```
 
