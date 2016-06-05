@@ -26,6 +26,17 @@ trCtrl <- trainControl(
     savePredictions = TRUE
 )
 
+ctrl <- trainControl(
+    method = "cv",
+    number = 10,
+    seeds = seeds,
+    classProbs = TRUE,
+    returnResamp = "final",
+    summaryFunction = twoClassSummary,
+    index = createFolds(train.party, 10, TRUE, TRUE),
+    savePredictions = TRUE
+)
+
 # function to run multiple sets of models
 #' @param data A data frame with training data
 #' @param valid A data frame with validation data
