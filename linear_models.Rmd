@@ -62,3 +62,31 @@ if (!file.exists("models/glmnet_dv.Rds")) {
     glmnet.dv <- readRDS("models/glmnet_dv.Rds")
 }
 ```
+
+## Nearest Shrunken Centroids
+
+```{r}
+nscGrid <- data.frame(.threshold = 0:25)
+```
+
+```{r}
+if (!file.exists("models/nsc_dv.Rds")) {
+    set.seed(1056)
+    nsc.dv <- train(
+        Party ~ .,
+        data = train.dv[, -c(1, hc.dv)],
+        method = "pam",
+        trControl = ctrl,
+        metric = "ROC",
+        tuneGrid = nscGrid,
+        preProcess = c("center", "scale", "nzv")
+    )
+    
+    saveRDS(nsc.dv, "models/nsc_dv.Rds")
+
+} else {
+    library(pamr)
+    nsc.dv <- readRDS("models/nsc_dv.Rds")
+}
+```
+
