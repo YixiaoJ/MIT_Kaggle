@@ -90,3 +90,32 @@ if (!file.exists("models/nsc_dv.Rds")) {
 }
 ```
 
+```{r}
+pls.dv
+```
+
+```{r}
+glmnet.dv
+```
+
+```{r}
+nsc.dv
+```
+
+```{r}
+pred1 <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
+pred2 <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
+pred3 <- predict(nsc.dv, valid.dv[, -c(1, hc.dv)])
+```
+
+```{r}
+confusionMatrix(pred1, valid.party)
+```
+
+```{r}
+confusionMatrix(pred2, valid.party)
+```
+
+```{r}
+confusionMatrix(pred3, valid.party)
+```
