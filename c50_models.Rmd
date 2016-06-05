@@ -8,18 +8,34 @@ source("2-model_tests.R")
 ```
 
 ```{r}
+ctrl <- trainControl(
+    method = "cv",
+    number = 10,
+    seeds = seeds,
+    classProbs = TRUE,
+    returnResamp = "final",
+    summaryFunction = twoClassSummary,
+    index = createFolds(train.party, 10, TRUE, TRUE),
+    savePredictions = TRUE
+)
+```
+
+
+```{r}
 c50Grid <- expand.grid(
     .winnow = c(TRUE, FALSE),
     .trials = c(1:9, 1:10 * 10),
     .model = c("tree", "rules")
 )
+```
 
+```{r}
 set.seed(1056)
 c50.data <- train(
     Party ~ .,
     data = train.data[, -1],
     method = "C5.0",
-    trControl = trCtrl,
+    trControl = ctrl,
     na.action = na.pass,
     metric = "ROC",
     tuneGrid = c50Grid
@@ -32,8 +48,8 @@ c50.set <- train(
     Party ~ .,
     data = train.set[, -1],
     method = "C5.0",
-    trControl = trCtrl,
-    na.action = na.pass,
+    trControl = ctrl,
+    # na.action = na.pass,
     metric = "ROC",
     tuneGrid = c50Grid
 )
@@ -45,17 +61,29 @@ c50.dv <- train(
     Party ~ .,
     data = train.dv[, -1],
     method = "C5.0",
-    trControl = trCtrl,
-    na.action = na.pass,
+    trControl = ctrl,
+    # na.action = na.pass,
     metric = "ROC",
     tuneGrid = c50Grid
 )
 ```
 
 ```{r}
-pred1 <- predict(c50.data, valid.data[, -7], na.action = na.pass)
-pred2 <- predict(c50.set, valid.set)
-pred3 <- predict(c50.dv, valid.dv)
+c50.data
+```
+
+```{r}
+c50.set
+```
+
+```{r}
+c50.dv
+```
+
+```{r}
+pred1 <- predict(c50.data, valid.data[, -c(1, 7)], na.action = na.pass)
+pred2 <- predict(c50.set, valid.set[, -1])
+pred3 <- predict(c50.dv, valid.dv[, -1])
 ```
 
 ```{r}
@@ -135,15 +163,4 @@ perf <- mutate(perf, set = c("data", "set", "dv")) %>%
 
 ggplot(perf, aes(x = method, y = val, color = measure)) +
     geom_point()
-               
 ```
-
-```{r}
-library(pROC)
-c50roc <- roc(
-    response = c50.data$pred$obs,
-    predictor = c50.data$pred$successful,
-    levels = rev(levels(c50.data$pred$obs))
-)
-```
-
