@@ -30,42 +30,66 @@ c50Grid <- expand.grid(
 ```
 
 ```{r}
-set.seed(1056)
-c50.data <- train(
-    Party ~ .,
-    data = train.data[, -1],
-    method = "C5.0",
-    trControl = ctrl,
-    na.action = na.pass,
-    metric = "ROC",
-    tuneGrid = c50Grid
-)
+if (!file.exists("models/c50_data.Rds")) {
+    set.seed(1056)
+    c50.data <- train(
+        Party ~ .,
+        data = train.data[, -1],
+        method = "C5.0",
+        trControl = ctrl,
+        na.action = na.pass,
+        metric = "ROC",
+        tuneGrid = c50Grid
+    )
+
+    saveRDS(c50.data, "models/c50_data.Rds")
+
+} else {
+    library(C50)
+    c50.data <- readRDS("models/c50_data.Rds")
+}
 ```
 
 ```{r}
-set.seed(1056)
-c50.set <- train(
-    Party ~ .,
-    data = train.set[, -1],
-    method = "C5.0",
-    trControl = ctrl,
-    # na.action = na.pass,
-    metric = "ROC",
-    tuneGrid = c50Grid
-)
+if (!file.exists("models/c50_set.Rds")) {
+    set.seed(1056)
+    c50.set <- train(
+        Party ~ .,
+        data = train.set[, -1],
+        method = "C5.0",
+        trControl = ctrl,
+        # na.action = na.pass,
+        metric = "ROC",
+        tuneGrid = c50Grid
+    )
+    
+    saveRDS(c50.set, "models/c50_set.Rds")
+
+} else {
+    library(C50)
+    c50.set <- readRDS("models/c50_set.Rds")
+}
 ```
 
 ```{r}
-set.seed(1056)
-c50.dv <- train(
-    Party ~ .,
-    data = train.dv[, -1],
-    method = "C5.0",
-    trControl = ctrl,
-    # na.action = na.pass,
-    metric = "ROC",
-    tuneGrid = c50Grid
-)
+if (!file.exists("models/c50_dv.Rds")) {
+    set.seed(1056)
+    c50.dv <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "C5.0",
+        trControl = ctrl,
+        # na.action = na.pass,
+        metric = "ROC",
+        tuneGrid = c50Grid
+    )
+    
+    saveRDS(c50.dv, "models/c50_dv.Rds")
+
+} else {
+    library(C50)
+    c50.dv <- readRDS("models/c50_dv.Rds")
+}
 ```
 
 ```{r}
