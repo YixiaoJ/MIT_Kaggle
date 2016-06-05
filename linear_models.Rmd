@@ -1,0 +1,64 @@
+---
+title: "Linear Classification Models"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+## Partial Least Squares
+```{r}
+plsGrid <- expand.grid(.ncomp = 1:10)
+```
+
+```{r}
+if (!file.exists("models/pls_dv.Rds")) {
+    set.seed(1056)
+    pls.dv <- train(
+        Party ~ .,
+        data = train.dv[, -c(1, hc.dv)],
+        method = "pls",
+        trControl = ctrl,
+        metric = "ROC",
+        tuneGrid = plsGrid,
+        preProcess = c("nzv", "pca")
+    )
+    
+    saveRDS(pls.dv, "models/pls_dv.Rds")
+
+} else {
+    library(pls)
+    pls.dv <- readRDS("models/pls_dv.Rds")
+}
+```
+
+## Penalized Models
+
+```{r}
+glmnGrid <- expand.grid(
+    .alpha = c(0, 0.1, 0.2, 0.4, 0.6, 0.8, 1), 
+    .lambda = seq(0.1, 0.2, length = 40)
+)
+```
+
+```{r}
+if (!file.exists("models/glmnet_dv.Rds")) {
+    set.seed(1056)
+    glmnet.dv <- train(
+        Party ~ .,
+        data = train.dv[, -c(1, hc.dv)],
+        method = "glmnet",
+        trControl = ctrl,
+        metric = "ROC",
+        tuneGrid = glmnGrid,
+        preProcess = c("nzv", "pca")
+    )
+    
+    saveRDS(glmnet.dv, "models/glmnet_dv.Rds")
+
+} else {
+    library(glmnet)
+    glmnet.dv <- readRDS("models/glmnet_dv.Rds")
+}
+```
