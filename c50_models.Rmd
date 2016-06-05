@@ -116,5 +116,6 @@ c50.vi <- inner_join(c50.vi1, c50.vi2, by = "var.name") %>%
 
 ```{r}
 keep <- filter(c50.vi, vi1 > 0 | vi2 > 0 | vi3 > 0)
+keep
 ```
 
