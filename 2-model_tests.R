@@ -23,8 +23,7 @@ trCtrl <- trainControl(
     returnResamp = "final",
     summaryFunction = twoClassSummary,
     index = createMultiFolds(train.party, 10, 5),
-    savePredictions = "final",
-    verboseIter = TRUE
+    savePredictions = TRUE
 )
 
 # function to run multiple sets of models
