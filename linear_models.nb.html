@@ -144,9 +144,6 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="partial-least-squares" class="section level2">
@@ -174,12 +171,24 @@ $(document).ready(function () {
     )
     
     saveRDS(pls.dv, &quot;models/pls_dv.Rds&quot;)
-
 } else {
     library(pls)
     pls.dv &lt;- readRDS(&quot;models/pls_dv.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBwbHNcblxuQXR0YWNoaW5nIHBhY2thZ2U6IMOi4oKsy5xwbHPDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpjYXJldMOi4oKs4oSiOlxuXG4gICAgUjJcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20gw6LigqzLnHBhY2thZ2U6c3RhdHPDouKCrOKEojpcblxuICAgIGxvYWRpbmdzXG4ifQ== -->
+<pre><code>Loading required package: pls
+
+Attaching package: â€˜plsâ€™
+
+The following object is masked from â€˜package:caretâ€™:
+
+    R2
+
+The following object is masked from â€˜package:statsâ€™:
+
+    loadings</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -211,12 +220,16 @@ $(document).ready(function () {
     )
     
     saveRDS(glmnet.dv, &quot;models/glmnet_dv.Rds&quot;)
-
 } else {
     library(glmnet)
     glmnet.dv &lt;- readRDS(&quot;models/glmnet_dv.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBnbG1uZXRcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogTWF0cml4XG5Mb2FkZWQgZ2xtbmV0IDIuMC01XG4ifQ== -->
+<pre><code>Loading required package: glmnet
+Loading required package: Matrix
+Loaded glmnet 2.0-5</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -245,12 +258,25 @@ $(document).ready(function () {
     )
     
     saveRDS(nsc.dv, &quot;models/nsc_dv.Rds&quot;)
-
 } else {
     library(pamr)
     nsc.dv &lt;- readRDS(&quot;models/nsc_dv.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBwYW1yXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IGNsdXN0ZXJcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogc3Vydml2YWxcblxuQXR0YWNoaW5nIHBhY2thZ2U6IMOi4oKsy5xzdXJ2aXZhbMOi4oKs4oSiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmNhcmV0w6LigqzihKI6XG5cbiAgICBjbHVzdGVyXG4ifQ== -->
+<pre><code>Loading required package: pamr
+Loading required package: cluster
+Loading required package: survival
+
+Attaching package: â€˜survivalâ€™
+
+The following object is masked from â€˜package:caretâ€™:
+
+    cluster</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiMVxuIn0= -->
+<pre><code>1</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
