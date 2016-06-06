@@ -129,5 +129,64 @@ confusionMatrix(pred1, valid.party)
 
 ## SVM
 
+```{r}
+library(kernlab)
+svmGrid <- expand.grid(
+    .sigma = sigest(as.matrix(train.rfe.dv[, -20])), 
+    .C = 2^(seq(-4, 4))
+)
+```
+
+```{r}
+if (!file.exists("models/svm_rfe.Rds")) {
+    set.seed(1056)
+    svm.rfe <- train(
+        Party ~ .,
+        data = train.rfe.dv,
+        method = "svmRadial",
+        trControl = ctrl,
+        tuneGrid = svmGrid,
+        metric = "ROC",
+        preProcess = c("center", "scale")
+    )
+    
+    saveRDS(svm.rfe, "models/svm_rfe.Rds")
+
+} else {
+    library(kernlab)
+    svm.rfe <- readRDS("models/svm_rfe.Rds")
+}
+```
+
 ## Neural Network
 
+```{r}
+nnetGrid <- expand.grid(.size = 1:10, .decay = c(0, 0.1, 1, 2))
+maxSize <- max(nnetGrid$.size)
+numWts <- 1 * (maxSize * (length(train.rfe.dv[, -20]) + 1) + maxSize + 1)
+```
+
+```{r}
+if (!file.exists("models/nnet_rfe.Rds")) {
+    set.seed(1056)
+    nnet.rfe <- train(
+        Party ~ .,
+        data = train.rfe.dv,
+        method = "nnet",
+        trControl = ctrl,
+        tuneGrid = nnetGrid,
+        metric = "ROC",
+        preProcess = c("center", "scale", "spatialSign"),
+        trace = FALSE,
+        maxit = 2000,
+        MaxNWts = numWts
+    )
+    
+    saveRDS(nnet.rfe, "models/nnet_rfe.Rds")
+
+} else {
+    library(kernlab)
+    nnet.rfe <- readRDS("models/nnet_rfe.Rds")
+}
+
+```

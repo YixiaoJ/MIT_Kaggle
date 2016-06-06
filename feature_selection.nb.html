@@ -144,26 +144,73 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnGRwbHlyw6LigqzihKJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpwbHlyw6LigqzihKI6XG5cbiAgICBhcnJhbmdlLCBjb3VudCwgZGVzYywgZmFpbHdpdGgsIGlkLCBtdXRhdGUsIHJlbmFtZSwgc3VtbWFyaXNlLFxuICAgIHN1bW1hcml6ZVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOnN0YXRzw6LigqzihKI6XG5cbiAgICBmaWx0ZXIsIGxhZ1xuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmJhc2XDouKCrOKEojpcblxuICAgIGludGVyc2VjdCwgc2V0ZGlmZiwgc2V0ZXF1YWwsIHVuaW9uXG5cblxuQXR0YWNoaW5nIHBhY2thZ2U6IMOi4oKsy5x0aWJibGXDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmRwbHlyw6LigqzihKI6XG5cbiAgICBhc19kYXRhX2ZyYW1lLCBkYXRhX2ZyYW1lLCBkYXRhX2ZyYW1lXywgZnJhbWVfZGF0YSwgZ2xpbXBzZSxcbiAgICBrbml0X3ByaW50LnRydW5jX21hdCwgdGliYmxlLCB0cnVuY19tYXQsIHR5cGVfc3VtXG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogbGF0dGljZVxuTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBnZ3Bsb3QyXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDDouKCrMuccHVycnLDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpjYXJldMOi4oKs4oSiOlxuXG4gICAgbGlmdFxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpkcGx5csOi4oKs4oSiOlxuXG4gICAgb3JkZXJfYnlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20gw6LigqzLnHBhY2thZ2U6cGx5csOi4oKs4oSiOlxuXG4gICAgY29tcGFjdFxuXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IFJjcHBcbm1pY2UgMi4yNSAyMDE1LTExLTA5XG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IGZvcmVhY2hcbmZvcmVhY2g6IHNpbXBsZSwgc2NhbGFibGUgcGFyYWxsZWwgcHJvZ3JhbW1pbmcgZnJvbSBSZXZvbHV0aW9uIEFuYWx5dGljc1xuVXNlIFJldm9sdXRpb24gUiBmb3Igc2NhbGFiaWxpdHksIGZhdWx0IHRvbGVyYW5jZSBhbmQgbW9yZS5cbmh0dHA6Ly93d3cucmV2b2x1dGlvbmFuYWx5dGljcy5jb21cblxuQXR0YWNoaW5nIHBhY2thZ2U6IMOi4oKsy5xmb3JlYWNow6LigqzihKJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpwdXJycsOi4oKs4oSiOlxuXG4gICAgYWNjdW11bGF0ZSwgd2hlblxuXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IGl0ZXJhdG9yc1xuTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBwYXJhbGxlbFxuIn0= -->
+<pre><code>
+Attaching package: â€˜dplyrâ€™
+
+The following objects are masked from â€˜package:plyrâ€™:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following objects are masked from â€˜package:statsâ€™:
+
+    filter, lag
+
+The following objects are masked from â€˜package:baseâ€™:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: â€˜tibbleâ€™
+
+The following objects are masked from â€˜package:dplyrâ€™:
+
+    as_data_frame, data_frame, data_frame_, frame_data, glimpse,
+    knit_print.trunc_mat, tibble, trunc_mat, type_sum
+
+Loading required package: lattice
+Loading required package: ggplot2
+
+Attaching package: â€˜purrrâ€™
+
+The following object is masked from â€˜package:caretâ€™:
+
+    lift
+
+The following object is masked from â€˜package:dplyrâ€™:
+
+    order_by
+
+The following object is masked from â€˜package:plyrâ€™:
+
+    compact
+
+Loading required package: Rcpp
+mice 2.25 2015-11-09
+Loading required package: foreach
+foreach: simple, scalable parallel programming from Revolution Analytics
+Use Revolution R for scalability, fault tolerance and more.
+http://www.revolutionanalytics.com
+
+Attaching package: â€˜foreachâ€™
+
+The following objects are masked from â€˜package:purrrâ€™:
+
+    accumulate, when
+
+Loading required package: iterators
+Loading required package: parallel</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="feature-selection" class="section level2">
 <h2>Feature Selection</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>rfeCtrl &lt;- rfeControl(
-    functions = rfFuncs,
-    method = &quot;cv&quot;,
-    seeds = seeds
-)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>subsets &lt;- c(1:5, 10, 15, 20, 25)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -172,66 +219,6 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>rfProfile</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5SZWN1cnNpdmUgZmVhdHVyZSBzZWxlY3Rpb25cblxuT3V0ZXIgcmVzYW1wbGluZyBtZXRob2Q6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCkgXG5cblJlc2FtcGxpbmcgcGVyZm9ybWFuY2Ugb3ZlciBzdWJzZXQgc2l6ZTpcblxuIFZhcmlhYmxlcyBBY2N1cmFjeSAgS2FwcGEgQWNjdXJhY3lTRCBLYXBwYVNEIFNlbGVjdGVkXG4gICAgICAgICAxICAgMC41NzA2IDAuMTc0MyAgICAwLjAxNzI4IDAuMDMyNzQgICAgICAgICBcbiAgICAgICAgIDIgICAwLjU5OTUgMC4xOTM1ICAgIDAuMDE1MDkgMC4wMzA1MiAgICAgICAgIFxuICAgICAgICAgMyAgIDAuNjA5MCAwLjIxNjkgICAgMC4wMTY5NSAwLjAzMzkyICAgICAgICAgXG4gICAgICAgICA0ICAgMC42MTc3IDAuMjE5MiAgICAwLjAxNjgxIDAuMDMzOTcgICAgICAgICBcbiAgICAgICAgIDUgICAwLjYyMjQgMC4yMzIyICAgIDAuMDE1OTIgMC4wMzE3OSAgICAgICAgKlxuICAgICAgICAxMCAgIDAuNjE1NyAwLjIyMTcgICAgMC4wMTYwMyAwLjAzMzMyICAgICAgICAgXG4gICAgICAgIDE1ICAgMC42MTQ2IDAuMjIwNiAgICAwLjAxNzkzIDAuMDM1ODUgICAgICAgICBcbiAgICAgICAgMjAgICAwLjYwNDAgMC4yMDI0ICAgIDAuMDEzNTUgMC4wMjcwMiAgICAgICAgIFxuICAgICAgICAyNSAgIDAuNTk3OCAwLjE5MDcgICAgMC4wMjAzMSAwLjA0MTU1ICAgICAgICAgXG4gICAgICAgMzI5ICAgMC42MTkzIDAuMjMxNyAgICAwLjAyNDg3IDAuMDQ4ODkgICAgICAgICBcblxuVGhlIHRvcCA1IHZhcmlhYmxlcyAob3V0IG9mIDUpOlxuICAgUTEwOTI0NC5ZZXMsIFExMDkyNDQuTm8sIFExMTU2MTEuWWVzLCBROTgxOTcuWWVzLCBRMTEzMTgxLlllc1xuIn0= -->
-<pre><code>
-Recursive feature selection
-
-Outer resampling method: Cross-Validated (10 fold) 
-
-Resampling performance over subset size:
-
- Variables Accuracy  Kappa AccuracySD KappaSD Selected
-         1   0.5706 0.1743    0.01728 0.03274         
-         2   0.5995 0.1935    0.01509 0.03052         
-         3   0.6090 0.2169    0.01695 0.03392         
-         4   0.6177 0.2192    0.01681 0.03397         
-         5   0.6224 0.2322    0.01592 0.03179        *
-        10   0.6157 0.2217    0.01603 0.03332         
-        15   0.6146 0.2206    0.01793 0.03585         
-        20   0.6040 0.2024    0.01355 0.02702         
-        25   0.5978 0.1907    0.02031 0.04155         
-       329   0.6193 0.2317    0.02487 0.04889         
-
-The top 5 variables (out of 5):
-   Q109244.Yes, Q109244.No, Q115611.Yes, Q98197.Yes, Q113181.Yes</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>predictors(rfProfile)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiUTEwOTI0NC5ZZXNcIiBcIlExMDkyNDQuTm9cIiAgXCJRMTE1NjExLlllc1wiIFwiUTk4MTk3Llllc1wiICBcIlExMTMxODEuWWVzXCJcbiJ9 -->
-<pre><code>[1] &quot;Q109244.Yes&quot; &quot;Q109244.No&quot;  &quot;Q115611.Yes&quot; &quot;Q98197.Yes&quot;  &quot;Q113181.Yes&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>lmCtrl &lt;- rfeControl(
-    functions = lmFuncs,
-    method = &quot;cv&quot;,
-    seeds = seeds
-)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>set.seed(1056)
-lmProfile &lt;- rfe(
-    x = train.dv[, -c(1, 331)],
-    y = train.party,
-    sizes = subsets,
-    rfeControl = lmCtrl
-)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -240,176 +227,22 @@ lmProfile &lt;- rfe(
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>predictors(ldaProfile)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICBbMV0gXCJRMTA5MjQ0Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNTYxMS5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuICBbM10gXCJRMTEzMTgxLlllc1wiICAgICAgICAgICAgICAgICAgIFwiR2VuZGVyLk1hbGVcIiAgICAgICAgICAgICAgICAgIFxuICBbNV0gXCJROTgxOTcuWWVzXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMDM3OS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuICBbN10gXCJIb3VzZWhvbGRTdGF0dXMubWFycmllZF9raWRzXCIgIFwiUTEwMTE2My5EYWRcIiAgICAgICAgICAgICAgICAgIFxuICBbOV0gXCJRMTIwNDcyLlNjaWVuY2VcIiAgICAgICAgICAgICAgIFwiUTk4ODY5Llllc1wiICAgICAgICAgICAgICAgICAgIFxuIFsxMV0gXCJRMTE5ODUxLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTk5NDgwLlllc1wiICAgICAgICAgICAgICAgICAgIFxuIFsxM10gXCJRMTA1ODQwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNjg4MS5SaWdodFwiICAgICAgICAgICAgICAgIFxuIFsxNV0gXCJRMTA2MjcyLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExNTg5OS5NZVwiICAgICAgICAgICAgICAgICAgIFxuIFsxN10gXCJRMTAxNTk2Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExODg5Mi5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFsxOV0gXCJRMTA4ODU1LlllcyFcIiAgICAgICAgICAgICAgICAgIFwiUTEwNjA0Mi5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFsyMV0gXCJRMTEwNzQwLlBDXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMDAxNC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFsyM10gXCJRMTE5NjUwLkdpdmluZ1wiICAgICAgICAgICAgICAgIFwiUTEwMjA4OS5Pd25cIiAgICAgICAgICAgICAgICAgIFxuIFsyNV0gXCJRMTIwNjUwLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExNTE5NS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFsyN10gXCJRMTE2NDQ4Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMzYyMS5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFsyOV0gXCJRMTE4MjM3Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMDE5NC5UcnkgZmlyc3RcIiAgICAgICAgICAgIFxuIFszMV0gXCJRMTA2Mzg5Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwNzg2OS5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFszM10gXCJRMTExMjIwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMjQ3OC5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFszNV0gXCJRMTEzNTgzLlRhbGtcIiAgICAgICAgICAgICAgICAgIFwiUTEyMzQ2NC5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFszN10gXCJRMTE1MzkwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMDY4MC5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFszOV0gXCJRMTA4MzQyLkluLXBlcnNvblwiICAgICAgICAgICAgIFwiUTEyMTY5OS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs0MV0gXCJRMTA2Mzg4Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExNjk1My5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs0M10gXCJRMTI0MTIyLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExODExNy5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs0NV0gXCJRMTE2NDQxLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExODIzMi5QcmFnbWF0aXN0XCIgICAgICAgICAgIFxuIFs0N10gXCJRMTIxNzAwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExOTMzNC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs0OV0gXCJRMTIwMDEyLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMTg0OC5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs1MV0gXCJRMTIyNzY5Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEyMjc3MS5Qcml2YXRlXCIgICAgICAgICAgICAgIFxuIFs1M10gXCJRMTIwOTc4Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODYxNy5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs1NV0gXCJRMTAwNjg5Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMTY5OS5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs1N10gXCJJbmNvbWUubzE1MFwiICAgICAgICAgICAgICAgICAgIFwiUTEwMzI5My5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs1OV0gXCJRMTA0OTk2Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMTU4MC5TdXBwb3J0aXZlXCIgICAgICAgICAgIFxuIFs2MV0gXCJRMTIxMDExLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTk2MDI0Llllc1wiICAgICAgICAgICAgICAgICAgIFxuIFs2M10gXCJROTk5ODIuTm9wZVwiICAgICAgICAgICAgICAgICAgIFwiUTEwODg1Ni5Tb2NpYWxpemVcIiAgICAgICAgICAgIFxuIFs2NV0gXCJRMTA2OTk3LkdycnIgcGVvcGxlXCIgICAgICAgICAgIFwiUTExNjYwMS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs2N10gXCJRMTEyMjcwLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwOTM2Ny5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs2OV0gXCJROTgwNzguTm9cIiAgICAgICAgICAgICAgICAgICAgIFwiUTEwODc1NC5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs3MV0gXCJRMTE4MjMzLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyNDc0Mi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs3M10gXCJROTgxOTcuTkFcIiAgICAgICAgICAgICAgICAgICAgIFwiUTk4MDU5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFxuIFs3NV0gXCJRMTIyNzcwLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwNjk5My5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs3N10gXCJFZHVjYXRpb25MZXZlbC5oc19kaXBsb21hXCIgICAgIFwiUTEwMjY4Ny5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs3OV0gXCJZT0JcIiAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiRWR1Y2F0aW9uTGV2ZWwuYWFcIiAgICAgICAgICAgIFxuIFs4MV0gXCJRMTE1Nzc3LkVuZFwiICAgICAgICAgICAgICAgICAgIFwiUTEyMjEyMC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs4M10gXCJROTk3MTYuTm9cIiAgICAgICAgICAgICAgICAgICAgIFwiUTEwMjI4OS5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs4NV0gXCJRMTE0NTE3Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNzE4Ni5Ib3QgaGVhZGVkXCIgICAgICAgICAgIFxuIFs4N10gXCJRMTE0MTUyLlllc1wiICAgICAgICAgICAgICAgICAgIFwiRWR1Y2F0aW9uTGV2ZWwuTkFcIiAgICAgICAgICAgIFxuIFs4OV0gXCJRMTAyNjc0Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNjc5Ny5Ob1wiICAgICAgICAgICAgICAgICAgIFxuIFs5MV0gXCJRMTE0OTYxLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTk2MDI0Lk5BXCIgICAgICAgICAgICAgICAgICAgIFxuIFs5M10gXCJRMTE2MTk3LkEuTS5cIiAgICAgICAgICAgICAgICAgIFwiUTEwMDAxMC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuIFs5NV0gXCJRMTE1NjEwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNDM4Ni5NeXN0ZXJpb3VzXCIgICAgICAgICAgIFxuIFs5N10gXCJRMTA4MzQzLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExNjE5Ny5QLk0uXCIgICAgICAgICAgICAgICAgIFxuIFs5OV0gXCJRMTEzOTkyLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODk1MC5SaXNrLWZyaWVuZGx5XCIgICAgICAgIFxuWzEwMV0gXCJRMTE1NjAyLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMDY4OS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzEwM10gXCJROTk1ODEuWWVzXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMTE2Mi5QZXNzaW1pc3RcIiAgICAgICAgICAgIFxuWzEwNV0gXCJRMTA3NDkxLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTk4NTc4Lk5vXCIgICAgICAgICAgICAgICAgICAgIFxuWzEwN10gXCJRMTE3MTkzLlN0YW5kYXJkIGhvdXJzXCIgICAgICAgIFwiUTk4MDc4Lk5BXCIgICAgICAgICAgICAgICAgICAgIFxuWzEwOV0gXCJRMTE5MzM0Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMzU4NC5QZW9wbGVcIiAgICAgICAgICAgICAgIFxuWzExMV0gXCJRMTEyNTEyLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExNzE5My5PZGQgaG91cnNcIiAgICAgICAgICAgIFxuWzExM10gXCJRMTAyNjg3Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTk5NzE2Lk5BXCIgICAgICAgICAgICAgICAgICAgIFxuWzExNV0gXCJRMTExODQ4Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiSW5jb21lLnUyNVwiICAgICAgICAgICAgICAgICAgIFxuWzExN10gXCJRMTAyOTA2Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODg1Ni5TcGFjZVwiICAgICAgICAgICAgICAgIFxuWzExOV0gXCJROTg1NzguWWVzXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMzk5Mi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzEyMV0gXCJRMTE0Mzg2Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiRWR1Y2F0aW9uTGV2ZWwuaW5fc2Nob29sXCIgICAgIFxuWzEyM10gXCJRMTIyMTIwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNDc0OC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzEyNV0gXCJRMTA1NjU1Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExMzU4My5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzEyN10gXCJRMTAwNTYyLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExMjUxMi5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzEyOV0gXCJRMTAwMDEwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNTc3Ny5TdGFydFwiICAgICAgICAgICAgICAgIFxuWzEzMV0gXCJIb3VzZWhvbGRTdGF0dXMuTkFcIiAgICAgICAgICAgIFwiUTk4ODY5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFxuWzEzM10gXCJRMTE2Nzk3Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwMjkwNi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzEzNV0gXCJRMTIwOTc4Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwODM0My5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzEzN10gXCJRMTA1NjU1Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNDc0OC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzEzOV0gXCJRMTA3NDkxLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExODIzMy5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzE0MV0gXCJRMTAwNTYyLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNDk2MS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE0M10gXCJJbmNvbWUuNTBfNzRcIiAgICAgICAgICAgICAgICAgIFwiUTExNDE1Mi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE0NV0gXCJROTk1ODEuTm9cIiAgICAgICAgICAgICAgICAgICAgIFwiUTExNTYxMC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzE0N10gXCJRMTAxMTYyLk9wdGltaXN0XCIgICAgICAgICAgICAgIFwiUTExMjI3MC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE0OV0gXCJRMTE3MTg2LkNvb2wgaGVhZGVkXCIgICAgICAgICAgIFwiUTEyMjc2OS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzE1MV0gXCJFZHVjYXRpb25MZXZlbC5kclwiICAgICAgICAgICAgIFwiUTExNDUxNy5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzE1M10gXCJJbmNvbWUuMTAwXzE1MFwiICAgICAgICAgICAgICAgIFwiUTExOTY1MC5SZWNlaXZpbmdcIiAgICAgICAgICAgIFxuWzE1NV0gXCJRMTE1MzkwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwOTM2Ny5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE1N10gXCJRMTIyNzcwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMDU2Mi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE1OV0gXCJRMTI0NzQyLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMzU4NC5UZWNobm9sb2d5XCIgICAgICAgICAgIFxuWzE2MV0gXCJHZW5kZXIuTkFcIiAgICAgICAgICAgICAgICAgICAgIFwiUTEwNjk5My5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzE2M10gXCJRMTE1MTk1Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMzU4NC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE2NV0gXCJIb3VzZWhvbGRTdGF0dXMucGFydG5lcnNfa2lkc1wiIFwiSG91c2Vob2xkU3RhdHVzLm1hcnJpZWRcIiAgICAgIFxuWzE2N10gXCJRMTIxNjk5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODk1MC5DYXV0aW91c1wiICAgICAgICAgICAgIFxuWzE2OV0gXCJRMTA4MzQyLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNTYwMi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzE3MV0gXCJRMTE0NzQ4Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMjY3NC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzE3M10gXCJRMTA1NjU1Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMzI5My5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE3NV0gXCJRMTE1NjAyLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExODIzMi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE3N10gXCJJbmNvbWUuTkFcIiAgICAgICAgICAgICAgICAgICAgIFwiSG91c2Vob2xkU3RhdHVzLnNpbmdsZV9raWRzXCIgIFxuWzE3OV0gXCJRMTA4OTUwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODc1NC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzE4MV0gXCJRMTAyOTA2Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMjc3MS5QdWJsaWNcIiAgICAgICAgICAgICAgIFxuWzE4M10gXCJFZHVjYXRpb25MZXZlbC5pbl9jb2xsZWdlXCIgICAgIFwiUTk5OTgyLkNoZWNrIVwiICAgICAgICAgICAgICAgIFxuWzE4NV0gXCJRMTIxMDExLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExNjg4MS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE4N10gXCJROTgwNTkuT25seS1jaGlsZFwiICAgICAgICAgICAgIFwiUTExMTU4MC5EZW1hbmRpbmdcIiAgICAgICAgICAgIFxuWzE4OV0gXCJRMTEzMTgxLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMzQ2NC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzE5MV0gXCJRMTE1ODk5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMjI4OS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE5M10gXCJRMTAyMjg5Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwNjk5Ny5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE5NV0gXCJRMTAwNjgwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMTE2Mi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzE5N10gXCJRMTE2NjAxLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTk5NTgxLk5BXCIgICAgICAgICAgICAgICAgICAgIFxuWzE5OV0gXCJRMTA4NjE3Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExMjUxMi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIwMV0gXCJRMTAyMDg5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwNzQ5MS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIwM10gXCJRMTE4MjM3Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwMjY3NC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIwNV0gXCJRMTA3ODY5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNTYxMS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIwN10gXCJRMTIwNjUwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTk4MDU5Llllc1wiICAgICAgICAgICAgICAgICAgIFxuWzIwOV0gXCJRMTA0OTk2Llllc1wiICAgICAgICAgICAgICAgICAgIFwiSW5jb21lLjc1Xzk5XCIgICAgICAgICAgICAgICAgIFxuWzIxMV0gXCJRMTExMjIwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiSW5jb21lLjI1XzQ5XCIgICAgICAgICAgICAgICAgIFxuWzIxM10gXCJRMTA2Mzg4Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNjQ0OC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIxNV0gXCJRMTE2NDQxLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExODExNy5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzIxN10gXCJRMTAxMTYzLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMjQ3OC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzIxOV0gXCJRMTA1ODQwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNTYxMC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIyMV0gXCJRMTA0OTk2Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODM0My5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIyM10gXCJRMTIxNzAwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMDE5NC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIyNV0gXCJRMTE2NjAxLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwOTI0NC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIyN10gXCJRMTIwMDEyLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMDAxMi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzIyOV0gXCJRMTA2Mzg5Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwODc1NC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIzMV0gXCJROTk0ODAuTkFcIiAgICAgICAgICAgICAgICAgICAgIFwiUTEwNjk5Ny5ZYXkgcGVvcGxlIVwiICAgICAgICAgIFxuWzIzM10gXCJRMTA2MjcyLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTk4NTc4Lk5BXCIgICAgICAgICAgICAgICAgICAgIFxuWzIzNV0gXCJRMTA2OTkzLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExODg5Mi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzIzN10gXCJRMTAwMDEwLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNDk2MS5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzIzOV0gXCJRMTE0NTE3Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiRWR1Y2F0aW9uTGV2ZWwuYnNcIiAgICAgICAgICAgIFxuWzI0MV0gXCJRMTI0MTIyLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMzYyMS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzI0M10gXCJRMTE3MTkzLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMzk5Mi5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzI0NV0gXCJRMTIyNzcwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNzE4Ni5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI0N10gXCJRMTE0MTUyLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyNDc0Mi5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzI0OV0gXCJRMTExNTgwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTk5OTgyLk5BXCIgICAgICAgICAgICAgICAgICAgIFxuWzI1MV0gXCJRMTE2Nzk3Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMTAxMS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI1M10gXCJRMTE2OTUzLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODYxNy5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI1NV0gXCJRMTE0Mzg2LlRNSVwiICAgICAgICAgICAgICAgICAgIFwiUTEyNDEyMi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzI1N10gXCJRMTE2OTUzLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEyMTcwMC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzI1OV0gXCJRMTA5MzY3Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExNTc3Ny5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI2MV0gXCJRMTAzMjkzLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwODg1NS5VbW0uLi5cIiAgICAgICAgICAgICAgIFxuWzI2M10gXCJRMTIwMDE0Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNjQ0MS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzI2NV0gXCJRMTIyNzcxLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExODIzMy5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI2N10gXCJRMTE4MTE3Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMjI3MC5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzI2OV0gXCJRMTIyMTIwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwNjA0Mi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI3MV0gXCJRMTA2Mzg4Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwNjM4OS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI3M10gXCJROTk3MTYuWWVzXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMTU5Ni5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzI3NV0gXCJRMTIzNjIxLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNjE5Ny5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI3N10gXCJRMTIwMzc5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwMjY4Ny5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzI3OV0gXCJRMTEwNzQwLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExMjQ3OC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI4MV0gXCJRMTIwMTk0LlN0dWR5IGZpcnN0XCIgICAgICAgICAgIFwiUTExMTIyMC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzI4M10gXCJRMTIyNzY5Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMDAxNC5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzI4NV0gXCJRMTE4MjMyLklkZWFsaXN0XCIgICAgICAgICAgICAgIFwiUTExMDc0MC5NYWNcIiAgICAgICAgICAgICAgICAgIFxuWzI4N10gXCJRMTAwNjgwLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExODIzNy5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI4OV0gXCJRMTIzNDY0Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTEyMDk3OC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI5MV0gXCJRMTA3ODY5Lk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwODg1Ni5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzI5M10gXCJROTgwNzguWWVzXCIgICAgICAgICAgICAgICAgICAgIFwiUTEwNjA0Mi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzI5NV0gXCJRMTE2NDQ4Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwODM0Mi5PbmxpbmVcIiAgICAgICAgICAgICAgIFxuWzI5N10gXCJRMTE5ODUxLk5BXCIgICAgICAgICAgICAgICAgICAgIFwiSG91c2Vob2xkU3RhdHVzLnBhcnRuZXJzXCIgICAgIFxuWzI5OV0gXCJRMTAxNTk2Lk5BXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNTM5MC5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzMwMV0gXCJFZHVjYXRpb25MZXZlbC5tc1wiICAgICAgICAgICAgIFwiUTEyMDY1MC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzMwM10gXCJRMTExODQ4Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTEwODg1NS5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzMwNV0gXCJRMTAyMDg5LlJlbnRcIiAgICAgICAgICAgICAgICAgIFwiUTEyMDQ3Mi5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzMwN10gXCJRMTAwNjg5Llllc1wiICAgICAgICAgICAgICAgICAgIFwiSG91c2Vob2xkU3RhdHVzLnNpbmdsZVwiICAgICAgIFxuWzMwOV0gXCJROTYwMjQuTm9cIiAgICAgICAgICAgICAgICAgICAgIFwiUTExOTMzNC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzMxMV0gXCJRMTE1MTk1Llllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExODg5Mi5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzMxM10gXCJRMTE5ODUxLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTExMzU4My5UdW5lc1wiICAgICAgICAgICAgICAgIFxuWzMxNV0gXCJRMTIwNDcyLkFydFwiICAgICAgICAgICAgICAgICAgIFwiUTExOTY1MC5OQVwiICAgICAgICAgICAgICAgICAgIFxuWzMxN10gXCJRMTA2MjcyLk5vXCIgICAgICAgICAgICAgICAgICAgIFwiUTExNTg5OS5DaXJjdW1zdGFuY2VzXCIgICAgICAgIFxuWzMxOV0gXCJRMTA1ODQwLlllc1wiICAgICAgICAgICAgICAgICAgIFwiUTk5NDgwLk5vXCIgICAgICAgICAgICAgICAgICAgIFxuWzMyMV0gXCJRMTE2ODgxLkhhcHB5XCIgICAgICAgICAgICAgICAgIFwiUTEyMDM3OS5ZZXNcIiAgICAgICAgICAgICAgICAgIFxuWzMyM10gXCJRMTAxMTYzLk1vbVwiICAgICAgICAgICAgICAgICAgIFwiUTk4ODY5Lk5vXCIgICAgICAgICAgICAgICAgICAgIFxuWzMyNV0gXCJHZW5kZXIuRmVtYWxlXCIgICAgICAgICAgICAgICAgIFwiUTExMzE4MS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzMyN10gXCJROTgxOTcuTm9cIiAgICAgICAgICAgICAgICAgICAgIFwiUTExNTYxMS5Ob1wiICAgICAgICAgICAgICAgICAgIFxuWzMyOV0gXCJRMTA5MjQ0Llllc1wiICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>  [1] &quot;Q109244.No&quot;                    &quot;Q115611.Yes&quot;                  
-  [3] &quot;Q113181.Yes&quot;                   &quot;Gender.Male&quot;                  
-  [5] &quot;Q98197.Yes&quot;                    &quot;Q120379.No&quot;                   
-  [7] &quot;HouseholdStatus.married_kids&quot;  &quot;Q101163.Dad&quot;                  
-  [9] &quot;Q120472.Science&quot;               &quot;Q98869.Yes&quot;                   
- [11] &quot;Q119851.No&quot;                    &quot;Q99480.Yes&quot;                   
- [13] &quot;Q105840.No&quot;                    &quot;Q116881.Right&quot;                
- [15] &quot;Q106272.Yes&quot;                   &quot;Q115899.Me&quot;                   
- [17] &quot;Q101596.Yes&quot;                   &quot;Q118892.No&quot;                   
- [19] &quot;Q108855.Yes!&quot;                  &quot;Q106042.No&quot;                   
- [21] &quot;Q110740.PC&quot;                    &quot;Q120014.Yes&quot;                  
- [23] &quot;Q119650.Giving&quot;                &quot;Q102089.Own&quot;                  
- [25] &quot;Q120650.Yes&quot;                   &quot;Q115195.No&quot;                   
- [27] &quot;Q116448.No&quot;                    &quot;Q123621.Yes&quot;                  
- [29] &quot;Q118237.No&quot;                    &quot;Q120194.Try first&quot;            
- [31] &quot;Q106389.No&quot;                    &quot;Q107869.Yes&quot;                  
- [33] &quot;Q111220.No&quot;                    &quot;Q112478.No&quot;                   
- [35] &quot;Q113583.Talk&quot;                  &quot;Q123464.No&quot;                   
- [37] &quot;Q115390.No&quot;                    &quot;Q100680.No&quot;                   
- [39] &quot;Q108342.In-person&quot;             &quot;Q121699.No&quot;                   
- [41] &quot;Q106388.Yes&quot;                   &quot;Q116953.No&quot;                   
- [43] &quot;Q124122.No&quot;                    &quot;Q118117.Yes&quot;                  
- [45] &quot;Q116441.Yes&quot;                   &quot;Q118232.Pragmatist&quot;           
- [47] &quot;Q121700.No&quot;                    &quot;Q119334.Yes&quot;                  
- [49] &quot;Q120012.No&quot;                    &quot;Q111848.No&quot;                   
- [51] &quot;Q122769.Yes&quot;                   &quot;Q122771.Private&quot;              
- [53] &quot;Q120978.No&quot;                    &quot;Q108617.No&quot;                   
- [55] &quot;Q100689.No&quot;                    &quot;Q121699.Yes&quot;                  
- [57] &quot;Income.o150&quot;                   &quot;Q103293.No&quot;                   
- [59] &quot;Q104996.No&quot;                    &quot;Q111580.Supportive&quot;           
- [61] &quot;Q121011.No&quot;                    &quot;Q96024.Yes&quot;                   
- [63] &quot;Q99982.Nope&quot;                   &quot;Q108856.Socialize&quot;            
- [65] &quot;Q106997.Grrr people&quot;           &quot;Q116601.No&quot;                   
- [67] &quot;Q112270.Yes&quot;                   &quot;Q109367.No&quot;                   
- [69] &quot;Q98078.No&quot;                     &quot;Q108754.No&quot;                   
- [71] &quot;Q118233.No&quot;                    &quot;Q124742.Yes&quot;                  
- [73] &quot;Q98197.NA&quot;                     &quot;Q98059.NA&quot;                    
- [75] &quot;Q122770.Yes&quot;                   &quot;Q106993.Yes&quot;                  
- [77] &quot;EducationLevel.hs_diploma&quot;     &quot;Q102687.No&quot;                   
- [79] &quot;YOB&quot;                           &quot;EducationLevel.aa&quot;            
- [81] &quot;Q115777.End&quot;                   &quot;Q122120.Yes&quot;                  
- [83] &quot;Q99716.No&quot;                     &quot;Q102289.Yes&quot;                  
- [85] &quot;Q114517.NA&quot;                    &quot;Q117186.Hot headed&quot;           
- [87] &quot;Q114152.Yes&quot;                   &quot;EducationLevel.NA&quot;            
- [89] &quot;Q102674.No&quot;                    &quot;Q116797.No&quot;                   
- [91] &quot;Q114961.No&quot;                    &quot;Q96024.NA&quot;                    
- [93] &quot;Q116197.A.M.&quot;                  &quot;Q100010.Yes&quot;                  
- [95] &quot;Q115610.No&quot;                    &quot;Q114386.Mysterious&quot;           
- [97] &quot;Q108343.Yes&quot;                   &quot;Q116197.P.M.&quot;                 
- [99] &quot;Q113992.NA&quot;                    &quot;Q108950.Risk-friendly&quot;        
-[101] &quot;Q115602.No&quot;                    &quot;Q100689.NA&quot;                   
-[103] &quot;Q99581.Yes&quot;                    &quot;Q101162.Pessimist&quot;            
-[105] &quot;Q107491.No&quot;                    &quot;Q98578.No&quot;                    
-[107] &quot;Q117193.Standard hours&quot;        &quot;Q98078.NA&quot;                    
-[109] &quot;Q119334.No&quot;                    &quot;Q113584.People&quot;               
-[111] &quot;Q112512.Yes&quot;                   &quot;Q117193.Odd hours&quot;            
-[113] &quot;Q102687.NA&quot;                    &quot;Q99716.NA&quot;                    
-[115] &quot;Q111848.NA&quot;                    &quot;Income.u25&quot;                   
-[117] &quot;Q102906.No&quot;                    &quot;Q108856.Space&quot;                
-[119] &quot;Q98578.Yes&quot;                    &quot;Q113992.Yes&quot;                  
-[121] &quot;Q114386.NA&quot;                    &quot;EducationLevel.in_school&quot;     
-[123] &quot;Q122120.No&quot;                    &quot;Q114748.Yes&quot;                  
-[125] &quot;Q105655.Yes&quot;                   &quot;Q113583.NA&quot;                   
-[127] &quot;Q100562.Yes&quot;                   &quot;Q112512.No&quot;                   
-[129] &quot;Q100010.NA&quot;                    &quot;Q115777.Start&quot;                
-[131] &quot;HouseholdStatus.NA&quot;            &quot;Q98869.NA&quot;                    
-[133] &quot;Q116797.Yes&quot;                   &quot;Q102906.Yes&quot;                  
-[135] &quot;Q120978.Yes&quot;                   &quot;Q108343.No&quot;                   
-[137] &quot;Q105655.No&quot;                    &quot;Q114748.NA&quot;                   
-[139] &quot;Q107491.Yes&quot;                   &quot;Q118233.Yes&quot;                  
-[141] &quot;Q100562.No&quot;                    &quot;Q114961.NA&quot;                   
-[143] &quot;Income.50_74&quot;                  &quot;Q114152.NA&quot;                   
-[145] &quot;Q99581.No&quot;                     &quot;Q115610.Yes&quot;                  
-[147] &quot;Q101162.Optimist&quot;              &quot;Q112270.NA&quot;                   
-[149] &quot;Q117186.Cool headed&quot;           &quot;Q122769.No&quot;                   
-[151] &quot;EducationLevel.dr&quot;             &quot;Q114517.Yes&quot;                  
-[153] &quot;Income.100_150&quot;                &quot;Q119650.Receiving&quot;            
-[155] &quot;Q115390.NA&quot;                    &quot;Q109367.NA&quot;                   
-[157] &quot;Q122770.No&quot;                    &quot;Q100562.NA&quot;                   
-[159] &quot;Q124742.NA&quot;                    &quot;Q113584.Technology&quot;           
-[161] &quot;Gender.NA&quot;                     &quot;Q106993.No&quot;                   
-[163] &quot;Q115195.NA&quot;                    &quot;Q113584.NA&quot;                   
-[165] &quot;HouseholdStatus.partners_kids&quot; &quot;HouseholdStatus.married&quot;      
-[167] &quot;Q121699.NA&quot;                    &quot;Q108950.Cautious&quot;             
-[169] &quot;Q108342.NA&quot;                    &quot;Q115602.Yes&quot;                  
-[171] &quot;Q114748.No&quot;                    &quot;Q102674.Yes&quot;                  
-[173] &quot;Q105655.NA&quot;                    &quot;Q103293.NA&quot;                   
-[175] &quot;Q115602.NA&quot;                    &quot;Q118232.NA&quot;                   
-[177] &quot;Income.NA&quot;                     &quot;HouseholdStatus.single_kids&quot;  
-[179] &quot;Q108950.NA&quot;                    &quot;Q108754.Yes&quot;                  
-[181] &quot;Q102906.NA&quot;                    &quot;Q122771.Public&quot;               
-[183] &quot;EducationLevel.in_college&quot;     &quot;Q99982.Check!&quot;                
-[185] &quot;Q121011.Yes&quot;                   &quot;Q116881.NA&quot;                   
-[187] &quot;Q98059.Only-child&quot;             &quot;Q111580.Demanding&quot;            
-[189] &quot;Q113181.NA&quot;                    &quot;Q123464.Yes&quot;                  
-[191] &quot;Q115899.NA&quot;                    &quot;Q102289.NA&quot;                   
-[193] &quot;Q102289.No&quot;                    &quot;Q106997.NA&quot;                   
-[195] &quot;Q100680.NA&quot;                    &quot;Q101162.NA&quot;                   
-[197] &quot;Q116601.NA&quot;                    &quot;Q99581.NA&quot;                    
-[199] &quot;Q108617.Yes&quot;                   &quot;Q112512.NA&quot;                   
-[201] &quot;Q102089.NA&quot;                    &quot;Q107491.NA&quot;                   
-[203] &quot;Q118237.Yes&quot;                   &quot;Q102674.NA&quot;                   
-[205] &quot;Q107869.NA&quot;                    &quot;Q115611.NA&quot;                   
-[207] &quot;Q120650.No&quot;                    &quot;Q98059.Yes&quot;                   
-[209] &quot;Q104996.Yes&quot;                   &quot;Income.75_99&quot;                 
-[211] &quot;Q111220.NA&quot;                    &quot;Income.25_49&quot;                 
-[213] &quot;Q106388.No&quot;                    &quot;Q116448.NA&quot;                   
-[215] &quot;Q116441.NA&quot;                    &quot;Q118117.No&quot;                   
-[217] &quot;Q101163.NA&quot;                    &quot;Q112478.Yes&quot;                  
-[219] &quot;Q105840.NA&quot;                    &quot;Q115610.NA&quot;                   
-[221] &quot;Q104996.NA&quot;                    &quot;Q108343.NA&quot;                   
-[223] &quot;Q121700.NA&quot;                    &quot;Q120194.NA&quot;                   
-[225] &quot;Q116601.Yes&quot;                   &quot;Q109244.NA&quot;                   
-[227] &quot;Q120012.NA&quot;                    &quot;Q120012.Yes&quot;                  
-[229] &quot;Q106389.Yes&quot;                   &quot;Q108754.NA&quot;                   
-[231] &quot;Q99480.NA&quot;                     &quot;Q106997.Yay people!&quot;          
-[233] &quot;Q106272.NA&quot;                    &quot;Q98578.NA&quot;                    
-[235] &quot;Q106993.NA&quot;                    &quot;Q118892.NA&quot;                   
-[237] &quot;Q100010.No&quot;                    &quot;Q114961.Yes&quot;                  
-[239] &quot;Q114517.No&quot;                    &quot;EducationLevel.bs&quot;            
-[241] &quot;Q124122.NA&quot;                    &quot;Q123621.No&quot;                   
-[243] &quot;Q117193.NA&quot;                    &quot;Q113992.No&quot;                   
-[245] &quot;Q122770.NA&quot;                    &quot;Q117186.NA&quot;                   
-[247] &quot;Q114152.No&quot;                    &quot;Q124742.No&quot;                   
-[249] &quot;Q111580.NA&quot;                    &quot;Q99982.NA&quot;                    
-[251] &quot;Q116797.NA&quot;                    &quot;Q121011.NA&quot;                   
-[253] &quot;Q116953.NA&quot;                    &quot;Q108617.NA&quot;                   
-[255] &quot;Q114386.TMI&quot;                   &quot;Q124122.Yes&quot;                  
-[257] &quot;Q116953.Yes&quot;                   &quot;Q121700.Yes&quot;                  
-[259] &quot;Q109367.Yes&quot;                   &quot;Q115777.NA&quot;                   
-[261] &quot;Q103293.Yes&quot;                   &quot;Q108855.Umm...&quot;               
-[263] &quot;Q120014.NA&quot;                    &quot;Q116441.No&quot;                   
-[265] &quot;Q122771.NA&quot;                    &quot;Q118233.NA&quot;                   
-[267] &quot;Q118117.NA&quot;                    &quot;Q112270.No&quot;                   
-[269] &quot;Q122120.NA&quot;                    &quot;Q106042.NA&quot;                   
-[271] &quot;Q106388.NA&quot;                    &quot;Q106389.NA&quot;                   
-[273] &quot;Q99716.Yes&quot;                    &quot;Q101596.No&quot;                   
-[275] &quot;Q123621.NA&quot;                    &quot;Q116197.NA&quot;                   
-[277] &quot;Q120379.NA&quot;                    &quot;Q102687.Yes&quot;                  
-[279] &quot;Q110740.NA&quot;                    &quot;Q112478.NA&quot;                   
-[281] &quot;Q120194.Study first&quot;           &quot;Q111220.Yes&quot;                  
-[283] &quot;Q122769.NA&quot;                    &quot;Q120014.No&quot;                   
-[285] &quot;Q118232.Idealist&quot;              &quot;Q110740.Mac&quot;                  
-[287] &quot;Q100680.Yes&quot;                   &quot;Q118237.NA&quot;                   
-[289] &quot;Q123464.NA&quot;                    &quot;Q120978.NA&quot;                   
-[291] &quot;Q107869.No&quot;                    &quot;Q108856.NA&quot;                   
-[293] &quot;Q98078.Yes&quot;                    &quot;Q106042.Yes&quot;                  
-[295] &quot;Q116448.Yes&quot;                   &quot;Q108342.Online&quot;               
-[297] &quot;Q119851.NA&quot;                    &quot;HouseholdStatus.partners&quot;     
-[299] &quot;Q101596.NA&quot;                    &quot;Q115390.Yes&quot;                  
-[301] &quot;EducationLevel.ms&quot;             &quot;Q120650.NA&quot;                   
-[303] &quot;Q111848.Yes&quot;                   &quot;Q108855.NA&quot;                   
-[305] &quot;Q102089.Rent&quot;                  &quot;Q120472.NA&quot;                   
-[307] &quot;Q100689.Yes&quot;                   &quot;HouseholdStatus.single&quot;       
-[309] &quot;Q96024.No&quot;                     &quot;Q119334.NA&quot;                   
-[311] &quot;Q115195.Yes&quot;                   &quot;Q118892.Yes&quot;                  
-[313] &quot;Q119851.Yes&quot;                   &quot;Q113583.Tunes&quot;                
-[315] &quot;Q120472.Art&quot;                   &quot;Q119650.NA&quot;                   
-[317] &quot;Q106272.No&quot;                    &quot;Q115899.Circumstances&quot;        
-[319] &quot;Q105840.Yes&quot;                   &quot;Q99480.No&quot;                    
-[321] &quot;Q116881.Happy&quot;                 &quot;Q120379.Yes&quot;                  
-[323] &quot;Q101163.Mom&quot;                   &quot;Q98869.No&quot;                    
-[325] &quot;Gender.Female&quot;                 &quot;Q113181.No&quot;                   
-[327] &quot;Q98197.No&quot;                     &quot;Q115611.No&quot;                   
-[329] &quot;Q109244.Yes&quot;                  </code></pre>
-<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -440,132 +273,103 @@ hc.rfe &lt;- findCorrelation(hcor.rfe)</code></pre>
 <h2>Partial Least Squares</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>plsGrid &lt;- expand.grid(.ncomp = 1:10)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>if (!file.exists(&quot;models/pls_rfe.Rds&quot;)) {
-    set.seed(1056)
-    pls.rfe &lt;- train(
-        Party ~ .,
-        data = train.rfe.dv,
-        method = &quot;pls&quot;,
-        trControl = ctrl,
-        metric = &quot;ROC&quot;,
-        tuneGrid = plsGrid
-    )
-    
-    saveRDS(pls.rfe, &quot;models/pls_rfe.Rds&quot;)
-} else {
-    library(pls)
-    pls.rfe &lt;- readRDS(&quot;models/pls_rfe.Rds&quot;)
-}</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBwbHNcblxuQXR0YWNoaW5nIHBhY2thZ2U6IMOi4oKsy5xwbHPDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpjYXJldMOi4oKs4oSiOlxuXG4gICAgUjJcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20gw6LigqzLnHBhY2thZ2U6c3RhdHPDouKCrOKEojpcblxuICAgIGxvYWRpbmdzXG4ifQ== -->
-<pre><code>Loading required package: pls
-
-Attaching package: â€˜plsâ€™
-
-The following object is masked from â€˜package:caretâ€™:
-
-    R2
-
-The following object is masked from â€˜package:statsâ€™:
-
-    loadings</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>pls.rfe</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFydGlhbCBMZWFzdCBTcXVhcmVzIFxuXG40NDU1IHNhbXBsZXNcbiAgMTkgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuTm8gcHJlLXByb2Nlc3NpbmdcblJlc2FtcGxpbmc6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCkgXG5TdW1tYXJ5IG9mIHNhbXBsZSBzaXplczogNDAxMCwgNDAwOSwgNDAwOSwgNDAxMCwgNDAwOSwgNDAwOSwgLi4uIFxuUmVzYW1wbGluZyByZXN1bHRzIGFjcm9zcyB0dW5pbmcgcGFyYW1ldGVyczpcblxuICBuY29tcCAgUk9DICAgICAgICBTZW5zICAgICAgIFNwZWMgICAgIFxuICAgMSAgICAgMC42Njg0NTY4ICAwLjczNDg0NTkgIDAuNTAxOTQxMlxuICAgMiAgICAgMC42Nzc3NDIzICAwLjcxNzg5NjcgIDAuNTIxNTI0M1xuICAgMyAgICAgMC42NzkyNjA0ICAwLjcyOTM0MjggIDAuNTA4NjIzOFxuICAgNCAgICAgMC42Nzg4ODc0ICAwLjcyODQ5NTMgIDAuNTA5NTkyMlxuICAgNSAgICAgMC42Nzg1MTAwICAwLjcxNDk0ODUgIDAuNTIxMDE2MlxuICAgNiAgICAgMC42NzkzNTMzICAwLjczMjc0MTUgIDAuNTAzODU1MVxuICAgNyAgICAgMC42Nzg4MjE1ICAwLjczMjMxNDIgIDAuNTA0ODE2NlxuICAgOCAgICAgMC42NzkzMDI5ICAwLjczMjMxNDIgIDAuNTAzODU1MVxuICAgOSAgICAgMC42NzkyMzQ1ICAwLjczMTQ2NjggIDAuNTA0MzMzNlxuICAxMCAgICAgMC42NzkwNzA0ICAwLjczMTQ2NjggIDAuNTA1Mjg4MlxuXG5ST0Mgd2FzIHVzZWQgdG8gc2VsZWN0IHRoZSBvcHRpbWFsIG1vZGVsIHVzaW5nICB0aGUgbGFyZ2VzdCB2YWx1ZS5cblRoZSBmaW5hbCB2YWx1ZSB1c2VkIGZvciB0aGUgbW9kZWwgd2FzIG5jb21wID0gNi4gXG4ifQ== -->
-<pre><code>Partial Least Squares 
-
-4455 samples
-  19 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-No pre-processing
-Resampling: Cross-Validated (10 fold) 
-Summary of sample sizes: 4010, 4009, 4009, 4010, 4009, 4009, ... 
-Resampling results across tuning parameters:
-
-  ncomp  ROC        Sens       Spec     
-   1     0.6684568  0.7348459  0.5019412
-   2     0.6777423  0.7178967  0.5215243
-   3     0.6792604  0.7293428  0.5086238
-   4     0.6788874  0.7284953  0.5095922
-   5     0.6785100  0.7149485  0.5210162
-   6     0.6793533  0.7327415  0.5038551
-   7     0.6788215  0.7323142  0.5048166
-   8     0.6793029  0.7323142  0.5038551
-   9     0.6792345  0.7314668  0.5043336
-  10     0.6790704  0.7314668  0.5052882
-
-ROC was used to select the optimal model using  the largest value.
-The final value used for the model was ncomp = 6. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>pred1 &lt;- predict(pls.rfe, valid.rfe.dv)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>confusionMatrix(pred1, valid.party)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MjUgICAgICAgIDI1N1xuICBSZXB1YmxpY2FuICAgICAgMTY1ICAgICAgICAyNjZcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYyMDggICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU5MTYsIDAuNjQ5NClcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA2LjI0MGUtMTAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yMzEzICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA5LjQzMmUtMDYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MjAzICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjUwODYgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjIzMiAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MTcyICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzgxOSAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC42MTI4ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYxNDUgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        425        257
-  Republican      165        266
-                                          
-               Accuracy : 0.6208          
-                 95% CI : (0.5916, 0.6494)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 6.240e-10       
-                                          
-                  Kappa : 0.2313          
- Mcnemar's Test P-Value : 9.432e-06       
-                                          
-            Sensitivity : 0.7203          
-            Specificity : 0.5086          
-         Pos Pred Value : 0.6232          
-         Neg Pred Value : 0.6172          
-             Prevalence : 0.5301          
-         Detection Rate : 0.3819          
-   Detection Prevalence : 0.6128          
-      Balanced Accuracy : 0.6145          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 <div id="svm" class="section level2">
 <h2>SVM</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>library(kernlab)
+svmGrid &lt;- expand.grid(
+    .sigma = sigest(as.matrix(train.rfe.dv[, -20])), 
+    .C = 2^(seq(-4, 4))
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>if (!file.exists(&quot;models/svm_rfe.Rds&quot;)) {
+    set.seed(1056)
+    svm.rfe &lt;- train(
+        Party ~ .,
+        data = train.rfe.dv,
+        method = &quot;svmRadial&quot;,
+        trControl = ctrl,
+        tuneGrid = svmGrid,
+        metric = &quot;ROC&quot;,
+        preProcess = c(&quot;center&quot;, &quot;scale&quot;)
+    )
+    
+    saveRDS(svm.rfe, &quot;models/svm_rfe.Rds&quot;)
+} else {
+    library(kernlab)
+    svm.rfe &lt;- readRDS(&quot;models/svm_rfe.Rds&quot;)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="neural-network" class="section level2">
 <h2>Neural Network</h2>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>nnetGrid &lt;- expand.grid(.size = 1:10, .decay = c(0, 0.1, 1, 2))
+maxSize &lt;- max(nnetGrid$.size)
+numWts &lt;- 1 * (maxSize * (length(train.rfe.dv[, -20]) + 1) + maxSize + 1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>if (!file.exists(&quot;models/nnet_rfe.Rds&quot;)) {
+    set.seed(1056)
+    nnet.rfe &lt;- train(
+        Party ~ .,
+        data = train.rfe.dv,
+        method = &quot;nnet&quot;,
+        trControl = ctrl,
+        tuneGrid = nnetGrid,
+        metric = &quot;ROC&quot;,
+        preProcess = c(&quot;center&quot;, &quot;scale&quot;, &quot;spatialSign&quot;),
+        trace = FALSE,
+        maxit = 2000,
+        MaxNWts = numWts
+    )
+    
+    saveRDS(nnet.rfe, &quot;models/nnet_rfe.Rds&quot;)
+
+} else {
+    library(kernlab)
+    nnet.rfe &lt;- readRDS(&quot;models/nnet_rfe.Rds&quot;)
+}
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkZlYXR1cmUgU2VsZWN0aW9uIE1vZGVscyINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCmBgYHtyfQ0Kc291cmNlKCIyLW1vZGVsX3Rlc3RzLlIiKQ0KYGBgDQoNCiMjIEZlYXR1cmUgU2VsZWN0aW9uDQoNCmBgYHtyfQ0KcmZlQ3RybCA8LSByZmVDb250cm9sKA0KICAgIGZ1bmN0aW9ucyA9IHJmRnVuY3MsDQogICAgbWV0aG9kID0gImN2IiwNCiAgICBzZWVkcyA9IHNlZWRzDQopDQpgYGANCg0KYGBge3J9DQpzdWJzZXRzIDwtIGMoMTo1LCAxMCwgMTUsIDIwLCAyNSkNCmBgYA0KDQpgYGB7cn0NCnNldC5zZWVkKDEwNTYpDQpyZlByb2ZpbGUgPC0gcmZlKA0KICAgIHggPSB0cmFpbi5kdlssIC1jKDEsIDMzMSldLA0KICAgIHkgPSB0cmFpbi5wYXJ0eSwNCiAgICBzaXplcyA9IHN1YnNldHMsDQogICAgcmZlQ29udHJvbCA9IHJmZUN0cmwNCikNCmBgYA0KDQpgYGB7cn0NCnJmUHJvZmlsZQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZGljdG9ycyhyZlByb2ZpbGUpDQpgYGANCg0KYGBge3J9DQpsZGFDdHJsIDwtIHJmZUNvbnRyb2woDQogICAgZnVuY3Rpb25zID0gbGRhRnVuY3MsDQogICAgbWV0aG9kID0gImN2IiwNCiAgICBzZWVkcyA9IHNlZWRzLA0KICAgIGluZGV4ID0gY3JlYXRlRm9sZHModHJhaW4ucGFydHksIDEwLCBUUlVFLCBUUlVFKQ0KKQ0KYGBgDQoNCmBgYHtyfQ0KDQojIGxjIDwtIGZpbmRMaW5lYXJDb21ib3ModHJhaW4uZHZbLCAtYyhoYy5kdiwgMzMxKV0pDQoNCnNldC5zZWVkKDEwNTYpDQpsZGFQcm9maWxlIDwtIHJmZSgNCiAgICB4ID0gdHJhaW4uZHZbLCAtYygxLCAzMzEpXSwNCiAgICB5ID0gdHJhaW4ucGFydHksDQogICAgc2l6ZXMgPSBzdWJzZXRzLA0KICAgIHJmZUNvbnRyb2wgPSBsZGFDdHJsDQopDQpgYGANCg0KYGBge3J9DQpsZGFQcm9maWxlDQpgYGANCg0KYGBge3J9DQpwcmVkaWN0b3JzKGxkYVByb2ZpbGUpDQpgYGANCg0KYGBge3J9DQprZWVwIDwtIGMoIkhvdXNlaG9sZFN0YXR1cyIsICJRMTA5MjQ0IiwgIlExMTU2MTEiLCAiUTExMzE4MSIsICJROTgxOTciKQ0KDQp0cmFpbi5yZmUgPC0gc2VsZWN0KHRyYWluLnNldCwgSG91c2Vob2xkU3RhdHVzLCBRMTA5MjQ0LCBRMTE1NjExLCBRMTEzMTgxLCBROTgxOTcpDQp2YWxpZC5yZmUgPC0gc2VsZWN0KHZhbGlkLnNldCwgSG91c2Vob2xkU3RhdHVzLCBRMTA5MjQ0LCBRMTE1NjExLCBRMTEzMTgxLCBROTgxOTcpDQoNCnJmZS5kdiA8LSBkdW1teVZhcnMofiAuLCBkYXRhID0gdHJhaW4ucmZlKQ0KdHJhaW4ucmZlLmR2IDwtIHByZWRpY3QocmZlLmR2LCBuZXdkYXRhID0gdHJhaW4ucmZlKSAlPiUgDQogICAgYXNfZGF0YV9mcmFtZSgpICU+JQ0KICAgIG11dGF0ZShQYXJ0eSA9IHRyYWluLnBhcnR5KQ0KDQp2YWxpZC5yZmUuZHYgPC0gcHJlZGljdChyZmUuZHYsIG5ld2RhdGEgPSB2YWxpZC5yZmUpICU+JQ0KICAgIGFzX2RhdGFfZnJhbWUoKQ0KYGBgDQoNCmBgYHtyfQ0KaGNvci5yZmUgPC0gY29yKHRyYWluLnJmZS5kdlssIC0yMF0pDQpoYy5yZmUgPC0gZmluZENvcnJlbGF0aW9uKGhjb3IucmZlKQ0KYGBgDQoNCiMjIFBhcnRpYWwgTGVhc3QgU3F1YXJlcw0KDQpgYGB7cn0NCnBsc0dyaWQgPC0gZXhwYW5kLmdyaWQoLm5jb21wID0gMToxMCkNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9wbHNfcmZlLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBwbHMucmZlIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5yZmUuZHYsDQogICAgICAgIG1ldGhvZCA9ICJwbHMiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBwbHNHcmlkDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMocGxzLnJmZSwgIm1vZGVscy9wbHNfcmZlLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShwbHMpDQogICAgcGxzLnJmZSA8LSByZWFkUkRTKCJtb2RlbHMvcGxzX3JmZS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KcGxzLnJmZQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZDEgPC0gcHJlZGljdChwbHMucmZlLCB2YWxpZC5yZmUuZHYpDQpgYGANCg0KYGBge3J9DQpjb25mdXNpb25NYXRyaXgocHJlZDEsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCiMjIFNWTQ0KDQojIyBOZXVyYWwgTmV0d29yaw0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkZlYXR1cmUgU2VsZWN0aW9uIE1vZGVscyINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCmBgYHtyfQ0Kc291cmNlKCIyLW1vZGVsX3Rlc3RzLlIiKQ0KYGBgDQoNCiMjIEZlYXR1cmUgU2VsZWN0aW9uDQoNCmBgYHtyfQ0KcmZlQ3RybCA8LSByZmVDb250cm9sKA0KICAgIGZ1bmN0aW9ucyA9IHJmRnVuY3MsDQogICAgbWV0aG9kID0gImN2IiwNCiAgICBzZWVkcyA9IHNlZWRzDQopDQpgYGANCg0KYGBge3J9DQpzdWJzZXRzIDwtIGMoMTo1LCAxMCwgMTUsIDIwLCAyNSkNCmBgYA0KDQpgYGB7cn0NCnNldC5zZWVkKDEwNTYpDQpyZlByb2ZpbGUgPC0gcmZlKA0KICAgIHggPSB0cmFpbi5kdlssIC1jKDEsIDMzMSldLA0KICAgIHkgPSB0cmFpbi5wYXJ0eSwNCiAgICBzaXplcyA9IHN1YnNldHMsDQogICAgcmZlQ29udHJvbCA9IHJmZUN0cmwNCikNCmBgYA0KDQpgYGB7cn0NCnJmUHJvZmlsZQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZGljdG9ycyhyZlByb2ZpbGUpDQpgYGANCg0KYGBge3J9DQpsZGFDdHJsIDwtIHJmZUNvbnRyb2woDQogICAgZnVuY3Rpb25zID0gbGRhRnVuY3MsDQogICAgbWV0aG9kID0gImN2IiwNCiAgICBzZWVkcyA9IHNlZWRzLA0KICAgIGluZGV4ID0gY3JlYXRlRm9sZHModHJhaW4ucGFydHksIDEwLCBUUlVFLCBUUlVFKQ0KKQ0KYGBgDQoNCmBgYHtyfQ0KDQojIGxjIDwtIGZpbmRMaW5lYXJDb21ib3ModHJhaW4uZHZbLCAtYyhoYy5kdiwgMzMxKV0pDQoNCnNldC5zZWVkKDEwNTYpDQpsZGFQcm9maWxlIDwtIHJmZSgNCiAgICB4ID0gdHJhaW4uZHZbLCAtYygxLCAzMzEpXSwNCiAgICB5ID0gdHJhaW4ucGFydHksDQogICAgc2l6ZXMgPSBzdWJzZXRzLA0KICAgIHJmZUNvbnRyb2wgPSBsZGFDdHJsDQopDQpgYGANCg0KYGBge3J9DQpsZGFQcm9maWxlDQpgYGANCg0KYGBge3J9DQpwcmVkaWN0b3JzKGxkYVByb2ZpbGUpDQpgYGANCg0KYGBge3J9DQprZWVwIDwtIGMoIkhvdXNlaG9sZFN0YXR1cyIsICJRMTA5MjQ0IiwgIlExMTU2MTEiLCAiUTExMzE4MSIsICJROTgxOTciKQ0KDQp0cmFpbi5yZmUgPC0gc2VsZWN0KHRyYWluLnNldCwgSG91c2Vob2xkU3RhdHVzLCBRMTA5MjQ0LCBRMTE1NjExLCBRMTEzMTgxLCBROTgxOTcpDQp2YWxpZC5yZmUgPC0gc2VsZWN0KHZhbGlkLnNldCwgSG91c2Vob2xkU3RhdHVzLCBRMTA5MjQ0LCBRMTE1NjExLCBRMTEzMTgxLCBROTgxOTcpDQoNCnJmZS5kdiA8LSBkdW1teVZhcnMofiAuLCBkYXRhID0gdHJhaW4ucmZlKQ0KdHJhaW4ucmZlLmR2IDwtIHByZWRpY3QocmZlLmR2LCBuZXdkYXRhID0gdHJhaW4ucmZlKSAlPiUgDQogICAgYXNfZGF0YV9mcmFtZSgpICU+JQ0KICAgIG11dGF0ZShQYXJ0eSA9IHRyYWluLnBhcnR5KQ0KDQp2YWxpZC5yZmUuZHYgPC0gcHJlZGljdChyZmUuZHYsIG5ld2RhdGEgPSB2YWxpZC5yZmUpICU+JQ0KICAgIGFzX2RhdGFfZnJhbWUoKQ0KYGBgDQoNCmBgYHtyfQ0KaGNvci5yZmUgPC0gY29yKHRyYWluLnJmZS5kdlssIC0yMF0pDQpoYy5yZmUgPC0gZmluZENvcnJlbGF0aW9uKGhjb3IucmZlKQ0KYGBgDQoNCiMjIFBhcnRpYWwgTGVhc3QgU3F1YXJlcw0KDQpgYGB7cn0NCnBsc0dyaWQgPC0gZXhwYW5kLmdyaWQoLm5jb21wID0gMToxMCkNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9wbHNfcmZlLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBwbHMucmZlIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5yZmUuZHYsDQogICAgICAgIG1ldGhvZCA9ICJwbHMiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBwbHNHcmlkDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMocGxzLnJmZSwgIm1vZGVscy9wbHNfcmZlLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShwbHMpDQogICAgcGxzLnJmZSA8LSByZWFkUkRTKCJtb2RlbHMvcGxzX3JmZS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KcGxzLnJmZQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZDEgPC0gcHJlZGljdChwbHMucmZlLCB2YWxpZC5yZmUuZHYpDQpgYGANCg0KYGBge3J9DQpjb25mdXNpb25NYXRyaXgocHJlZDEsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCiMjIFNWTQ0KDQpgYGB7cn0NCmxpYnJhcnkoa2VybmxhYikNCnN2bUdyaWQgPC0gZXhwYW5kLmdyaWQoDQogICAgLnNpZ21hID0gc2lnZXN0KGFzLm1hdHJpeCh0cmFpbi5yZmUuZHZbLCAtMjBdKSksIA0KICAgIC5DID0gMl4oc2VxKC00LCA0KSkNCikNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9zdm1fcmZlLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBzdm0ucmZlIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5yZmUuZHYsDQogICAgICAgIG1ldGhvZCA9ICJzdm1SYWRpYWwiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICB0dW5lR3JpZCA9IHN2bUdyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhzdm0ucmZlLCAibW9kZWxzL3N2bV9yZmUuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KGtlcm5sYWIpDQogICAgc3ZtLnJmZSA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtX3JmZS5SZHMiKQ0KfQ0KYGBgDQoNCiMjIE5ldXJhbCBOZXR3b3JrDQoNCmBgYHtyfQ0Kbm5ldEdyaWQgPC0gZXhwYW5kLmdyaWQoLnNpemUgPSAxOjEwLCAuZGVjYXkgPSBjKDAsIDAuMSwgMSwgMikpDQptYXhTaXplIDwtIG1heChubmV0R3JpZCQuc2l6ZSkNCm51bVd0cyA8LSAxICogKG1heFNpemUgKiAobGVuZ3RoKHRyYWluLnJmZS5kdlssIC0yMF0pICsgMSkgKyBtYXhTaXplICsgMSkNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9ubmV0X3JmZS5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgbm5ldC5yZmUgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLnJmZS5kdiwNCiAgICAgICAgbWV0aG9kID0gIm5uZXQiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICB0dW5lR3JpZCA9IG5uZXRHcmlkLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoImNlbnRlciIsICJzY2FsZSIsICJzcGF0aWFsU2lnbiIpLA0KICAgICAgICB0cmFjZSA9IEZBTFNFLA0KICAgICAgICBtYXhpdCA9IDIwMDAsDQogICAgICAgIE1heE5XdHMgPSBudW1XdHMNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhubmV0LnJmZSwgIm1vZGVscy9ubmV0X3JmZS5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkoa2VybmxhYikNCiAgICBubmV0LnJmZSA8LSByZWFkUkRTKCJtb2RlbHMvbm5ldF9yZmUuUmRzIikNCn0NCg0KYGBgDQo=</div>
 
 
 
