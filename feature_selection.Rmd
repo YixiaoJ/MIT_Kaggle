@@ -1,0 +1,69 @@
+---
+title: "Feature Selection Models"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+## Feature Selection
+
+```{r}
+rfeCtrl <- rfeControl(
+    functions = rfFuncs,
+    method = "cv",
+    seeds = seeds
+)
+```
+
+```{r}
+subsets <- c(1:5, 10, 15, 20, 25)
+```
+
+```{r}
+set.seed(1056)
+rfProfile <- rfe(
+    x = train.dv[, -c(1, 331)],
+    y = train.party,
+    sizes = subsets,
+    rfeControl = rfeCtrl
+)
+```
+
+```{r}
+rfProfile
+```
+
+```{r}
+ldaCtrl <- rfeControl(
+    functions = ldaFuncs,
+    method = "cv",
+    seeds = seeds,
+    index = createFolds(train.party, 10, TRUE, TRUE)
+)
+```
+
+```{r}
+
+# lc <- findLinearCombos(train.dv[, -c(hc.dv, 331)])
+
+set.seed(1056)
+ldaProfile <- rfe(
+    x = train.dv[, -c(1, 331)],
+    y = train.party,
+    sizes = subsets,
+    rfeControl = ldaCtrl
+)
+```
+
+```{r}
+ldaProfile
+```
+
+## Partial Least Squares
+
+## SVM
+
+## Neural Network
+
