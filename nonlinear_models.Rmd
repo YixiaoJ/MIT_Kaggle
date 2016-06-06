@@ -80,7 +80,17 @@ if (!file.exists("models/svm_dv.Rds")) {
 }
 ```
 
-The final values used for the model were sigma = 0.002439976 and C = 0.5. 
+```{r}
+svm.dv
+```
+
+```{r}
+pred2 <- predict(svm.dv, valid.dv[, -1])
+```
+
+```{r}
+confusionMatrix(pred2, valid.party)
+```
 
 ## Neural Network
 
@@ -114,3 +124,14 @@ if (!file.exists("models/nnet_dv.Rds")) {
 }
 ```
 
+```{r}
+nnet.dv
+```
+
+```{r}
+pred3 <- predict(nnet.dv, valid.dv[, -1])
+```
+
+```{r}
+confusionMatrix(pred3, valid.party)
+```
