@@ -1,7 +1,6 @@
 ---
 title: "C5.0 Models"
 output:
-  html_document: default
   html_notebook: default
 ---
 
