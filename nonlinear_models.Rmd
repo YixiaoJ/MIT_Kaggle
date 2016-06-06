@@ -1,0 +1,62 @@
+---
+title: "Nonlinear Classification Models"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+## Feature Selection
+
+```{r}
+rfeCtrl <- rfeControl(
+    functions = rfFuncs,
+    method = "cv",
+    seeds = seeds
+)
+```
+
+```{r}
+subsets <- c(1:5, 10, 15, 20, 25)
+```
+
+```{r}
+set.seed(1056)
+rfProfile <- rfe(
+    x = train.dv[, -c(1, 331)],
+    y = train.party,
+    sizes = subsets,
+    rfeControl = rfeCtrl
+)
+```
+
+```{r}
+rfProfile
+```
+
+```{r}
+lmCtrl <- rfeControl(
+    functions = lmFuncs,
+    method = "cv",
+    seeds = seeds
+)
+```
+
+```{r}
+set.seed(1056)
+lmProfile <- rfe(
+    x = train.dv[, -c(1, 331)],
+    y = train.party,
+    sizes = subsets,
+    rfeControl = lmCtrl
+)
+```
+
+
+## MARS
+
+## SVM
+
+## Neural Network
+
