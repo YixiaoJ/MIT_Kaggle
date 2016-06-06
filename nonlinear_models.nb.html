@@ -144,108 +144,125 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<div id="feature-selection" class="section level2">
-<h2>Feature Selection</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>rfeCtrl &lt;- rfeControl(
-    functions = rfFuncs,
-    method = &quot;cv&quot;,
-    seeds = seeds
-)</code></pre>
+<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>subsets &lt;- c(1:5, 10, 15, 20, 25)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>set.seed(1056)
-rfProfile &lt;- rfe(
-    x = train.dv[, -c(1, 331)],
-    y = train.party,
-    sizes = subsets,
-    rfeControl = rfeCtrl
-)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>rfProfile</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5SZWN1cnNpdmUgZmVhdHVyZSBzZWxlY3Rpb25cblxuT3V0ZXIgcmVzYW1wbGluZyBtZXRob2Q6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCkgXG5cblJlc2FtcGxpbmcgcGVyZm9ybWFuY2Ugb3ZlciBzdWJzZXQgc2l6ZTpcblxuIFZhcmlhYmxlcyBBY2N1cmFjeSAgS2FwcGEgQWNjdXJhY3lTRCBLYXBwYVNEIFNlbGVjdGVkXG4gICAgICAgICAxICAgMC41NzA2IDAuMTc0MyAgICAwLjAxNzI4IDAuMDMyNzQgICAgICAgICBcbiAgICAgICAgIDIgICAwLjU5OTUgMC4xOTM1ICAgIDAuMDE1MDkgMC4wMzA1MiAgICAgICAgIFxuICAgICAgICAgMyAgIDAuNjA5MCAwLjIxNjkgICAgMC4wMTY5NSAwLjAzMzkyICAgICAgICAgXG4gICAgICAgICA0ICAgMC42MTc3IDAuMjE5MiAgICAwLjAxNjgxIDAuMDMzOTcgICAgICAgICBcbiAgICAgICAgIDUgICAwLjYyMjQgMC4yMzIyICAgIDAuMDE1OTIgMC4wMzE3OSAgICAgICAgKlxuICAgICAgICAxMCAgIDAuNjE1NyAwLjIyMTcgICAgMC4wMTYwMyAwLjAzMzMyICAgICAgICAgXG4gICAgICAgIDE1ICAgMC42MTQ2IDAuMjIwNiAgICAwLjAxNzkzIDAuMDM1ODUgICAgICAgICBcbiAgICAgICAgMjAgICAwLjYwNDAgMC4yMDI0ICAgIDAuMDEzNTUgMC4wMjcwMiAgICAgICAgIFxuICAgICAgICAyNSAgIDAuNTk3OCAwLjE5MDcgICAgMC4wMjAzMSAwLjA0MTU1ICAgICAgICAgXG4gICAgICAgMzI5ICAgMC42MTkzIDAuMjMxNyAgICAwLjAyNDg3IDAuMDQ4ODkgICAgICAgICBcblxuVGhlIHRvcCA1IHZhcmlhYmxlcyAob3V0IG9mIDUpOlxuICAgUTEwOTI0NC5ZZXMsIFExMDkyNDQuTm8sIFExMTU2MTEuWWVzLCBROTgxOTcuWWVzLCBRMTEzMTgxLlllc1xuIn0= -->
-<pre><code>
-Recursive feature selection
-
-Outer resampling method: Cross-Validated (10 fold) 
-
-Resampling performance over subset size:
-
- Variables Accuracy  Kappa AccuracySD KappaSD Selected
-         1   0.5706 0.1743    0.01728 0.03274         
-         2   0.5995 0.1935    0.01509 0.03052         
-         3   0.6090 0.2169    0.01695 0.03392         
-         4   0.6177 0.2192    0.01681 0.03397         
-         5   0.6224 0.2322    0.01592 0.03179        *
-        10   0.6157 0.2217    0.01603 0.03332         
-        15   0.6146 0.2206    0.01793 0.03585         
-        20   0.6040 0.2024    0.01355 0.02702         
-        25   0.5978 0.1907    0.02031 0.04155         
-       329   0.6193 0.2317    0.02487 0.04889         
-
-The top 5 variables (out of 5):
-   Q109244.Yes, Q109244.No, Q115611.Yes, Q98197.Yes, Q113181.Yes</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>lmCtrl &lt;- rfeControl(
-    functions = lmFuncs,
-    method = &quot;cv&quot;,
-    seeds = seeds
-)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>set.seed(1056)
-lmProfile &lt;- rfe(
-    x = train.dv[, -c(1, 331)],
-    y = train.party,
-    sizes = subsets,
-    rfeControl = lmCtrl
-)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
 <div id="mars" class="section level2">
 <h2>MARS</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>marsGrid &lt;- expand.grid(.degree = 1:2, .nprune = 2:38)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>if (!file.exists(&quot;models/mars_dv.Rds&quot;)) {
+    set.seed(1056)
+    mars.dv &lt;- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = &quot;earth&quot;,
+        trControl = ctrl,
+        tuneGrid = marsGrid,
+        metric = &quot;ROC&quot;
+    )
+    
+    saveRDS(mars.dv, &quot;models/mars_dv.Rds&quot;)
+} else {
+    library(earth)
+    mars.dv &lt;- readRDS(&quot;models/mars_dv.Rds&quot;)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="svm" class="section level2">
 <h2>SVM</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>library(kernlab)
+svmGrid &lt;- expand.grid(
+    .sigma = sigest(as.matrix(train.dv[, -c(1, vars)])), 
+    .C = 2^(seq(-4, 4))
+)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>if (!file.exists(&quot;models/svm_dv.Rds&quot;)) {
+    set.seed(1056)
+    svm.dv &lt;- train(
+        Party ~ .,
+        data = svm.dv[, -1],
+        method = &quot;svmRadial&quot;,
+        trControl = ctrl,
+        tuneGrid = svmGrid,
+        metric = &quot;ROC&quot;,
+        preProcess = c(&quot;center&quot;, &quot;scale&quot;)
+    )
+    
+    saveRDS(svm.dv, &quot;models/svm_dv.Rds&quot;)
+
+} else {
+    library(kernlab)
+    svm.dv &lt;- readRDS(&quot;models/svm_dv.Rds&quot;)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The final values used for the model were sigma = 0.002439976 and C = 0.5.</p>
 </div>
 <div id="neural-network" class="section level2">
 <h2>Neural Network</h2>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>nnetGrid &lt;- expand.grid(.size = 1:10, .decay = c(0, 0.1, 1, 2))
+maxSize &lt;- max(nnetGrid$.size)
+numWts &lt;- 1 * (maxSize * (length(train.dv[, -1]) + 1) + maxSize + 1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>if (!file.exists(&quot;models/nnet_dv.Rds&quot;)) {
+    set.seed(1056)
+    nnet.dv &lt;- train(
+        Party ~ .,
+        data = nnet.dv[, -1],
+        method = &quot;nnet&quot;,
+        trControl = ctrl,
+        tuneGrid = nnetGrid,
+        metric = &quot;ROC&quot;,
+        preProcess = c(&quot;center&quot;, &quot;scale&quot;, &quot;spatialSign&quot;),
+        trace = FALSE,
+        maxit = 2000,
+        MaxNWts = numWts
+    )
+    
+    saveRDS(nnet.dv, &quot;models/nnet_dv.Rds&quot;)
+
+} else {
+    library(kernlab)
+    nnet.dv &lt;- readRDS(&quot;models/nnet_dv.Rds&quot;)
+}
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIk5vbmxpbmVhciBDbGFzc2lmaWNhdGlvbiBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnNvdXJjZSgiMi1tb2RlbF90ZXN0cy5SIikNCmBgYA0KDQojIyBGZWF0dXJlIFNlbGVjdGlvbg0KDQpgYGB7cn0NCnJmZUN0cmwgPC0gcmZlQ29udHJvbCgNCiAgICBmdW5jdGlvbnMgPSByZkZ1bmNzLA0KICAgIG1ldGhvZCA9ICJjdiIsDQogICAgc2VlZHMgPSBzZWVkcw0KKQ0KYGBgDQoNCmBgYHtyfQ0Kc3Vic2V0cyA8LSBjKDE6NSwgMTAsIDE1LCAyMCwgMjUpDQpgYGANCg0KYGBge3J9DQpzZXQuc2VlZCgxMDU2KQ0KcmZQcm9maWxlIDwtIHJmZSgNCiAgICB4ID0gdHJhaW4uZHZbLCAtYygxLCAzMzEpXSwNCiAgICB5ID0gdHJhaW4ucGFydHksDQogICAgc2l6ZXMgPSBzdWJzZXRzLA0KICAgIHJmZUNvbnRyb2wgPSByZmVDdHJsDQopDQpgYGANCg0KYGBge3J9DQpyZlByb2ZpbGUNCmBgYA0KDQpgYGB7cn0NCmxtQ3RybCA8LSByZmVDb250cm9sKA0KICAgIGZ1bmN0aW9ucyA9IGxtRnVuY3MsDQogICAgbWV0aG9kID0gImN2IiwNCiAgICBzZWVkcyA9IHNlZWRzDQopDQpgYGANCg0KYGBge3J9DQpzZXQuc2VlZCgxMDU2KQ0KbG1Qcm9maWxlIDwtIHJmZSgNCiAgICB4ID0gdHJhaW4uZHZbLCAtYygxLCAzMzEpXSwNCiAgICB5ID0gdHJhaW4ucGFydHksDQogICAgc2l6ZXMgPSBzdWJzZXRzLA0KICAgIHJmZUNvbnRyb2wgPSBsbUN0cmwNCikNCmBgYA0KDQoNCiMjIE1BUlMNCg0KIyMgU1ZNDQoNCiMjIE5ldXJhbCBOZXR3b3JrDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIk5vbmxpbmVhciBDbGFzc2lmaWNhdGlvbiBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnNvdXJjZSgiMi1tb2RlbF90ZXN0cy5SIikNCmBgYA0KDQojIyBNQVJTDQoNCmBgYHtyfQ0KbWFyc0dyaWQgPC0gZXhwYW5kLmdyaWQoLmRlZ3JlZSA9IDE6MiwgLm5wcnVuZSA9IDI6MzgpDQpgYGANCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvbWFyc19kdi5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgbWFycy5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJlYXJ0aCIsDQogICAgICAgIHRyQ29udHJvbCA9IGN0cmwsDQogICAgICAgIHR1bmVHcmlkID0gbWFyc0dyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMobWFycy5kdiwgIm1vZGVscy9tYXJzX2R2LlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShlYXJ0aCkNCiAgICBtYXJzLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9tYXJzX2R2LlJkcyIpDQp9DQpgYGANCg0KDQojIyBTVk0NCg0KYGBge3J9DQpsaWJyYXJ5KGtlcm5sYWIpDQpzdm1HcmlkIDwtIGV4cGFuZC5ncmlkKA0KICAgIC5zaWdtYSA9IHNpZ2VzdChhcy5tYXRyaXgodHJhaW4uZHZbLCAtYygxLCB2YXJzKV0pKSwgDQogICAgLkMgPSAyXihzZXEoLTQsIDQpKQ0KKQ0KYGBgDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL3N2bV9kdi5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgc3ZtLmR2IDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSBzdm0uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJzdm1SYWRpYWwiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICB0dW5lR3JpZCA9IHN2bUdyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhzdm0uZHYsICJtb2RlbHMvc3ZtX2R2LlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShrZXJubGFiKQ0KICAgIHN2bS5kdiA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtX2R2LlJkcyIpDQp9DQpgYGANCg0KVGhlIGZpbmFsIHZhbHVlcyB1c2VkIGZvciB0aGUgbW9kZWwgd2VyZSBzaWdtYSA9IDAuMDAyNDM5OTc2IGFuZCBDID0gMC41LiANCg0KIyMgTmV1cmFsIE5ldHdvcmsNCg0KYGBge3J9DQpubmV0R3JpZCA8LSBleHBhbmQuZ3JpZCguc2l6ZSA9IDE6MTAsIC5kZWNheSA9IGMoMCwgMC4xLCAxLCAyKSkNCm1heFNpemUgPC0gbWF4KG5uZXRHcmlkJC5zaXplKQ0KbnVtV3RzIDwtIDEgKiAobWF4U2l6ZSAqIChsZW5ndGgodHJhaW4uZHZbLCAtMV0pICsgMSkgKyBtYXhTaXplICsgMSkNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9ubmV0X2R2LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBubmV0LmR2IDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSBubmV0LmR2WywgLTFdLA0KICAgICAgICBtZXRob2QgPSAibm5ldCIsDQogICAgICAgIHRyQ29udHJvbCA9IGN0cmwsDQogICAgICAgIHR1bmVHcmlkID0gbm5ldEdyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIiwgInNwYXRpYWxTaWduIiksDQogICAgICAgIHRyYWNlID0gRkFMU0UsDQogICAgICAgIG1heGl0ID0gMjAwMCwNCiAgICAgICAgTWF4Tld0cyA9IG51bVd0cw0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKG5uZXQuZHYsICJtb2RlbHMvbm5ldF9kdi5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkoa2VybmxhYikNCiAgICBubmV0LmR2IDwtIHJlYWRSRFMoIm1vZGVscy9ubmV0X2R2LlJkcyIpDQp9DQoNCmBgYA0KDQo=</div>
 
 
 

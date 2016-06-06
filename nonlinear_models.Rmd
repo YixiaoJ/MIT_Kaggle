@@ -7,56 +7,96 @@ output: html_notebook
 source("2-model_tests.R")
 ```
 
-## Feature Selection
-
-```{r}
-rfeCtrl <- rfeControl(
-    functions = rfFuncs,
-    method = "cv",
-    seeds = seeds
-)
-```
-
-```{r}
-subsets <- c(1:5, 10, 15, 20, 25)
-```
-
-```{r}
-set.seed(1056)
-rfProfile <- rfe(
-    x = train.dv[, -c(1, 331)],
-    y = train.party,
-    sizes = subsets,
-    rfeControl = rfeCtrl
-)
-```
-
-```{r}
-rfProfile
-```
-
-```{r}
-lmCtrl <- rfeControl(
-    functions = lmFuncs,
-    method = "cv",
-    seeds = seeds
-)
-```
-
-```{r}
-set.seed(1056)
-lmProfile <- rfe(
-    x = train.dv[, -c(1, 331)],
-    y = train.party,
-    sizes = subsets,
-    rfeControl = lmCtrl
-)
-```
-
-
 ## MARS
+
+```{r}
+marsGrid <- expand.grid(.degree = 1:2, .nprune = 2:38)
+```
+
+```{r}
+if (!file.exists("models/mars_dv.Rds")) {
+    set.seed(1056)
+    mars.dv <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "earth",
+        trControl = ctrl,
+        tuneGrid = marsGrid,
+        metric = "ROC"
+    )
+    
+    saveRDS(mars.dv, "models/mars_dv.Rds")
+
+} else {
+    library(earth)
+    mars.dv <- readRDS("models/mars_dv.Rds")
+}
+```
+
 
 ## SVM
 
+```{r}
+library(kernlab)
+svmGrid <- expand.grid(
+    .sigma = sigest(as.matrix(train.dv[, -c(1, vars)])), 
+    .C = 2^(seq(-4, 4))
+)
+```
+
+```{r}
+if (!file.exists("models/svm_dv.Rds")) {
+    set.seed(1056)
+    svm.dv <- train(
+        Party ~ .,
+        data = svm.dv[, -1],
+        method = "svmRadial",
+        trControl = ctrl,
+        tuneGrid = svmGrid,
+        metric = "ROC",
+        preProcess = c("center", "scale")
+    )
+    
+    saveRDS(svm.dv, "models/svm_dv.Rds")
+
+} else {
+    library(kernlab)
+    svm.dv <- readRDS("models/svm_dv.Rds")
+}
+```
+
+The final values used for the model were sigma = 0.002439976 and C = 0.5. 
+
 ## Neural Network
+
+```{r}
+nnetGrid <- expand.grid(.size = 1:10, .decay = c(0, 0.1, 1, 2))
+maxSize <- max(nnetGrid$.size)
+numWts <- 1 * (maxSize * (length(train.dv[, -1]) + 1) + maxSize + 1)
+```
+
+```{r}
+if (!file.exists("models/nnet_dv.Rds")) {
+    set.seed(1056)
+    nnet.dv <- train(
+        Party ~ .,
+        data = nnet.dv[, -1],
+        method = "nnet",
+        trControl = ctrl,
+        tuneGrid = nnetGrid,
+        metric = "ROC",
+        preProcess = c("center", "scale", "spatialSign"),
+        trace = FALSE,
+        maxit = 2000,
+        MaxNWts = numWts
+    )
+    
+    saveRDS(nnet.dv, "models/nnet_dv.Rds")
+
+} else {
+    library(kernlab)
+    nnet.dv <- readRDS("models/nnet_dv.Rds")
+}
+
+```
 
