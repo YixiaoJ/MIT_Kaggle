@@ -54,7 +54,7 @@ confusionMatrix(pred1, valid.party)
 ```{r}
 library(kernlab)
 svmGrid <- expand.grid(
-    .sigma = sigest(as.matrix(train.dv[, -c(1, 7)])), 
+    .sigma = sigest(as.matrix(train.dv[, -c(1, 331)])), 
     .C = 2^(seq(-4, 4))
 )
 ```
@@ -87,7 +87,7 @@ The final values used for the model were sigma = 0.002439976 and C = 0.5.
 ```{r}
 nnetGrid <- expand.grid(.size = 1:10, .decay = c(0, 0.1, 1, 2))
 maxSize <- max(nnetGrid$.size)
-numWts <- 1 * (maxSize * (length(train.dv[, -c(1, 7)]) + 1) + maxSize + 1)
+numWts <- 1 * (maxSize * (length(train.dv[, -c(1, 331)]) + 1) + maxSize + 1)
 ```
 
 ```{r}
