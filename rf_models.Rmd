@@ -94,3 +94,60 @@ vi2 <-varImp(rf.dv)
 plot(vi2, top = 20)
 ```
 
+## Ranger Random Forest
+
+```{r}
+rfGrid <- data.frame(mtry = c(10, 15, 20, 25, 30))
+
+if (!file.exists("models/rf2_set.Rds")) {
+    set.seed(1056)
+    rf2.set <- train(
+        Party ~ .,
+        data = train.set[, -1],
+        method = "ranger",
+        trControl = ctrl,
+        tuneGrid = rfGrid,
+        metric = "ROC",
+        num.trees = 1500,
+        importance = "impurity"
+    )
+    
+    saveRDS(rf2.set, "models/rf2_set.Rds")
+
+} else {
+    library(ranger)
+    rf2.set <- readRDS("models/rf2_set.Rds")
+}
+```
+```{r}
+rf2.set
+```
+
+```{r}
+rfGrid <- data.frame(mtry = c(40, 50, 60))
+
+if (!file.exists("models/rf2_dv.Rds")) {
+    set.seed(1056)
+    rf2.dv <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "ranger",
+        trControl = ctrl,
+        tuneGrid = rfGrid,
+        metric = "ROC",
+        num.trees = 1500,
+        importance = "impurity"
+    )
+    
+    saveRDS(rf2.dv, "models/rf2_dv.Rds")
+
+} else {
+    library(ranger)
+    rf2.dv <- readRDS("models/rf2_dv.Rds")
+}
+```
+
+```{r}
+rf2.dv
+```
+
