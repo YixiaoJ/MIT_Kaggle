@@ -151,3 +151,16 @@ if (!file.exists("models/rf2_dv.Rds")) {
 rf2.dv
 ```
 
+```{r}
+pred3 <- predict(rf2.set, valid.set[, -1])
+pred4 <- predict(rf2.dv, valid.dv[, -1])
+```
+
+```{r}
+confusionMatrix(pred3, valid.party)
+```
+
+```{r}
+confusionMatrix(pred4, valid.party)
+```
+```
