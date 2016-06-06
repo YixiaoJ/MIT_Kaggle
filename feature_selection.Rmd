@@ -158,6 +158,18 @@ if (!file.exists("models/svm_rfe.Rds")) {
 }
 ```
 
+```{r}
+svm.rfe
+```
+
+```{r}
+pred2 <- predict(svm.rfe, valid.rfe.dv)
+```
+
+```{r}
+confusionMatrix(pred2, valid.party)
+```
+
 ## Neural Network
 
 ```{r}
@@ -189,4 +201,16 @@ if (!file.exists("models/nnet_rfe.Rds")) {
     nnet.rfe <- readRDS("models/nnet_rfe.Rds")
 }
 
+```
+
+```{r}
+nnet.rfe
+```
+
+```{r}
+pred3 <- predict(nnet.rfe, valid.rfe.dv)
+```
+
+```{r}
+confusionMatrix(pred3, valid.party)
 ```
