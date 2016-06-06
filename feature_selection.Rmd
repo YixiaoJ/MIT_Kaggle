@@ -36,6 +36,10 @@ rfProfile
 ```
 
 ```{r}
+predictors(rfProfile)
+```
+
+```{r}
 ldaCtrl <- rfeControl(
     functions = ldaFuncs,
     method = "cv",
@@ -61,7 +65,67 @@ ldaProfile <- rfe(
 ldaProfile
 ```
 
+```{r}
+predictors(ldaProfile)
+```
+
+```{r}
+keep <- c("HouseholdStatus", "Q109244", "Q115611", "Q113181", "Q98197")
+
+train.rfe <- select(train.set, HouseholdStatus, Q109244, Q115611, Q113181, Q98197)
+valid.rfe <- select(valid.set, HouseholdStatus, Q109244, Q115611, Q113181, Q98197)
+
+rfe.dv <- dummyVars(~ ., data = train.rfe)
+train.rfe.dv <- predict(rfe.dv, newdata = train.rfe) %>% 
+    as_data_frame() %>%
+    mutate(Party = train.party)
+
+valid.rfe.dv <- predict(rfe.dv, newdata = valid.rfe) %>%
+    as_data_frame()
+```
+
+```{r}
+hcor.rfe <- cor(train.rfe.dv[, -20])
+hc.rfe <- findCorrelation(hcor.rfe)
+```
+
 ## Partial Least Squares
+
+```{r}
+plsGrid <- expand.grid(.ncomp = 1:10)
+```
+
+```{r}
+if (!file.exists("models/pls_rfe.Rds")) {
+    set.seed(1056)
+    pls.rfe <- train(
+        Party ~ .,
+        data = train.rfe.dv,
+        method = "pls",
+        trControl = ctrl,
+        metric = "ROC",
+        tuneGrid = plsGrid
+    )
+    
+    saveRDS(pls.rfe, "models/pls_rfe.Rds")
+
+} else {
+    library(pls)
+    pls.rfe <- readRDS("models/pls_rfe.Rds")
+}
+```
+
+```{r}
+pls.rfe
+```
+
+```{r}
+pred1 <- predict(pls.rfe, valid.rfe.dv)
+```
+
+```{r}
+confusionMatrix(pred1, valid.party)
+```
 
 ## SVM
 
