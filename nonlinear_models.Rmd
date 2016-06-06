@@ -33,6 +33,21 @@ if (!file.exists("models/mars_dv.Rds")) {
 }
 ```
 
+```{r}
+mars.dv
+```
+
+```{r}
+varImp(mars.dv)
+```
+
+```{r}
+pred1 <- predict(mars.dv, valid.dv[, -1])
+```
+
+```{r}
+confusionMatrix(pred1, valid.party)
+```
 
 ## SVM
 
@@ -49,7 +64,7 @@ if (!file.exists("models/svm_dv.Rds")) {
     set.seed(1056)
     svm.dv <- train(
         Party ~ .,
-        data = svm.dv[, -1],
+        data = train.dv[, -1],
         method = "svmRadial",
         trControl = ctrl,
         tuneGrid = svmGrid,
@@ -80,7 +95,7 @@ if (!file.exists("models/nnet_dv.Rds")) {
     set.seed(1056)
     nnet.dv <- train(
         Party ~ .,
-        data = nnet.dv[, -1],
+        data = train.dv[, -1],
         method = "nnet",
         trControl = ctrl,
         tuneGrid = nnetGrid,
