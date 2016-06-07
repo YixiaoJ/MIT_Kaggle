@@ -33,7 +33,7 @@ if (!file.exists("models/rf_set.Rds")) {
     saveRDS(rf.set, "models/rf_set.Rds")
 
 } else {
-    library(rf)
+    library(randomForest)
     rf.set <- readRDS("models/rf_set.Rds")
 }
 ```
@@ -58,7 +58,7 @@ if (!file.exists("models/rf_dv.Rds")) {
     saveRDS(rf.dv, "models/rf_dv.Rds")
 
 } else {
-    library(rf)
+    library(randomForest)
     rf.dv <- readRDS("models/rf_dv.Rds")
 }
 ```
