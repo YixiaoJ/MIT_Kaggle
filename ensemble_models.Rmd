@@ -1,0 +1,37 @@
+---
+title: "Ensemble Models"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+```{r}
+library(caretEnsemble)
+```
+
+```{r}
+cms.rf <- caretModelSpec(method = "ranger", tuneGrid = data.frame(mtry = 20))
+cms.c50 <- caretModelSpec(method = "C5.0", tuneGrid = expand.grid(.winnow = TRUE, .trials = 8, .model = "tree"))
+set.seed(1056)
+cl.rf.c50 <- caretList(
+    # Party ~ .,
+    # data = train.dv[, -1],
+    x = train.dv[, -c(1, 331)],
+    y = train.party,
+    trControl = ctrl,
+    metric = "ROC",
+    tuneList = list(ranger = cms.rf, C5.0 = cms.c50)
+)
+```
+
+```{r}
+cs <- caretStack(cl.rf.c50, method = "glm")
+```
+
+```{r}
+pred <- predict(cs, valid.dv[, -1])
+confusionMatrix(pred, valid.party)
+```
+
