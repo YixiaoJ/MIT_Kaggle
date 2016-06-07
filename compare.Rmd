@@ -1,0 +1,53 @@
+---
+title: "Compare Models"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+```{r}
+library(pls)
+pls.dv <- readRDS("models/pls_dv.Rds")
+
+library(glmnet)
+glmnet.dv <- readRDS("models/glmnet_dv.Rds")
+
+library(pamr)
+nsc.dv <- readRDS("models/nsc_dv.Rds")
+
+library(earth)
+mars.dv <- readRDS("models/mars_dv.Rds")
+
+library(kernlab)
+svm.dv <- readRDS("models/svm_dv.Rds")
+
+nnet.dv <- readRDS("models/nnet_dv.Rds")
+
+library(randomForest)
+rf.set <- readRDS("models/rf_set.Rds")
+rf.dv <- readRDS("models/rf_dv.Rds")
+
+library(ranger)
+rf2.set <- readRDS("models/rf2_set.Rds")
+rf2.dv <- readRDS("models/rf2_dv.Rds")
+
+library(C50)
+c50.data <- readRDS("models/c50_data.Rds")
+c50.set <- readRDS("models/c50_set.Rds")
+c50.dv <- readRDS("models/c50_dv.Rds")
+
+library(xgboost)
+xgb.dv <- readRDS("models/xgb_dv.Rds")
+
+library(gbm)
+gbm.set <- readRDS("models/gbm_set.Rds")
+gbm.dv <- readRDS("models/gbm_dv.Rds")
+```
+
+```{r}
+resamps <- resamples(list(pls = pls.dv, glmnet = glmnet.dv, nsc = nsc.dv, mars = mars.dv, svm = svm.dv, nnet = nnet.dv, rfset = rf.set, rfdv = rf.dv, rf2set = rf2.set, rf2dv = rf2.dv, c50data = c50.data, c50set = c50.set, c50dv = c50.dv, xgb = xgb.dv, gbmset = gbm.set, gbmdv = gbm.dv))
+modelCor(resamps, metric = "ROC")
+```
+
