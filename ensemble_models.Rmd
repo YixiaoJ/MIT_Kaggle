@@ -35,3 +35,26 @@ pred <- predict(cs, valid.dv[, -1])
 confusionMatrix(pred, valid.party)
 ```
 
+```{r}
+cms.mars <- caretModelSpec(method = "earth", tuneGrid = expand.grid(.degree = 1, .nprune = 9))
+cms.c50 <- caretModelSpec(method = "C5.0", tuneGrid = expand.grid(.winnow = TRUE, .trials = 8, .model = "tree"))
+set.seed(1056)
+cl.mars.c50 <- caretList(
+    # Party ~ .,
+    # data = train.dv[, -1],
+    x = train.dv[, -c(1, 331)],
+    y = train.party,
+    trControl = ctrl,
+    metric = "ROC",
+    tuneList = list(earth = cms.mars, C5.0 = cms.c50)
+)
+```
+
+```{r}
+cs2 <- caretStack(cl.mars.c50, method = "glm")
+```
+
+```{r}
+pred2 <- predict(cs2, valid.dv[, -1])
+confusionMatrix(pred2, valid.party)
+```

@@ -144,36 +144,6 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnGRwbHlyw6LigqzihKJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpwbHlyw6LigqzihKI6XG5cbiAgICBhcnJhbmdlLCBjb3VudCwgZGVzYywgZmFpbHdpdGgsIGlkLCBtdXRhdGUsIHJlbmFtZSwgc3VtbWFyaXNlLCBzdW1tYXJpemVcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpzdGF0c8Oi4oKs4oSiOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpiYXNlw6LigqzihKI6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDDouKCrMucdGliYmxlw6LigqzihKJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpkcGx5csOi4oKs4oSiOlxuXG4gICAgYXNfZGF0YV9mcmFtZSwgZGF0YV9mcmFtZSwgZGF0YV9mcmFtZV8sIGZyYW1lX2RhdGEsIGdsaW1wc2UsIGtuaXRfcHJpbnQudHJ1bmNfbWF0LCB0YmxfZGYsIHRpYmJsZSxcbiAgICB0cnVuY19tYXQsIHR5cGVfc3VtXG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogbGF0dGljZVxuTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBnZ3Bsb3QyXG4ifQ== -->
-<pre><code>
-Attaching package: â€˜dplyrâ€™
-
-The following objects are masked from â€˜package:plyrâ€™:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise, summarize
-
-The following objects are masked from â€˜package:statsâ€™:
-
-    filter, lag
-
-The following objects are masked from â€˜package:baseâ€™:
-
-    intersect, setdiff, setequal, union
-
-
-Attaching package: â€˜tibbleâ€™
-
-The following objects are masked from â€˜package:dplyrâ€™:
-
-    as_data_frame, data_frame, data_frame_, frame_data, glimpse, knit_print.trunc_mat, tbl_df, tibble,
-    trunc_mat, type_sum
-
-Loading required package: lattice
-Loading required package: ggplot2</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -239,37 +209,11 @@ The following object is masked from â€˜package:ggplot2â€™:
 <!-- rnb-source-begin -->
 <pre class="r"><code>svm.dv &lt;- readRDS(&quot;models/svm_dv.Rds&quot;)
 nnet.dv &lt;- readRDS(&quot;models/nnet_dv.Rds&quot;)
-library(randomForest)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmFuZG9tRm9yZXN0IDQuNi0xMlxuVHlwZSByZk5ld3MoKSB0byBzZWUgbmV3IGZlYXR1cmVzL2NoYW5nZXMvYnVnIGZpeGVzLlxuXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnHJhbmRvbUZvcmVzdMOi4oKs4oSiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmdncGxvdDLDouKCrOKEojpcblxuICAgIG1hcmdpblxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpkcGx5csOi4oKs4oSiOlxuXG4gICAgY29tYmluZVxuIn0= -->
-<pre><code>randomForest 4.6-12
-Type rfNews() to see new features/changes/bug fixes.
-
-Attaching package: â€˜randomForestâ€™
-
-The following object is masked from â€˜package:ggplot2â€™:
-
-    margin
-
-The following object is masked from â€˜package:dplyrâ€™:
-
-    combine</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>rf.set &lt;- readRDS(&quot;models/rf_set.Rds&quot;)
+library(randomForest)
+rf.set &lt;- readRDS(&quot;models/rf_set.Rds&quot;)
 rf.dv &lt;- readRDS(&quot;models/rf_dv.Rds&quot;)
-library(ranger)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnHJhbmdlcsOi4oKs4oSiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOnJhbmRvbUZvcmVzdMOi4oKs4oSiOlxuXG4gICAgaW1wb3J0YW5jZVxuIn0= -->
-<pre><code>
-Attaching package: â€˜rangerâ€™
-
-The following object is masked from â€˜package:randomForestâ€™:
-
-    importance</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>rf2.set &lt;- readRDS(&quot;models/rf2_set.Rds&quot;)
+library(ranger)
+rf2.set &lt;- readRDS(&quot;models/rf2_set.Rds&quot;)
 rf2.dv &lt;- readRDS(&quot;models/rf2_dv.Rds&quot;)
 library(C50)
 c50.data &lt;- readRDS(&quot;models/c50_data.Rds&quot;)

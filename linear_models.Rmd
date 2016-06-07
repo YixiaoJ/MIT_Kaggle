@@ -17,9 +17,9 @@ if (!file.exists("models/pls_dv.Rds")) {
     set.seed(1056)
     pls.dv <- train(
         Party ~ .,
-        data = train.dv[, -c(1, hc.dv)],
+        data = train.dv[, -1],
         method = "pls",
-        trControl = ctrl,
+        trControl = trCtrl,
         metric = "ROC",
         tuneGrid = plsGrid,
         preProcess = c("nzv", "pca")
@@ -103,7 +103,7 @@ nsc.dv
 ```
 
 ```{r}
-pred1 <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
+pred1 <- predict(pls.dv, valid.dv[, -1])
 pred2 <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
 pred3 <- predict(nsc.dv, valid.dv[, -c(1, hc.dv)])
 ```
