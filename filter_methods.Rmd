@@ -122,7 +122,7 @@ pCorrection <- function(score, x, y) {
 ```
 
 ```{r}
-lda.pval <- ldaSBF
+lda.pval <- treebagSBF
 lda.pval$score <- pScore
 lda.pval$summary <- fiveStats
 lda.pval$filter <- pCorrection
@@ -139,11 +139,31 @@ sbfCtrl <- sbfControl(
 ```
 
 ```{r}
+train.lgl <- train.dv %>%
+    mutate_each(funs(as.logical), -USER_ID, -YOB, -Party)
+```
+
+```{r}
 lda.filter <- sbf(
-    x = train.dv[, -c(1, 331)],
-    y = train.party,
-    tol = 1.0e-12,
-    sbfControl = sbfCtrl
+    # x = train.dv[, -c(1, 331)],
+    # y = train.party,
+    Party ~ .,
+    data = train.data[, -1],
+    # tol = 1.0e-12,
+    sbfControl = sbfCtrl,
+    na.action = na.pass
 )
+```
+
+```{r}
+lda.filter
+```
+
+```{r}
+pred3 <- predict(lda.filter, valid.dv[, -c(1, 131)])
+```
+
+```{r}
+confusionMatrix(pred3, valid.party)
 ```
 
