@@ -15,7 +15,9 @@ rand_ctrl <- trainControl(
     number = 5, 
     search = "random", 
     classProbs = TRUE, 
-    summaryFunction = twoClassSummary
+    summaryFunction = twoClassSummary,
+    savePredictions = "all",
+    verboseIter = TRUE
 )
 ```
 
@@ -33,6 +35,15 @@ rand_search <- train(
 ```
 
 ```{r}
+saveRDS(rand_search, "models/rand_search.Rds")
+```
+
+```{r}
+rand_search <- readRDS("models/rand_search.Rds")
+```
+
+
+```{r}
 ggplot(rand_search) +
     scale_x_log10() +
     scale_y_log10()
@@ -42,13 +53,19 @@ ggplot(rand_search) +
 getTrainPerf(rand_search)
 ```
 
+```{r}
+rand_search$bestTune
+```
+
 
 ```{r}
 ctrlOp <- trainControl(
     method = "cv", 
     number = 5, 
     classProbs = TRUE,
-    summaryFunction = twoClassSummary
+    summaryFunction = twoClassSummary,
+    savePredictions = "all",
+    verboseIter = TRUE
 )
 ```
 
@@ -64,7 +81,7 @@ svm_fit_bayes <- function(logC, logSigma) {
             tuneGrid = data.frame(C = exp(logC), sigma = exp(logSigma))
         )
     )
-    list(Score = -getTrainPerf(mod)[, "TrainROC"], Pred = 0)
+    list(Score = getTrainPerf(mod)[, "TrainROC"], Pred = mod$pred)
 }
 ```
 
@@ -79,7 +96,7 @@ bounds <- list(logC = c(lower_bounds[1], upper_bounds[1]),
 initial_grid <- rand_search$results[, c("C", "sigma", "ROC")]
 initial_grid$C <- log(initial_grid$C)
 initial_grid$sigma <- log(initial_grid$sigma)
-initial_grid$ROC <- -initial_grid$ROC
+# initial_grid$ROC <- -initial_grid$ROC
 names(initial_grid) <- c("logC", "logSigma", "Value")
 ```
 
@@ -90,12 +107,14 @@ set.seed(8086)
 ba_search <- BayesianOptimization(
     svm_fit_bayes,
     bounds = bounds,
-    init_grid_dt = initial_grid,
-    init_points = 0,
-    n_iter = 30,
-    acq = "ucb",
-    kappa = 1,
-    eps = 0.0,
+    # init_grid_dt = initial_grid,
+    init_points = 10,
+    n_iter = 5,
+    # init_points = 0,
+    # n_iter = 30,
+    # acq = "ucb",
+    # kappa = 1,
+    # eps = 0.0,
     verbose = TRUE
 )
 ```
@@ -106,13 +125,21 @@ final_search <- train(
     Party ~ .,
     data = train.dv[, -1],
     method = "svmRadial",
-    tuneGrid = data.frame(C = exp(ba_search$Best_Par["logC"]), 
+    tuneGrid = data.frame(C = exp(ba_search$Best_Par["logC"]),
                           sigma = exp(ba_search$Best_Par["logSigma"])),
+    # tuneGrid = data.frame(C = rand_search$bestTune["C"], 
+    #                       sigma = rand_search$bestTune["sigma"]),
     metric = "ROC",
     preProcess = c("center", "scale"),
     trControl = ctrlOp
 )
 ```
+
+```{r}
+pred.svm <- predict(final_search, valid.dv[, -1])
+confusionMatrix(pred.svm, valid.party)
+```
+
 
 ```{r}
 compare_models(final_search, rand_search)
@@ -123,8 +150,89 @@ postResample(predict(rand_search, valid.dv[, -1]), valid.party)
 ```
 
 ```{r}
-postResample(predict(final_serach, valid.dv[, -1]), valid.party)
+postResample(predict(final_search, valid.dv[, -1]), valid.party)
 ```
 
+```{r}
+library(xgboost)
+party <- as.numeric(train.party == "Republican")
+dtrain <- xgb.DMatrix(as.matrix(train.dv[, -c(1, 331)]), label = party)
+```
 
+```{r}
+library(rBayesianOptimization)
+cv_folds <- KFold(train.party, nfolds = 5, stratified = TRUE, seed = 0)
+```
+
+```{r}
+xgb_cv_bayes <- function(max.depth, min_child_weight, subsample) {
+    cv <- xgb.cv(params = list(booster = "gbtree",
+                                eta = 0.01,
+                                max_depth = max.depth,
+                                min_child_weight = min_child_weight,
+                                subsample = subsample,
+                                colsample_bytree = 0.3,
+                                lambda = 1,
+                                alpha = 0,
+                                objective = "binary:logistic",
+                                eval_metric = "auc"),
+                 data = dtrain,
+                 nround = 100,
+                 folds = cv_folds,
+                 prediction = TRUE,
+                 showsd = TRUE,
+                 early.stop.round = 5,
+                 maximize = TRUE,
+                 verbose = TRUE)
+    list(Score = cv$dt[, max(test.auc.mean)],
+         Pred = cv$pred)
+}
+```
+
+```{r}
+OPT_Res <- BayesianOptimization(xgb_cv_bayes,
+                                bounds = list(max.depth = c(2L, 6L),
+                                              min_child_weight = c(1L, 10L),
+                                              subsample = c(0.5, 0.8)),
+                                init_points = 10,
+                                n_iter = 20,
+                                acq = "ucb",
+                                kappa = 2.576,
+                                eps = 0.0,
+                                verbose = TRUE)
+```
+
+```{r}
+xgb_final <- xgboost(params = list(booster = "gbtree",
+                                eta = 0.01,
+                                max_depth = OPT_Res$Best_Par["max.depth"],
+                                min_child_weight = OPT_Res$Best_Par["min_child_weight"],
+                                subsample = OPT_Res$Best_Par["subsample"],
+                                colsample_bytree = 0.3,
+                                lambda = 1,
+                                alpha = 0,
+                                objective = "binary:logistic",
+                                eval_metric = "auc"),
+                 data = dtrain,
+                 nround = 100,
+                 # folds = cv_folds,
+                 prediction = TRUE,
+                 # showsd = TRUE,
+                 early.stop.round = 5,
+                 maximize = TRUE,
+                 verbose = TRUE
+)
+```
+
+```{r}
+vparty <- as.numeric(valid.party == "Republican")
+vtrain <- xgb.DMatrix(as.matrix(valid.dv[, -c(1, 331)]), label = vparty)
+
+pred <- predict(xgb_final, vtrain)
+```
+
+```{r}
+predxgb <- ifelse(pred < 0.5, "Democrat", "Republican")
+confusionMatrix(predxgb, valid.party)
+```
 

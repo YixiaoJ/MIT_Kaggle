@@ -23,7 +23,7 @@ trCtrl <- trainControl(
     returnResamp = "final",
     summaryFunction = twoClassSummary,
     index = createMultiFolds(train.party, 10, 5),
-    savePredictions = TRUE
+    savePredictions = "all"
 )
 
 ctrl <- trainControl(
@@ -34,7 +34,7 @@ ctrl <- trainControl(
     returnResamp = "final",
     summaryFunction = twoClassSummary,
     index = createFolds(train.party, 10, TRUE, TRUE),
-    savePredictions = TRUE
+    savePredictions = "all"
 )
 
 # function to run multiple sets of models
