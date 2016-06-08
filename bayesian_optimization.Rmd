@@ -10,7 +10,13 @@ source("2-model_tests.R")
 ```
 
 ```{r}
-rand_ctrl <- trainControl(method = "cv", number = 5, search = "random", classProbs = TRUE)
+rand_ctrl <- trainControl(
+    method = "cv", 
+    number = 5, 
+    search = "random", 
+    classProbs = TRUE, 
+    summaryFunction = twoClassSummary
+)
 ```
 
 ```{r}
@@ -38,7 +44,12 @@ getTrainPerf(rand_search)
 
 
 ```{r}
-ctrlOp <- trainControl(method = "cv", number = 5, classProbs = TRUE)
+ctrlOp <- trainControl(
+    method = "cv", 
+    number = 5, 
+    classProbs = TRUE,
+    summaryFunction = twoClassSummary
+)
 ```
 
 ```{r}
@@ -67,7 +78,7 @@ bounds <- list(logC = c(lower_bounds[1], upper_bounds[1]),
 ```{r}
 initial_grid <- rand_search$results[, c("C", "sigma", "ROC")]
 initial_grid$C <- log(initial_grid$C)
-initial_grid$sigma <- log(intial_grid$sigma)
+initial_grid$sigma <- log(initial_grid$sigma)
 initial_grid$ROC <- -initial_grid$ROC
 names(initial_grid) <- c("logC", "logSigma", "Value")
 ```
