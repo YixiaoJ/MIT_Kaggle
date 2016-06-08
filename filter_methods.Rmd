@@ -1,0 +1,149 @@
+---
+title: "Feature Selection Filter"
+output: html_notebook
+---
+
+```{r}
+source("2-model_tests.R")
+```
+
+```{r}
+pScore <- function(x, y) {
+    numX <- length(unique(x))
+    if (numX > 2) {
+        out <- t.test(x ~ y)$p.value
+    } else {
+        out <- fisher.test(factor(x), y)$p.value
+    }
+    out
+}
+```
+
+```{r}
+scores <- apply(X = train.data.n[, -c(1, 7)], MARGIN = 2, FUN = pScore, y = train.data.n$Party)
+```
+
+```{r}
+scores2 <- apply(X = train.dv[, -c(1, 331)], MARGIN = 2, FUN = pScore, y = train.dv$Party)
+```
+
+```{r}
+pval <- sort(scores[scores < 0.05])
+```
+
+```{r}
+pval.dv <- sort(scores2[scores2 < 0.05])
+```
+
+```{r}
+names(pval.dv)
+```
+
+```{r}
+c50Grid <- expand.grid(
+    .winnow = c(TRUE, FALSE),
+    .trials = c(1:9, 1:10 * 10),
+    .model = c("tree", "rules")
+)
+```
+
+```{r}
+train.pval <- train.data[, names(pval)]
+train.pval$Party <- train.party
+```
+
+```{r}
+set.seed(1056)
+c50.pval.data <- train(
+    # x = train.data[, names(pval)],
+    # y = train.party,
+    Party ~ .,
+    data = train.pval,
+    method = "C5.0",
+    trControl = ctrl,
+    na.action = na.pass,
+    metric = "ROC",
+    tuneGrid = c50Grid
+)
+```
+
+```{r}
+c50.pval.data
+```
+
+```{r}
+pred1 <- predict(c50.pval.data, valid.data[, names(pval)], na.action = na.pass)
+```
+
+```{r}
+confusionMatrix(pred1, valid.party)
+```
+
+```{r}
+rfGrid <- data.frame(mtry = round(seq(5, ncol(train.pval) - 1, length.out = 5)))
+```
+
+```{r}
+set.seed(1056)
+rngr.pval.set <- train(
+    # Party ~ .,
+    # data = train.pval,
+    x = train.set[, names(pval)],
+    y = train.party,
+    method = "ranger",
+    trControl = ctrl,
+    tuneGrid = rfGrid,
+    metric = "ROC",
+    num.trees = 1500,
+    importance = "impurity"
+)
+```
+
+```{r}
+rngr.pval.set
+```
+
+```{r}
+pred2 <- predict(rngr.pval.set, valid.set[, names(pval)])
+```
+
+```{r}
+confusionMatrix(pred2, valid.party)
+```
+
+```{r}
+fiveStats <- function(...) c(twoClassSummary(...), defaultSummary(...))
+```
+
+```{r}
+pCorrection <- function(score, x, y) {
+    score <- p.adjust(score, "bonferroni")
+}
+```
+
+```{r}
+lda.pval <- ldaSBF
+lda.pval$score <- pScore
+lda.pval$summary <- fiveStats
+lda.pval$filter <- pCorrection
+```
+
+```{r}
+sbfCtrl <- sbfControl(
+    method = "repeatedcv",
+    repeats = 5,
+    verbose = TRUE,
+    functions = lda.pval,
+    index = createMultiFolds(train.party)
+)
+```
+
+```{r}
+lda.filter <- sbf(
+    x = train.dv[, -c(1, 331)],
+    y = train.party,
+    tol = 1.0e-12,
+    sbfControl = sbfCtrl
+)
+```
+
