@@ -1,0 +1,119 @@
+---
+title: "Bayesian Optimization"
+output: html_notebook
+---
+
+http://blog.revolutionanalytics.com/2016/06/bayesian-optimization-of-machine-learning-models.html
+
+```{r}
+source("2-model_tests.R")
+```
+
+```{r}
+rand_ctrl <- trainControl(method = "cv", number = 5, search = "random")
+```
+
+```{r}
+set.seed(1056)
+rand_search <- train(
+    Party ~ .,
+    data = train.dv[, -1],
+    method = "svmRadial",
+    tuneLength = 20,
+    metric = "ROC",
+    preProcess = c("center", "scale"),
+    trControl = rand_ctrl
+)
+```
+
+```{r}
+ggplot(rand_search) +
+    scale_x_log10() +
+    scale_y_log10()
+```
+
+```{r}
+getTrainPerf(rand_search)
+```
+
+
+```{r}
+ctrlOp <- trainControl(method = "cv", number = 5)
+```
+
+```{r}
+svm_fit_bayes <- function(logC, logSigma) {
+    txt <- capture.output(
+        mod <- train(
+            Party ~ .,
+            data = train.dv[, -1],
+            method = "svmRadial",
+            metric = "ROC",
+            trControl = ctrlOp,
+            tuneGrid = data.frame(C = exp(logC), sigma = exp(logSigma))
+        )
+    )
+    list(Score = -getTrainPerf(mod)[, "TrainROC"], Pred = 0)
+}
+```
+
+```{r}
+lower_bounds <- c(logC = -5, logSigma = -9)
+upper_bounds <- c(logC = 20, logSigma = -0.75)
+bounds <- list(logC = c(lower_bounds[1], upper_bounds[1]),
+               logSigma = c(lower_bounds[2], upper_bounds[2]))
+```
+
+```{r}
+initial_grid <- rand_search$results[, c("C", "sigma", "ROC")]
+initial_grid$C <- log(initial_grid$C)
+initial_grid$sigma <- log(intial_grid$sigma)
+initial_grid$ROC <- -initial_grid$ROC
+names(initial_grid) <- c("logC", "logSigma", "Value")
+```
+
+```{r}
+library(rBayesianOptimization)
+
+set.seed(8086)
+ba_search <- BayesianOptimization(
+    svm_fit_bayes,
+    bounds = bounds,
+    init_grid_dt = initial_grid,
+    init_points = 0,
+    n_iter = 30,
+    acq = "ucb",
+    kappa = 1,
+    eps = 0.0,
+    verbose = TRUE
+)
+```
+
+```{r}
+set.seed(1056)
+final_search <- train(
+    Party ~ .,
+    data = train.dv[, -1],
+    method = "svmRadial",
+    tuneGrid = data.frame(C = exp(ba_search$Best_Par["logC"]), 
+                          sigma = exp(ba_search$Best_Par["logSigma"])),
+    metric = "ROC",
+    preProcess = c("center", "scale"),
+    trControl = ctrlOp
+)
+```
+
+```{r}
+compare_models(final_search, rand_search)
+```
+
+```{r}
+postResample(predict(rand_search, valid.dv[, -1]), valid.party)
+```
+
+```{r}
+postResample(predict(final_serach, valid.dv[, -1]), valid.party)
+```
+
+
+
