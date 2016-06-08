@@ -10,7 +10,7 @@ source("2-model_tests.R")
 ```
 
 ```{r}
-rand_ctrl <- trainControl(method = "cv", number = 5, search = "random")
+rand_ctrl <- trainControl(method = "cv", number = 5, search = "random", classProbs = TRUE)
 ```
 
 ```{r}
@@ -38,7 +38,7 @@ getTrainPerf(rand_search)
 
 
 ```{r}
-ctrlOp <- trainControl(method = "cv", number = 5)
+ctrlOp <- trainControl(method = "cv", number = 5, classProbs = TRUE)
 ```
 
 ```{r}

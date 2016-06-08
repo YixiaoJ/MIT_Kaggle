@@ -145,71 +145,12 @@ $(document).ready(function () {
 <p><a href="http://blog.revolutionanalytics.com/2016/06/bayesian-optimization-of-machine-learning-models.html" class="uri">http://blog.revolutionanalytics.com/2016/06/bayesian-optimization-of-machine-learning-models.html</a></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnGRwbHlyw6LigqzihKJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpwbHlyw6LigqzihKI6XG5cbiAgICBhcnJhbmdlLCBjb3VudCwgZGVzYywgZmFpbHdpdGgsIGlkLCBtdXRhdGUsIHJlbmFtZSwgc3VtbWFyaXNlLFxuICAgIHN1bW1hcml6ZVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOnN0YXRzw6LigqzihKI6XG5cbiAgICBmaWx0ZXIsIGxhZ1xuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmJhc2XDouKCrOKEojpcblxuICAgIGludGVyc2VjdCwgc2V0ZGlmZiwgc2V0ZXF1YWwsIHVuaW9uXG5cblxuQXR0YWNoaW5nIHBhY2thZ2U6IMOi4oKsy5x0aWJibGXDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmRwbHlyw6LigqzihKI6XG5cbiAgICBhc19kYXRhX2ZyYW1lLCBkYXRhX2ZyYW1lLCBkYXRhX2ZyYW1lXywgZnJhbWVfZGF0YSwgZ2xpbXBzZSxcbiAgICBrbml0X3ByaW50LnRydW5jX21hdCwgdGliYmxlLCB0cnVuY19tYXQsIHR5cGVfc3VtXG5cblxuQXR0YWNoaW5nIHBhY2thZ2U6IMOi4oKsy5xwdXJycsOi4oKs4oSiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmRwbHlyw6LigqzihKI6XG5cbiAgICBvcmRlcl9ieVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpwbHlyw6LigqzihKI6XG5cbiAgICBjb21wYWN0XG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmNhcmV0w6LigqzihKI6XG5cbiAgICBsaWZ0XG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogUmNwcFxubWljZSAyLjI1IDIwMTUtMTEtMDlcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogZm9yZWFjaFxuZm9yZWFjaDogc2ltcGxlLCBzY2FsYWJsZSBwYXJhbGxlbCBwcm9ncmFtbWluZyBmcm9tIFJldm9sdXRpb24gQW5hbHl0aWNzXG5Vc2UgUmV2b2x1dGlvbiBSIGZvciBzY2FsYWJpbGl0eSwgZmF1bHQgdG9sZXJhbmNlIGFuZCBtb3JlLlxuaHR0cDovL3d3dy5yZXZvbHV0aW9uYW5hbHl0aWNzLmNvbVxuXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnGZvcmVhY2jDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOnB1cnJyw6LigqzihKI6XG5cbiAgICBhY2N1bXVsYXRlLCB3aGVuXG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogaXRlcmF0b3JzXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IHBhcmFsbGVsXG4ifQ== -->
-<pre><code>
-Attaching package: â€˜dplyrâ€™
-
-The following objects are masked from â€˜package:plyrâ€™:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise,
-    summarize
-
-The following objects are masked from â€˜package:statsâ€™:
-
-    filter, lag
-
-The following objects are masked from â€˜package:baseâ€™:
-
-    intersect, setdiff, setequal, union
-
-
-Attaching package: â€˜tibbleâ€™
-
-The following objects are masked from â€˜package:dplyrâ€™:
-
-    as_data_frame, data_frame, data_frame_, frame_data, glimpse,
-    knit_print.trunc_mat, tibble, trunc_mat, type_sum
-
-
-Attaching package: â€˜purrrâ€™
-
-The following object is masked from â€˜package:dplyrâ€™:
-
-    order_by
-
-The following object is masked from â€˜package:plyrâ€™:
-
-    compact
-
-The following object is masked from â€˜package:caretâ€™:
-
-    lift
-
-Loading required package: Rcpp
-mice 2.25 2015-11-09
-Loading required package: foreach
-foreach: simple, scalable parallel programming from Revolution Analytics
-Use Revolution R for scalability, fault tolerance and more.
-http://www.revolutionanalytics.com
-
-Attaching package: â€˜foreachâ€™
-
-The following objects are masked from â€˜package:purrrâ€™:
-
-    accumulate, when
-
-Loading required package: iterators
-Loading required package: parallel</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>rand_ctrl &lt;- trainControl(method = &quot;cv&quot;, number = 5, search = &quot;random&quot;)</code></pre>
+<pre class="r"><code>rand_ctrl &lt;- trainControl(method = &quot;cv&quot;, number = 5, search = &quot;random&quot;, classProbs = TRUE)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -227,133 +168,60 @@ rand_search &lt;- train(
     trControl = rand_ctrl
 )</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBpbiB0cmFpbi5kZWZhdWx0KHgsIHksIHdlaWdodHMgPSB3LCAuLi4pIDpcbiAgVGhlIG1ldHJpYyBcIlJPQ1wiIHdhcyBub3QgaW4gdGhlIHJlc3VsdCBzZXQuIEFjY3VyYWN5IHdpbGwgYmUgdXNlZCBpbnN0ZWFkLlxuIn0= -->
+<pre><code>Warning in train.default(x, y, weights = w, ...) :
+  The metric &quot;ROC&quot; was not in the result set. Accuracy will be used instead.</code></pre>
+<!-- rnb-output-end -->
+<!-- unknown-chunk-output -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>ggplot(rand_search) +
-    scale_x_log10() +
-    scale_y_log10()</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>getTrainPerf(rand_search)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>library(caret)
-ctrlOp &lt;- trainControl(method = &quot;cv&quot;)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>svm_fit_bayes &lt;- function(logC, logSigma) {
-    txt &lt;- capture.output(
-        mod &lt;- train(
-            Party ~ .,
-            data = train.dv,
-            method = &quot;svmRadial&quot;,
-            metric = &quot;ROC&quot;,
-            trControl = ctrlOp,
-            tuneGrid = data.frame(C = exp(logC), sigma = exp(logSigma))
-        )
-    )
-    list(Score = -getTrainPerf(mod)[, &quot;TrainROC&quot;], Pred = 0)
-}</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>lower_bounds &lt;- c(logC = -5, logSigma = -9)
-upper_bounds &lt;- c(logC = 20, logSigma = -0.75)
-bounds &lt;- list(logC = c(lower_bounds[1], upper_bounds[1]),
-               logSigma = c(lower_bounds[2], upper_bounds[2]))</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>initial_grid &lt;- rand_search$results[, c(&quot;C&quot;, &quot;sigma&quot;, &quot;ROC&quot;)]
-initial_grid$C &lt;- log(initial_grid$C)
-initial_grid$sigma &lt;- log(intial_grid$sigma)
-initial_grid$ROC &lt;- -initial_grid$ROC
-names(initial_grid) &lt;- c(&quot;logC&quot;, &quot;logSigma&quot;, &quot;Value&quot;)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>library(rBayesianOptimization)
-
-set.seed(8086)
-ba_search &lt;- BayesianOptimization(
-    svm_fit_bayes,
-    bounds = bounds,
-    init_grid_dt = initial_grid,
-    init_points = 0,
-    n_iter = 30,
-    acq = &quot;ucb&quot;,
-    kappa = 1,
-    eps = 0.0,
-    verbose = TRUE
-)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>set.seed(1056)
-final_search &lt;- train(
-    Party ~ .,
-    data = train.dv[, -1],
-    method = &quot;svmRadial&quot;,
-    tuneGrid = data.frame(C = exp(ba_search$Best_Par[&quot;logC&quot;]), 
-                          sigma = exp(ba_search$Best_Par[&quot;logSigma&quot;])),
-    metric = &quot;ROC&quot;,
-    preProcess = c(&quot;center&quot;, &quot;scale&quot;),
-    trControl = ctrlOp
-)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>compare_models(final_search, rand_search)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>postResample(predict(rand_search, valid.dv[, -1]), valid.party)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin -->
-<pre class="r"><code>postResample(predict(final_serach, valid.dv[, -1]), valid.party)</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkJheWVzaWFuIE9wdGltaXphdGlvbiINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCmh0dHA6Ly9ibG9nLnJldm9sdXRpb25hbmFseXRpY3MuY29tLzIwMTYvMDYvYmF5ZXNpYW4tb3B0aW1pemF0aW9uLW9mLW1hY2hpbmUtbGVhcm5pbmctbW9kZWxzLmh0bWwNCg0KYGBge3J9DQpzb3VyY2UoIjItbW9kZWxfdGVzdHMuUiIpDQpgYGANCg0KYGBge3J9DQpyYW5kX2N0cmwgPC0gdHJhaW5Db250cm9sKG1ldGhvZCA9ICJjdiIsIG51bWJlciA9IDUsIHNlYXJjaCA9ICJyYW5kb20iKQ0KYGBgDQoNCmBgYHtyfQ0Kc2V0LnNlZWQoMTA1NikNCnJhbmRfc2VhcmNoIDwtIHRyYWluKA0KICAgIFBhcnR5IH4gLiwNCiAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgbWV0aG9kID0gInN2bVJhZGlhbCIsDQogICAgdHVuZUxlbmd0aCA9IDIwLA0KICAgIG1ldHJpYyA9ICJST0MiLA0KICAgIHByZVByb2Nlc3MgPSBjKCJjZW50ZXIiLCAic2NhbGUiKSwNCiAgICB0ckNvbnRyb2wgPSByYW5kX2N0cmwNCikNCmBgYA0KDQpgYGB7cn0NCmdncGxvdChyYW5kX3NlYXJjaCkgKw0KICAgIHNjYWxlX3hfbG9nMTAoKSArDQogICAgc2NhbGVfeV9sb2cxMCgpDQpgYGANCg0KYGBge3J9DQpnZXRUcmFpblBlcmYocmFuZF9zZWFyY2gpDQpgYGANCg0KDQpgYGB7cn0NCmN0cmxPcCA8LSB0cmFpbkNvbnRyb2wobWV0aG9kID0gImN2IiwgbnVtYmVyID0gNSkNCmBgYA0KDQpgYGB7cn0NCnN2bV9maXRfYmF5ZXMgPC0gZnVuY3Rpb24obG9nQywgbG9nU2lnbWEpIHsNCiAgICB0eHQgPC0gY2FwdHVyZS5vdXRwdXQoDQogICAgICAgIG1vZCA8LSB0cmFpbigNCiAgICAgICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgICAgIGRhdGEgPSB0cmFpbi5kdlssIC0xXSwNCiAgICAgICAgICAgIG1ldGhvZCA9ICJzdm1SYWRpYWwiLA0KICAgICAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgICAgICB0ckNvbnRyb2wgPSBjdHJsT3AsDQogICAgICAgICAgICB0dW5lR3JpZCA9IGRhdGEuZnJhbWUoQyA9IGV4cChsb2dDKSwgc2lnbWEgPSBleHAobG9nU2lnbWEpKQ0KICAgICAgICApDQogICAgKQ0KICAgIGxpc3QoU2NvcmUgPSAtZ2V0VHJhaW5QZXJmKG1vZClbLCAiVHJhaW5ST0MiXSwgUHJlZCA9IDApDQp9DQpgYGANCg0KYGBge3J9DQpsb3dlcl9ib3VuZHMgPC0gYyhsb2dDID0gLTUsIGxvZ1NpZ21hID0gLTkpDQp1cHBlcl9ib3VuZHMgPC0gYyhsb2dDID0gMjAsIGxvZ1NpZ21hID0gLTAuNzUpDQpib3VuZHMgPC0gbGlzdChsb2dDID0gYyhsb3dlcl9ib3VuZHNbMV0sIHVwcGVyX2JvdW5kc1sxXSksDQogICAgICAgICAgICAgICBsb2dTaWdtYSA9IGMobG93ZXJfYm91bmRzWzJdLCB1cHBlcl9ib3VuZHNbMl0pKQ0KYGBgDQoNCmBgYHtyfQ0KaW5pdGlhbF9ncmlkIDwtIHJhbmRfc2VhcmNoJHJlc3VsdHNbLCBjKCJDIiwgInNpZ21hIiwgIlJPQyIpXQ0KaW5pdGlhbF9ncmlkJEMgPC0gbG9nKGluaXRpYWxfZ3JpZCRDKQ0KaW5pdGlhbF9ncmlkJHNpZ21hIDwtIGxvZyhpbnRpYWxfZ3JpZCRzaWdtYSkNCmluaXRpYWxfZ3JpZCRST0MgPC0gLWluaXRpYWxfZ3JpZCRST0MNCm5hbWVzKGluaXRpYWxfZ3JpZCkgPC0gYygibG9nQyIsICJsb2dTaWdtYSIsICJWYWx1ZSIpDQpgYGANCg0KYGBge3J9DQpsaWJyYXJ5KHJCYXllc2lhbk9wdGltaXphdGlvbikNCg0Kc2V0LnNlZWQoODA4NikNCmJhX3NlYXJjaCA8LSBCYXllc2lhbk9wdGltaXphdGlvbigNCiAgICBzdm1fZml0X2JheWVzLA0KICAgIGJvdW5kcyA9IGJvdW5kcywNCiAgICBpbml0X2dyaWRfZHQgPSBpbml0aWFsX2dyaWQsDQogICAgaW5pdF9wb2ludHMgPSAwLA0KICAgIG5faXRlciA9IDMwLA0KICAgIGFjcSA9ICJ1Y2IiLA0KICAgIGthcHBhID0gMSwNCiAgICBlcHMgPSAwLjAsDQogICAgdmVyYm9zZSA9IFRSVUUNCikNCmBgYA0KDQpgYGB7cn0NCnNldC5zZWVkKDEwNTYpDQpmaW5hbF9zZWFyY2ggPC0gdHJhaW4oDQogICAgUGFydHkgfiAuLA0KICAgIGRhdGEgPSB0cmFpbi5kdlssIC0xXSwNCiAgICBtZXRob2QgPSAic3ZtUmFkaWFsIiwNCiAgICB0dW5lR3JpZCA9IGRhdGEuZnJhbWUoQyA9IGV4cChiYV9zZWFyY2gkQmVzdF9QYXJbImxvZ0MiXSksIA0KICAgICAgICAgICAgICAgICAgICAgICAgICBzaWdtYSA9IGV4cChiYV9zZWFyY2gkQmVzdF9QYXJbImxvZ1NpZ21hIl0pKSwNCiAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIiksDQogICAgdHJDb250cm9sID0gY3RybE9wDQopDQpgYGANCg0KYGBge3J9DQpjb21wYXJlX21vZGVscyhmaW5hbF9zZWFyY2gsIHJhbmRfc2VhcmNoKQ0KYGBgDQoNCmBgYHtyfQ0KcG9zdFJlc2FtcGxlKHByZWRpY3QocmFuZF9zZWFyY2gsIHZhbGlkLmR2WywgLTFdKSwgdmFsaWQucGFydHkpDQpgYGANCg0KYGBge3J9DQpwb3N0UmVzYW1wbGUocHJlZGljdChmaW5hbF9zZXJhY2gsIHZhbGlkLmR2WywgLTFdKSwgdmFsaWQucGFydHkpDQpgYGANCg0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkJheWVzaWFuIE9wdGltaXphdGlvbiINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCmh0dHA6Ly9ibG9nLnJldm9sdXRpb25hbmFseXRpY3MuY29tLzIwMTYvMDYvYmF5ZXNpYW4tb3B0aW1pemF0aW9uLW9mLW1hY2hpbmUtbGVhcm5pbmctbW9kZWxzLmh0bWwNCg0KYGBge3J9DQpzb3VyY2UoIjItbW9kZWxfdGVzdHMuUiIpDQpgYGANCg0KYGBge3J9DQpyYW5kX2N0cmwgPC0gdHJhaW5Db250cm9sKG1ldGhvZCA9ICJjdiIsIG51bWJlciA9IDUsIHNlYXJjaCA9ICJyYW5kb20iLCBjbGFzc1Byb2JzID0gVFJVRSkNCmBgYA0KDQpgYGB7cn0NCnNldC5zZWVkKDEwNTYpDQpyYW5kX3NlYXJjaCA8LSB0cmFpbigNCiAgICBQYXJ0eSB+IC4sDQogICAgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgIG1ldGhvZCA9ICJzdm1SYWRpYWwiLA0KICAgIHR1bmVMZW5ndGggPSAyMCwNCiAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIiksDQogICAgdHJDb250cm9sID0gcmFuZF9jdHJsDQopDQpgYGANCg0KYGBge3J9DQpnZ3Bsb3QocmFuZF9zZWFyY2gpICsNCiAgICBzY2FsZV94X2xvZzEwKCkgKw0KICAgIHNjYWxlX3lfbG9nMTAoKQ0KYGBgDQoNCmBgYHtyfQ0KZ2V0VHJhaW5QZXJmKHJhbmRfc2VhcmNoKQ0KYGBgDQoNCg0KYGBge3J9DQpjdHJsT3AgPC0gdHJhaW5Db250cm9sKG1ldGhvZCA9ICJjdiIsIG51bWJlciA9IDUsIGNsYXNzUHJvYnMgPSBUUlVFKQ0KYGBgDQoNCmBgYHtyfQ0Kc3ZtX2ZpdF9iYXllcyA8LSBmdW5jdGlvbihsb2dDLCBsb2dTaWdtYSkgew0KICAgIHR4dCA8LSBjYXB0dXJlLm91dHB1dCgNCiAgICAgICAgbW9kIDwtIHRyYWluKA0KICAgICAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICAgICAgbWV0aG9kID0gInN2bVJhZGlhbCIsDQogICAgICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgICAgIHRyQ29udHJvbCA9IGN0cmxPcCwNCiAgICAgICAgICAgIHR1bmVHcmlkID0gZGF0YS5mcmFtZShDID0gZXhwKGxvZ0MpLCBzaWdtYSA9IGV4cChsb2dTaWdtYSkpDQogICAgICAgICkNCiAgICApDQogICAgbGlzdChTY29yZSA9IC1nZXRUcmFpblBlcmYobW9kKVssICJUcmFpblJPQyJdLCBQcmVkID0gMCkNCn0NCmBgYA0KDQpgYGB7cn0NCmxvd2VyX2JvdW5kcyA8LSBjKGxvZ0MgPSAtNSwgbG9nU2lnbWEgPSAtOSkNCnVwcGVyX2JvdW5kcyA8LSBjKGxvZ0MgPSAyMCwgbG9nU2lnbWEgPSAtMC43NSkNCmJvdW5kcyA8LSBsaXN0KGxvZ0MgPSBjKGxvd2VyX2JvdW5kc1sxXSwgdXBwZXJfYm91bmRzWzFdKSwNCiAgICAgICAgICAgICAgIGxvZ1NpZ21hID0gYyhsb3dlcl9ib3VuZHNbMl0sIHVwcGVyX2JvdW5kc1syXSkpDQpgYGANCg0KYGBge3J9DQppbml0aWFsX2dyaWQgPC0gcmFuZF9zZWFyY2gkcmVzdWx0c1ssIGMoIkMiLCAic2lnbWEiLCAiUk9DIildDQppbml0aWFsX2dyaWQkQyA8LSBsb2coaW5pdGlhbF9ncmlkJEMpDQppbml0aWFsX2dyaWQkc2lnbWEgPC0gbG9nKGludGlhbF9ncmlkJHNpZ21hKQ0KaW5pdGlhbF9ncmlkJFJPQyA8LSAtaW5pdGlhbF9ncmlkJFJPQw0KbmFtZXMoaW5pdGlhbF9ncmlkKSA8LSBjKCJsb2dDIiwgImxvZ1NpZ21hIiwgIlZhbHVlIikNCmBgYA0KDQpgYGB7cn0NCmxpYnJhcnkockJheWVzaWFuT3B0aW1pemF0aW9uKQ0KDQpzZXQuc2VlZCg4MDg2KQ0KYmFfc2VhcmNoIDwtIEJheWVzaWFuT3B0aW1pemF0aW9uKA0KICAgIHN2bV9maXRfYmF5ZXMsDQogICAgYm91bmRzID0gYm91bmRzLA0KICAgIGluaXRfZ3JpZF9kdCA9IGluaXRpYWxfZ3JpZCwNCiAgICBpbml0X3BvaW50cyA9IDAsDQogICAgbl9pdGVyID0gMzAsDQogICAgYWNxID0gInVjYiIsDQogICAga2FwcGEgPSAxLA0KICAgIGVwcyA9IDAuMCwNCiAgICB2ZXJib3NlID0gVFJVRQ0KKQ0KYGBgDQoNCmBgYHtyfQ0Kc2V0LnNlZWQoMTA1NikNCmZpbmFsX3NlYXJjaCA8LSB0cmFpbigNCiAgICBQYXJ0eSB+IC4sDQogICAgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgIG1ldGhvZCA9ICJzdm1SYWRpYWwiLA0KICAgIHR1bmVHcmlkID0gZGF0YS5mcmFtZShDID0gZXhwKGJhX3NlYXJjaCRCZXN0X1BhclsibG9nQyJdKSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgIHNpZ21hID0gZXhwKGJhX3NlYXJjaCRCZXN0X1BhclsibG9nU2lnbWEiXSkpLA0KICAgIG1ldHJpYyA9ICJST0MiLA0KICAgIHByZVByb2Nlc3MgPSBjKCJjZW50ZXIiLCAic2NhbGUiKSwNCiAgICB0ckNvbnRyb2wgPSBjdHJsT3ANCikNCmBgYA0KDQpgYGB7cn0NCmNvbXBhcmVfbW9kZWxzKGZpbmFsX3NlYXJjaCwgcmFuZF9zZWFyY2gpDQpgYGANCg0KYGBge3J9DQpwb3N0UmVzYW1wbGUocHJlZGljdChyYW5kX3NlYXJjaCwgdmFsaWQuZHZbLCAtMV0pLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQpgYGB7cn0NCnBvc3RSZXNhbXBsZShwcmVkaWN0KGZpbmFsX3NlcmFjaCwgdmFsaWQuZHZbLCAtMV0pLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQoNCg0K</div>
 
 
 
