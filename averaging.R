@@ -174,6 +174,13 @@ vote.wrong <- filter(valid.vote, pred != party) %>%
     select(-(vote:party)) %>%
     summarize_each(funs(sum(.) / 397))
 
+vote.correct <- filter(valid.vote, pred == party) %>%
+    mutate_each(funs(ifelse(. == TRUE, "Republican", "Democrat")), -(vote:party)) %>%
+    mutate_each(funs(factor(., levels = c("Democrat", "Republican"))), -(vote:party)) %>%
+    mutate_each(funs(. == party), -(vote:party)) %>%
+    select(-(vote:party)) %>%
+    summarize_each(funs(sum(.) / 716))
+
 test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = pred.avg.test)
 
 mod <- str_replace_all(as.character(Sys.time()), "-|:| ", "")
