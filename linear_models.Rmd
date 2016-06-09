@@ -33,6 +33,35 @@ if (!file.exists("models/pls_dv.Rds")) {
 }
 ```
 
+```{r}
+set.seed(1056)
+kpls.dv <- train(
+    Party ~ .,
+    data = train.dv[, -c(1, hc.dv)],
+    # data = train.set[, -1],
+    method = "kernelpls",
+    trControl = trCtrl,
+    metric = "ROC",
+    tuneGrid = plsGrid,
+    preProcess = c("center", "scale")
+)
+```
+
+```{r}
+kpls.dv
+```
+
+```{r}
+# pred.kpls.dv <- predict(kpls.dv, valid.set[, -1])
+pred.kpls.dv <- predict(kpls.dv, valid.dv[, -c(1, hc.dv)])
+confusionMatrix(pred.kpls.dv, valid.party)
+```
+
+```{r}
+varImp(kpls.dv)
+```
+
+
 ## Penalized Models
 
 ```{r}
@@ -62,6 +91,28 @@ if (!file.exists("models/glmnet_dv.Rds")) {
     glmnet.dv <- readRDS("models/glmnet_dv.Rds")
 }
 ```
+```{r}
+library(glmnet)
+glmnGrid <- expand.grid(
+    .alpha = c(0, 0.1, 0.2, 0.4, 0.6, 0.8, 1), 
+    .lambda = seq(0.1, 0.2, length = 40)
+)
+```
+
+
+```{r}
+set.seed(1056)
+glmnet.dv <- train(
+    Party ~ .,
+    data = train.dv[, -c(1, hc.dv)],
+    method = "glmnet",
+    trControl = ctrl,
+    metric = "ROC",
+    tuneGrid = glmnGrid,
+    preProcess = c("nzv", "pca")
+)
+```
+
 
 ## Nearest Shrunken Centroids
 
