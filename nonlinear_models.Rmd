@@ -92,6 +92,35 @@ pred2 <- predict(svm.dv, valid.dv[, -1])
 confusionMatrix(pred2, valid.party)
 ```
 
+### Linear Kernel
+```{r}
+
+```
+
+
+```{r}
+if (!file.exists("models/svmL_dv.Rds")) {
+    set.seed(1056)
+    svmL.dv <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "svmLinear",
+        trControl = ctrl,
+        # tuneGrid = svmGrid,
+        tuneLength = 10,
+        metric = "ROC",
+        preProcess = c("center", "scale")
+    )
+    
+    saveRDS(svmL.dv, "models/svmL_dv.Rds")
+
+} else {
+    library(kernlab)
+    svmL.dv <- readRDS("models/svmL_dv.Rds")
+}
+```
+
+
 ## Neural Network
 
 ```{r}
