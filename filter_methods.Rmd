@@ -36,12 +36,6 @@ names(pval)
 ```
 
 ```{r}
-pval.dv <- dummyVars()
-```
-
-
-
-```{r}
 pval.dv <- sort(scores2[scores2 < 0.05])
 ```
 
@@ -149,7 +143,7 @@ cms.pls <- caretModelSpec(method = "pls", tuneGrid = expand.grid(.ncomp = 2))
 cms.c50 <- caretModelSpec(method = "C5.0", tuneGrid = expand.grid(.winnow = FALSE, .trials = 10, .model = "tree"))
 cms.rngr <- caretModelSpec(method = "ranger", tuneGrid = data.frame(mtry = 5))
 set.seed(1056)
-cl.pls.c50 <- caretList(
+cl.pls.c50.rngr <- caretList(
     # Party ~ .,
     # data = train.dv[, -1],
     x = train.dv[, names(pval.dv)],
@@ -166,7 +160,7 @@ saveRDS(cl.pls.c50, "models/cl_pls_c50_rngr.Rds")
 
 
 ```{r}
-cs <- caretStack(cl.pls.c50, method = "glm")
+cs. <- caretStack(cl.pls.c50, method = "glm")
 cs
 ```
 
