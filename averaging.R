@@ -181,7 +181,12 @@ vote.correct <- filter(valid.vote, pred == party) %>%
     select(-(vote:party)) %>%
     summarize_each(funs(sum(.) / 716))
 
-test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = pred.avg.test)
+test.vote <- test.avg %>%
+    mutate_each(funs(ifelse(. == "Republican", TRUE, FALSE)))
+test.vote$vote <- rowSums(test.vote)
+pred.test.vote <- ifelse(test.vote$vote >= 10, "Republican", "Democrat")
+
+test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = pred.test.vote)
 
 mod <- str_replace_all(as.character(Sys.time()), "-|:| ", "")
 write_csv(test.submit, paste0("submission_", mod, ".csv"))
