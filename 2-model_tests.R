@@ -15,6 +15,9 @@ for(i in 1:50) seeds[[i]] <- sample.int(1000, 40)
 seeds[[51]] <- sample.int(1000, 1)
 
 # set train control
+
+rcv.index <- createMultiFolds(train.party, 10, 5)
+
 trCtrl <- trainControl(
     method = "repeatedcv",
     repeats = 5,
@@ -22,9 +25,11 @@ trCtrl <- trainControl(
     classProbs = TRUE,
     returnResamp = "final",
     summaryFunction = twoClassSummary,
-    index = createMultiFolds(train.party, 10, 5),
+    index = rcv.index,
     savePredictions = "all"
 )
+
+cv.index <- createFolds(train.party, 10, TRUE, TRUE)
 
 ctrl <- trainControl(
     method = "cv",
@@ -33,7 +38,7 @@ ctrl <- trainControl(
     classProbs = TRUE,
     returnResamp = "final",
     summaryFunction = twoClassSummary,
-    index = createFolds(train.party, 10, TRUE, TRUE),
+    index = cv.index,
     savePredictions = "all"
 )
 
