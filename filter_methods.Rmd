@@ -133,8 +133,10 @@ confusionMatrix(pred2, valid.party)
 library(caretEnsemble)
 ```
 
+### Correlation
+
 ```{r}
-resamps <- resamples(list(pls = pls.pval.dv, c50 = c50.pval.dv, rngr = rngr.pval.dv))
+resamps <- resamples(list(pls = pls.pval.dv, c50 = c50.pval.dv, rngr = rngr.pval.dv, svm = svm.pval.dv))
 modelCor(resamps, metric = "ROC")
 ```
 
@@ -158,10 +160,14 @@ cl.pls.c50.rngr <- caretList(
 saveRDS(cl.pls.c50, "models/cl_pls_c50_rngr.Rds")
 ```
 
+```{r}
+cl.pls.c50.rngr <- readRDS("models/cl_pls_c50_rngr.Rds")
+```
+
 
 ```{r}
-cs. <- caretStack(cl.pls.c50, method = "glm")
-cs
+stack.mod <- caretStack(cl.pls.c50.rngr, method = "glm")
+saveRDS(stack.mod, "models/stack_pls_c50_rngr_pval_dv.Rds")
 ```
 
 ```{r}
@@ -210,7 +216,7 @@ saveRDS(rngr.pval.dv, "models/ranger_pval_dv.Rds")
 ```
 
 ```{r}
-rngr.pval.dv
+rngr.pval.dv <- readRDS("models/ranger_pval_dv.Rds")
 ```
 
 
@@ -221,6 +227,68 @@ pred2 <- predict(rngr.pval.set, valid.set[, names(pval)])
 ```{r}
 confusionMatrix(pred2, valid.party)
 ```
+
+### SVM
+
+```{r}
+library(kernlab)
+svmGrid <- expand.grid(
+    .sigma = sigest(as.matrix(train.dv[, names(pval.dv)])), 
+    .C = 2^(seq(-4, 4))
+)
+```
+
+```{r}
+set.seed(1056)
+svm.pval.dv <- train(
+    # Party ~ .,
+    # data = train.dv[, -1],
+    x = train.dv[, names(pval.dv)],
+    y = train.party,
+    method = "svmRadial",
+    trControl = ctrl,
+    tuneGrid = svmGrid,
+    metric = "ROC",
+    preProcess = c("center", "scale")
+)
+```
+
+```{r}
+train.pval <- train.dv[, names(pval.dv)]
+train.pval$Party <- train.party
+
+set.seed(1056)
+svm.pval.dv2 <- train(
+    Party ~ .,
+    data = train.pval,
+    # x = train.dv[, names(pval.dv)],
+    # y = train.party,
+    method = "svmRadial",
+    trControl = ctrl,
+    tuneGrid = svmGrid,
+    metric = "ROC",
+    preProcess = c("center", "scale")
+)
+```
+
+```{r}
+saveRDS(svm.pval.dv, "models/svm_pval_dv.Rds")
+```
+
+```{r}
+svm.pval.dv$resample
+```
+
+
+```{r}
+pred4 <- predict(svm.pval.dv, valid.dv[, names(pval.dv)])
+confusionMatrix(pred4, valid.party)
+```
+
+
+### SBF
+
+**Not Working**
 
 ```{r}
 fiveStats <- function(...) c(twoClassSummary(...), defaultSummary(...))

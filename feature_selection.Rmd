@@ -163,6 +163,11 @@ svm.rfe <- rfe(
 ```
 
 ```{r}
+saveRDS(svm.rfe, "models/svm_rfe.Rds")
+```
+
+
+```{r}
 if (!file.exists("models/svm_rfe.Rds")) {
     set.seed(1056)
     svm.rfe <- train(
