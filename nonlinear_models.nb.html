@@ -145,8 +145,30 @@ $(document).ready(function () {
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>NA</code></pre>
+<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnE1BU1PDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpkcGx5csOi4oKs4oSiOlxuXG4gICAgc2VsZWN0XG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogZm9yZWFjaFxuZm9yZWFjaDogc2ltcGxlLCBzY2FsYWJsZSBwYXJhbGxlbCBwcm9ncmFtbWluZyBmcm9tIFJldm9sdXRpb24gQW5hbHl0aWNzXG5Vc2UgUmV2b2x1dGlvbiBSIGZvciBzY2FsYWJpbGl0eSwgZmF1bHQgdG9sZXJhbmNlIGFuZCBtb3JlLlxuaHR0cDovL3d3dy5yZXZvbHV0aW9uYW5hbHl0aWNzLmNvbVxuXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnGZvcmVhY2jDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOnB1cnJyw6LigqzihKI6XG5cbiAgICBhY2N1bXVsYXRlLCB3aGVuXG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogaXRlcmF0b3JzXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IHBhcmFsbGVsXG4ifQ== -->
+<pre><code>
+Attaching package: â€˜MASSâ€™
+
+The following object is masked from â€˜package:dplyrâ€™:
+
+    select
+
+Loading required package: foreach
+foreach: simple, scalable parallel programming from Revolution Analytics
+Use Revolution R for scalability, fault tolerance and more.
+http://www.revolutionanalytics.com
+
+Attaching package: â€˜foreachâ€™
+
+The following objects are masked from â€˜package:purrrâ€™:
+
+    accumulate, when
+
+Loading required package: iterators
+Loading required package: parallel</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="mars" class="section level2">
@@ -476,12 +498,89 @@ Prediction   Democrat Republican
     )
     
     saveRDS(svmL.dv, &quot;models/svmL_dv.Rds&quot;)
-
 } else {
     library(kernlab)
     svmL.dv &lt;- readRDS(&quot;models/svmL_dv.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBrZXJubGFiXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDDouKCrMuca2VybmxhYsOi4oKs4oSiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmdncGxvdDLDouKCrOKEojpcblxuICAgIGFscGhhXG5cbldhcm5pbmcgaW4gbm9taW5hbFRyYWluV29ya2Zsb3coeCA9IHgsIHkgPSB5LCB3dHMgPSB3ZWlnaHRzLCBpbmZvID0gdHJhaW5JbmZvLCAgOlxuICBUaGVyZSB3ZXJlIG1pc3NpbmcgdmFsdWVzIGluIHJlc2FtcGxlZCBwZXJmb3JtYW5jZSBtZWFzdXJlcy5cbiJ9 -->
+<pre><code>Loading required package: kernlab
+
+Attaching package: â€˜kernlabâ€™
+
+The following object is masked from â€˜package:ggplot2â€™:
+
+    alpha
+
+Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo,  :
+  There were missing values in resampled performance measures.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuRml0dGluZyBmaW5hbCBtb2RlbCBvbiBmdWxsIHRyYWluaW5nIHNldFxuIn0= -->
+<pre><code>Aggregating results
+Fitting final model on full training set</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>svmL.dv
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiU3VwcG9ydCBWZWN0b3IgTWFjaGluZXMgd2l0aCBMaW5lYXIgS2VybmVsIFxuXG40NDU1IHNhbXBsZXNcbiAzMjkgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuUHJlLXByb2Nlc3Npbmc6IGNlbnRlcmVkICgzMjkpLCBzY2FsZWQgKDMyOSkgXG5SZXNhbXBsaW5nOiBDcm9zcy1WYWxpZGF0ZWQgKDEwIGZvbGQpIFxuU3VtbWFyeSBvZiBzYW1wbGUgc2l6ZXM6IDQwMTAsIDQwMDksIDQwMDksIDQwMTAsIDQwMDksIDQwMDksIC4uLiBcblJlc2FtcGxpbmcgcmVzdWx0czpcblxuICBST0MgICAgICAgIFNlbnMgICAgICAgU3BlYyAgICAgXG4gIDAuNjQ3NjI2MSAgMC43MTIwMDc0ICAwLjQ4MzU4NjhcblxuVHVuaW5nIHBhcmFtZXRlciAnQycgd2FzIGhlbGQgY29uc3RhbnQgYXQgYSB2YWx1ZSBvZiAxXG4gXG4ifQ== -->
+<pre><code>Support Vector Machines with Linear Kernel 
+
+4455 samples
+ 329 predictor
+   2 classes: 'Democrat', 'Republican' 
+
+Pre-processing: centered (329), scaled (329) 
+Resampling: Cross-Validated (10 fold) 
+Summary of sample sizes: 4010, 4009, 4009, 4010, 4009, 4009, ... 
+Resampling results:
+
+  ROC        Sens       Spec     
+  0.6476261  0.7120074  0.4835868
+
+Tuning parameter 'C' was held constant at a value of 1
+ </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>pred.svmL.dv &lt;- predict(svmL.dv, valid.dv[, -1])
+confusionMatrix(pred.svmL.dv, valid.party)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MTggICAgICAgIDI1OFxuICBSZXB1YmxpY2FuICAgICAgMTcyICAgICAgICAyNjVcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYxMzcgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU4NDMsIDAuNjQyNClcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAxLjE2MGUtMDggICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yMTcyICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA0LjE0OGUtMDUgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MDg1ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjUwNjcgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjE4MyAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MDY0ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzc1NiAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC42MDc0ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYwNzYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<pre><code>Confusion Matrix and Statistics
+
+            Reference
+Prediction   Democrat Republican
+  Democrat        418        258
+  Republican      172        265
+                                          
+               Accuracy : 0.6137          
+                 95% CI : (0.5843, 0.6424)
+    No Information Rate : 0.5301          
+    P-Value [Acc &gt; NIR] : 1.160e-08       
+                                          
+                  Kappa : 0.2172          
+ Mcnemar's Test P-Value : 4.148e-05       
+                                          
+            Sensitivity : 0.7085          
+            Specificity : 0.5067          
+         Pos Pred Value : 0.6183          
+         Neg Pred Value : 0.6064          
+             Prevalence : 0.5301          
+         Detection Rate : 0.3756          
+   Detection Prevalence : 0.6074          
+      Balanced Accuracy : 0.6076          
+                                          
+       'Positive' Class : Democrat        
+                                          </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -612,7 +711,7 @@ Prediction   Democrat Republican
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIk5vbmxpbmVhciBDbGFzc2lmaWNhdGlvbiBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnNvdXJjZSgiMi1tb2RlbF90ZXN0cy5SIikNCmBgYA0KDQojIyBNQVJTDQoNCmBgYHtyfQ0KbWFyc0dyaWQgPC0gZXhwYW5kLmdyaWQoLmRlZ3JlZSA9IDE6MiwgLm5wcnVuZSA9IDI6MzgpDQpgYGANCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvbWFyc19kdi5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgbWFycy5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJlYXJ0aCIsDQogICAgICAgIHRyQ29udHJvbCA9IGN0cmwsDQogICAgICAgIHR1bmVHcmlkID0gbWFyc0dyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMobWFycy5kdiwgIm1vZGVscy9tYXJzX2R2LlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShlYXJ0aCkNCiAgICBtYXJzLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9tYXJzX2R2LlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQptYXJzLmR2DQpgYGANCg0KYGBge3J9DQp2YXJJbXAobWFycy5kdikNCmBgYA0KDQpgYGB7cn0NCnByZWQxIDwtIHByZWRpY3QobWFycy5kdiwgdmFsaWQuZHZbLCAtMV0pDQpgYGANCg0KYGBge3J9DQpjb25mdXNpb25NYXRyaXgocHJlZDEsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCiMjIFNWTQ0KDQpgYGB7cn0NCmxpYnJhcnkoa2VybmxhYikNCnN2bUdyaWQgPC0gZXhwYW5kLmdyaWQoDQogICAgLnNpZ21hID0gc2lnZXN0KGFzLm1hdHJpeCh0cmFpbi5kdlssIC1jKDEsIDMzMSldKSksIA0KICAgIC5DID0gMl4oc2VxKC00LCA0KSkNCikNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9zdm1fZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIHN2bS5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJzdm1SYWRpYWwiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICB0dW5lR3JpZCA9IHN2bUdyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhzdm0uZHYsICJtb2RlbHMvc3ZtX2R2LlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShrZXJubGFiKQ0KICAgIHN2bS5kdiA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtX2R2LlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQpzdm0uZHYNCmBgYA0KDQpgYGB7cn0NCnByZWQyIDwtIHByZWRpY3Qoc3ZtLmR2LCB2YWxpZC5kdlssIC0xXSkNCmBgYA0KDQpgYGB7cn0NCmNvbmZ1c2lvbk1hdHJpeChwcmVkMiwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMjIExpbmVhciBLZXJuZWwNCmBgYHtyfQ0KDQpgYGANCg0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9zdm1MX2R2LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBzdm1MLmR2IDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5kdlssIC0xXSwNCiAgICAgICAgbWV0aG9kID0gInN2bUxpbmVhciIsDQogICAgICAgIHRyQ29udHJvbCA9IGN0cmwsDQogICAgICAgICMgdHVuZUdyaWQgPSBzdm1HcmlkLA0KICAgICAgICB0dW5lTGVuZ3RoID0gMTAsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhzdm1MLmR2LCAibW9kZWxzL3N2bUxfZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KGtlcm5sYWIpDQogICAgc3ZtTC5kdiA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtTF9kdi5SZHMiKQ0KfQ0KYGBgDQoNCg0KIyMgTmV1cmFsIE5ldHdvcmsNCg0KYGBge3J9DQpubmV0R3JpZCA8LSBleHBhbmQuZ3JpZCguc2l6ZSA9IDE6MTAsIC5kZWNheSA9IGMoMCwgMC4xLCAxLCAyKSkNCm1heFNpemUgPC0gbWF4KG5uZXRHcmlkJC5zaXplKQ0KbnVtV3RzIDwtIDEgKiAobWF4U2l6ZSAqIChsZW5ndGgodHJhaW4uZHZbLCAtYygxLCAzMzEpXSkgKyAxKSArIG1heFNpemUgKyAxKQ0KYGBgDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL25uZXRfZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIG5uZXQuZHYgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICBtZXRob2QgPSAibm5ldCIsDQogICAgICAgIHRyQ29udHJvbCA9IGN0cmwsDQogICAgICAgIHR1bmVHcmlkID0gbm5ldEdyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIiwgInNwYXRpYWxTaWduIiksDQogICAgICAgIHRyYWNlID0gRkFMU0UsDQogICAgICAgIG1heGl0ID0gMjAwMCwNCiAgICAgICAgTWF4Tld0cyA9IG51bVd0cw0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKG5uZXQuZHYsICJtb2RlbHMvbm5ldF9kdi5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkoa2VybmxhYikNCiAgICBubmV0LmR2IDwtIHJlYWRSRFMoIm1vZGVscy9ubmV0X2R2LlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQpubmV0LmR2DQpgYGANCg0KYGBge3J9DQpwcmVkMyA8LSBwcmVkaWN0KG5uZXQuZHYsIHZhbGlkLmR2WywgLTFdKQ0KYGBgDQoNCmBgYHtyfQ0KY29uZnVzaW9uTWF0cml4KHByZWQzLCB2YWxpZC5wYXJ0eSkNCmBgYA0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIk5vbmxpbmVhciBDbGFzc2lmaWNhdGlvbiBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnNvdXJjZSgiMi1tb2RlbF90ZXN0cy5SIikNCmBgYA0KDQojIyBNQVJTDQoNCmBgYHtyfQ0KbWFyc0dyaWQgPC0gZXhwYW5kLmdyaWQoLmRlZ3JlZSA9IDE6MiwgLm5wcnVuZSA9IDI6MzgpDQpgYGANCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvbWFyc19kdi5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgbWFycy5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJlYXJ0aCIsDQogICAgICAgIHRyQ29udHJvbCA9IGN0cmwsDQogICAgICAgIHR1bmVHcmlkID0gbWFyc0dyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMobWFycy5kdiwgIm1vZGVscy9tYXJzX2R2LlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShlYXJ0aCkNCiAgICBtYXJzLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9tYXJzX2R2LlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQptYXJzLmR2DQpgYGANCg0KYGBge3J9DQp2YXJJbXAobWFycy5kdikNCmBgYA0KDQpgYGB7cn0NCnByZWQxIDwtIHByZWRpY3QobWFycy5kdiwgdmFsaWQuZHZbLCAtMV0pDQpgYGANCg0KYGBge3J9DQpjb25mdXNpb25NYXRyaXgocHJlZDEsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCiMjIFNWTQ0KDQpgYGB7cn0NCmxpYnJhcnkoa2VybmxhYikNCnN2bUdyaWQgPC0gZXhwYW5kLmdyaWQoDQogICAgLnNpZ21hID0gc2lnZXN0KGFzLm1hdHJpeCh0cmFpbi5kdlssIC1jKDEsIDMzMSldKSksIA0KICAgIC5DID0gMl4oc2VxKC00LCA0KSkNCikNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9zdm1fZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIHN2bS5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJzdm1SYWRpYWwiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICB0dW5lR3JpZCA9IHN2bUdyaWQsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhzdm0uZHYsICJtb2RlbHMvc3ZtX2R2LlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShrZXJubGFiKQ0KICAgIHN2bS5kdiA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtX2R2LlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQpzdm0uZHYNCmBgYA0KDQpgYGB7cn0NCnByZWQyIDwtIHByZWRpY3Qoc3ZtLmR2LCB2YWxpZC5kdlssIC0xXSkNCmBgYA0KDQpgYGB7cn0NCmNvbmZ1c2lvbk1hdHJpeChwcmVkMiwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMjIExpbmVhciBLZXJuZWwNCmBgYHtyfQ0KDQpgYGANCg0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9zdm1MX2R2LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBzdm1MLmR2IDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5kdlssIC0xXSwNCiAgICAgICAgbWV0aG9kID0gInN2bUxpbmVhciIsDQogICAgICAgIHRyQ29udHJvbCA9IGN0cmwsDQogICAgICAgICMgdHVuZUdyaWQgPSBzdm1HcmlkLA0KICAgICAgICB0dW5lTGVuZ3RoID0gMTAsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhzdm1MLmR2LCAibW9kZWxzL3N2bUxfZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KGtlcm5sYWIpDQogICAgc3ZtTC5kdiA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtTF9kdi5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0Kc3ZtTC5kdg0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5zdm1MLmR2IDwtIHByZWRpY3Qoc3ZtTC5kdiwgdmFsaWQuZHZbLCAtMV0pDQpjb25mdXNpb25NYXRyaXgocHJlZC5zdm1MLmR2LCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQoNCiMjIE5ldXJhbCBOZXR3b3JrDQoNCmBgYHtyfQ0Kbm5ldEdyaWQgPC0gZXhwYW5kLmdyaWQoLnNpemUgPSAxOjEwLCAuZGVjYXkgPSBjKDAsIDAuMSwgMSwgMikpDQptYXhTaXplIDwtIG1heChubmV0R3JpZCQuc2l6ZSkNCm51bVd0cyA8LSAxICogKG1heFNpemUgKiAobGVuZ3RoKHRyYWluLmR2WywgLWMoMSwgMzMxKV0pICsgMSkgKyBtYXhTaXplICsgMSkNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9ubmV0X2R2LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBubmV0LmR2IDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5kdlssIC0xXSwNCiAgICAgICAgbWV0aG9kID0gIm5uZXQiLA0KICAgICAgICB0ckNvbnRyb2wgPSBjdHJsLA0KICAgICAgICB0dW5lR3JpZCA9IG5uZXRHcmlkLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoImNlbnRlciIsICJzY2FsZSIsICJzcGF0aWFsU2lnbiIpLA0KICAgICAgICB0cmFjZSA9IEZBTFNFLA0KICAgICAgICBtYXhpdCA9IDIwMDAsDQogICAgICAgIE1heE5XdHMgPSBudW1XdHMNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhubmV0LmR2LCAibW9kZWxzL25uZXRfZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KGtlcm5sYWIpDQogICAgbm5ldC5kdiA8LSByZWFkUkRTKCJtb2RlbHMvbm5ldF9kdi5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0Kbm5ldC5kdg0KYGBgDQoNCmBgYHtyfQ0KcHJlZDMgPC0gcHJlZGljdChubmV0LmR2LCB2YWxpZC5kdlssIC0xXSkNCmBgYA0KDQpgYGB7cn0NCmNvbmZ1c2lvbk1hdHJpeChwcmVkMywgdmFsaWQucGFydHkpDQpgYGANCg==</div>
 
 
 

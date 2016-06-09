@@ -120,6 +120,15 @@ if (!file.exists("models/svmL_dv.Rds")) {
 }
 ```
 
+```{r}
+svmL.dv
+```
+
+```{r}
+pred.svmL.dv <- predict(svmL.dv, valid.dv[, -1])
+confusionMatrix(pred.svmL.dv, valid.party)
+```
+
 
 ## Neural Network
 
