@@ -2,6 +2,7 @@
 
 source("2-model_tests.R")
 # library(readr)
+# library(dplyr)
 library(tibble)
 
 pScore <- function(x, y) {
@@ -154,6 +155,24 @@ test.avg <- data_frame(pls.dv = test.pls.dv,
                        gbm.dv = test.gbm.dv)
 
 pred.avg.test <- predict(mod.avg, test.avg)
+
+
+# valid.vote <- valid.avg == "Republican"
+valid.vote <- valid.avg %>%
+    mutate_each(funs(ifelse(. == "Republican", TRUE, FALSE)))
+valid.vote$vote <- rowSums(valid.vote)
+pred.valid.vote <- ifelse(valid.vote$vote >= 10, "Republican", "Democrat")
+confusionMatrix(pred.valid.vote, valid.party)
+
+valid.vote$pred <- factor(pred.valid.vote)
+valid.vote$party <- valid.party
+
+vote.wrong <- filter(valid.vote, pred != party) %>%
+    mutate_each(funs(ifelse(. == TRUE, "Republican", "Democrat")), -(vote:party)) %>%
+    mutate_each(funs(factor(., levels = c("Democrat", "Republican"))), -(vote:party)) %>%
+    mutate_each(funs(. == party), -(vote:party)) %>%
+    select(-(vote:party)) %>%
+    summarize_each(funs(sum(.) / 397))
 
 test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = pred.avg.test)
 
