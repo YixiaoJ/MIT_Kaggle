@@ -26,6 +26,7 @@ trCtrl <- trainControl(
     returnResamp = "final",
     summaryFunction = twoClassSummary,
     index = rcv.index,
+    verboseIter = TRUE,
     savePredictions = "all"
 )
 
@@ -39,6 +40,7 @@ ctrl <- trainControl(
     returnResamp = "final",
     summaryFunction = twoClassSummary,
     index = cv.index,
+    verboseIter = TRUE,
     savePredictions = "all"
 )
 

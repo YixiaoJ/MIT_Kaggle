@@ -173,3 +173,35 @@ hc.dv <- findCorrelation(hcor.dv)
 train.dv$Party <- train.party
 train.set$Party <- train.party
 train.set.n$Party <- train.party
+
+# new features -----------------------------------------
+
+train.ftr <- train.data %>%
+    by_row(function(x) sum(is.na(x)), .to = "num.na", .collate = "cols") %>%
+    select(USER_ID, Party, num.na)
+
+ica <- preProcess(train.dv[, -c(1, 331)], c("ica", "nzv"), n.comp = 15)
+train.ica <- predict(ica, train.dv)
+valid.ica <- predict(ica, valid.dv)
+
+# linear_combo <- findLinearCombos()
+# centroids <- classDist(train.data[, 3], train.party)
+# dist <- predict(centroids, valid.data[, 2])
+
+cats = apply(train.data[, -c(1, 2, 7)], 2, function(x) nlevels(as.factor(x)))
+
+# library(FactoMineR)
+# mca1 <- MCA(train.data, quanti.sup = c(1, 2), quali.sup = 7)
+#
+# train.mca <- predict(mca1, valid.data)
+
+library(tibble)
+# mca1_vars <- data.frame(mca1$var$coord)
+# mca1_obs <- data.frame(mca1$ind$coord)
+
+library(MASS)
+mca2 <- mca(train.data[, -c(1, 2, 7)], nf = 5)
+train.mca <- predict(mca2, train.data[, -c(1, 2, 7)]) %>% as_data_frame()
+valid.mca <- predict(mca2, valid.data[, -c(1, 2, 7)]) %>% as_data_frame()
+
+train.mca <- bind_cols(train.data[, c("USER_ID", "Party")], train.mca)

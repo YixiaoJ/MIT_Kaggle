@@ -17,7 +17,7 @@ if (!file.exists("models/pls_dv.Rds")) {
     set.seed(1056)
     pls.dv <- train(
         Party ~ .,
-        data = train.dv[, -1],
+        data = train.dv[, -c(1, hc.dv)],
         method = "pls",
         trControl = trCtrl,
         metric = "ROC",
@@ -32,6 +32,49 @@ if (!file.exists("models/pls_dv.Rds")) {
     pls.dv <- readRDS("models/pls_dv.Rds")
 }
 ```
+
+```{r}
+set.seed(1056)
+pls.dv <- train(
+    Party ~ .,
+    data = train.dv[, -c(1, hc.dv)],
+    method = "pls",
+    trControl = trCtrl,
+    metric = "ROC",
+    tuneGrid = expand.grid(.ncomp = 3),
+    preProcess = c("nzv", "pca")
+)
+
+```
+
+
+```{r}
+set.seed(1056)
+glmnet.mca <- train(
+    Party ~ .,
+    # data = train.dv[, -1],
+    data = train.mca[, -1],
+    method = "glmnet",
+    trControl = trCtrl,
+    metric = "ROC",
+    tuneGrid = expand.grid(.alpha = 0.1, .lambda = 0.0044944)
+    # tuneLength = 10
+    # tuneGrid = expand.grid(.ncomp = 1:5)
+    # preProcess = c("nzv", "ica")
+)
+```
+
+```{r}
+lda.ica
+```
+
+```{r}
+pred.lda.ica <- predict(lda.ica, valid.mca)
+confusionMatrix(pred.lda.ica, valid.party)
+```
+
+
+
 
 ```{r}
 set.seed(1056)
@@ -154,7 +197,7 @@ nsc.dv
 ```
 
 ```{r}
-pred1 <- predict(pls.dv, valid.dv[, -1])
+pred1 <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
 pred2 <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
 pred3 <- predict(nsc.dv, valid.dv[, -c(1, hc.dv)])
 ```
@@ -170,3 +213,35 @@ confusionMatrix(pred2, valid.party)
 ```{r}
 confusionMatrix(pred3, valid.party)
 ```
+
+```{r}
+resamps <- resamples(list(pls = pls.dv, glmnet = glmnet.mca))
+modelCor(resamps)
+```
+
+```{r}
+pred.pls <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
+pred.glmnet <- predict(glmnet.mca, valid.mca)
+```
+
+```{r}
+valid.avg <- data_frame(pred.pls, pred.glmnet)
+mod.avg <- train(x = valid.avg, y = valid.party, method = "rf")
+pred.avg.valid <- predict(mod.avg, valid.avg)
+confusionMatrix(pred.avg.valid, valid.party)
+```
+
+```{r}
+pred.test.pls <- predict(pls.dv, test.dv[, -c(1, hc.dv)])
+pred.test.glmnet <- predict(glmnet.mca, test.mca)
+test.avg <- data_frame(pred.test.pls, pred.test.glmnet)
+pred.test.avg <- predict(mod.avg, test.avg)
+```
+
+```{r}
+test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = pred.test.avg)
+
+mod <- str_replace_all(as.character(Sys.time()), "-|:| ", "")
+write_csv(test.submit, paste0("submission_", mod, ".csv"))
+```
+
