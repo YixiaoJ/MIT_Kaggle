@@ -180,15 +180,16 @@ train.ftr <- train.data %>%
     by_row(function(x) sum(is.na(x)), .to = "num.na", .collate = "cols") %>%
     select(USER_ID, Party, num.na)
 
-ica <- preProcess(train.dv[, -c(1, 331)], c("ica", "nzv"), n.comp = 15)
+ica <- preProcess(train.dv[, -c(1, 331)], c("ica", "nzv"), n.comp = 10)
 train.ica <- predict(ica, train.dv)
 valid.ica <- predict(ica, valid.dv)
+test.ica <- predict(ica, test.dv)
 
 # linear_combo <- findLinearCombos()
 # centroids <- classDist(train.data[, 3], train.party)
 # dist <- predict(centroids, valid.data[, 2])
 
-cats = apply(train.data[, -c(1, 2, 7)], 2, function(x) nlevels(as.factor(x)))
+# cats = apply(train.data[, -c(1, 2, 7)], 2, function(x) nlevels(as.factor(x)))
 
 # library(FactoMineR)
 # mca1 <- MCA(train.data, quanti.sup = c(1, 2), quali.sup = 7)
@@ -200,8 +201,13 @@ library(tibble)
 # mca1_obs <- data.frame(mca1$ind$coord)
 
 library(MASS)
-mca2 <- mca(train.data[, -c(1, 2, 7)], nf = 5)
+mca2 <- mca(train.data[, -c(1, 2, 7)], nf = 10)
 train.mca <- predict(mca2, train.data[, -c(1, 2, 7)]) %>% as_data_frame()
 valid.mca <- predict(mca2, valid.data[, -c(1, 2, 7)]) %>% as_data_frame()
+test.mca <- predict(mca2, test.data[, -c(1, 2)]) %>% as_data_frame()
+
+names(train.mca) <- paste0("mca", names(train.mca))
+names(valid.mca) <- paste0("mca", names(valid.mca))
+names(test.mca) <- paste0("mca", names(test.mca))
 
 train.mca <- bind_cols(train.data[, c("USER_ID", "Party")], train.mca)
