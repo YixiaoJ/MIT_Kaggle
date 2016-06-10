@@ -7,6 +7,101 @@ output: html_notebook
 source("2-model_tests.R")
 ```
 
+## Linear Discriminant Analysis
+
+### PCA
+
+```{r}
+if (!file.exists("models/lda_pca.Rds")) {
+    set.seed(1056)
+    lda.pca <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "lda",
+        trControl = trCtrl,
+        metric = "ROC",
+        preProcess = c("nzv", "pca")
+    )
+    
+    saveRDS(lda.pca, "models/lda_pca.Rds")
+
+} else {
+    library(lda)
+    lda.pca <- readRDS("models/lda_pca.Rds")
+}
+```
+
+```{r}
+lda.pca
+```
+
+```{r}
+pred.lda.pca <- predict(lda.pca, valid.dv[, -1])
+confusionMatrix(pred.lda.pca, valid.party)
+```
+
+### ICA
+
+```{r}
+if (!file.exists("models/lda_ica.Rds")) {
+    set.seed(1056)
+    lda.ica <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "lda",
+        trControl = trCtrl,
+        metric = "ROC",
+        preProcess = c("nzv", "ica")
+    )
+    
+    saveRDS(lda.ica, "models/lda_ica.Rds")
+
+} else {
+    library(lda)
+    lda.ica <- readRDS("models/lda_ica.Rds")
+}
+```
+
+```{r}
+lda.ica
+```
+
+```{r}
+pred.lda.ica <- predict(lda.ica, valid.dv[, -1])
+confusionMatrix(pred.lda.ica, valid.party)
+```
+
+### MCA
+
+```{r}
+if (!file.exists("models/lda_mca.Rds")) {
+    set.seed(1056)
+    lda.mca <- train(
+        Party ~ .,
+        data = train.mca[, -1],
+        method = "lda",
+        trControl = trCtrl,
+        metric = "ROC",
+        preProcess = c("center", "scale")
+    )
+    
+    saveRDS(lda.mca, "models/lda_mca.Rds")
+
+} else {
+    library(lda)
+    lda.mca <- readRDS("models/lda_mca.Rds")
+}
+```
+
+```{r}
+lda.mca
+```
+
+```{r}
+pred.lda.mca <- predict(lda.mca, valid.mca)
+confusionMatrix(pred.lda.mca, valid.party)
+```
+
 ## Partial Least Squares
 
 ```{r}
@@ -43,38 +138,6 @@ pls.dv
 ```{r}
 pred.pls.dv <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
 confusionMatrix(pred.pls.dv, valid.party)
-```
-
-### MCA
-
-```{r}
-if (!file.exists("models/pls_mca.Rds")) {
-    set.seed(1056)
-    pls.mca <- train(
-        Party ~ .,
-        data = train.mca[, -1],
-        method = "pls",
-        trControl = trCtrl,
-        metric = "ROC",
-        tuneGrid = plsGrid
-        # preProcess = c("center", "scale")
-    )
-    
-    saveRDS(pls.mca, "models/pls_mca.Rds")
-
-} else {
-    library(pls)
-    pls.mca <- readRDS("models/pls_mca.Rds")
-}
-```
-
-```{r}
-pls.mca
-```
-
-```{r}
-pred.pls.mca <- predict(pls.mca, valid.mca)
-confusionMatrix(pred.pls.mca, valid.party)
 ```
 
 ### Kernal PLS
