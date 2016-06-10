@@ -44,6 +44,13 @@ names(pval.dv)
 ```
 
 ```{r}
+question <- apply(X = train.data.n[, -c(1, 7, 68)], MARGIN = 2, FUN = pScore, y = train.data.n$Q109244)
+pques <- sort(question[question < 0.05])
+names(pques)
+```
+
+
+```{r}
 hcor.fltr.dv <- cor(train.dv[, names(pval.dv)], use = "na.or.complete")
 hc.fltr.dv <- findCorrelation(hcor.fltr.dv)
 ```
