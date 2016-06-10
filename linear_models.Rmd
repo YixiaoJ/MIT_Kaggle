@@ -246,9 +246,9 @@ if (!file.exists("models/glmnet_dv_pca.Rds")) {
         Party ~ .,
         data = train.dv[, -c(1, hc.dv)],
         method = "glmnet",
-        trControl = ctrl,
+        trControl = trCtrl,
         metric = "ROC",
-        tuneGrid = glmnGrid,
+        tuneGrid = expand.grid(.alpha = 0.1, .lambda = 0.1),
         preProcess = c("nzv", "pca")
     )
     
@@ -375,5 +375,63 @@ nsc.mca
 ```{r}
 pred.nsc.mca <- predict(nsc.mca, valid.mca)
 confusionMatrix(pred.nsc.mca, valid.party)
+```
+
+## Compare Models
+
+```{r}
+compare_models(lda.mca, glmnet.mca)
+```
+
+```{r}
+resamps <- resamples(list(lda.pca = lda.pca, 
+                          # lda.mca = lda.mca, 
+                          pls = pls.dv,
+                          # pls.pca = pls.dv.pca,
+                          # glmnet.dv = glmnet.dv, 
+                          # glmnet.pca = glmnet.dv.pca,
+                          glmnet.mca = glmnet.mca, 
+                          nsc.dv = nsc.dv))
+modelCor(resamps, metric = "ROC")
+```
+
+## Linear Model Averaging
+
+```{r}
+valid.avg <- data_frame(lda = pred.lda.pca,
+                        pls = pred.pls.dv,
+                        glmnet = pred.glmnet.mca,
+                        nsc = pred.nsc)
+
+linear.mod.avg <- train(
+    x = valid.avg,
+    y = valid.party, 
+    method = "rf", 
+    tuneGrid = expand.grid(.mtry = c(2:5))
+)
+
+pred.avg.valid <- predict(linear.mod.avg, valid.avg)
+confusionMatrix(pred.avg.valid, valid.party)
+```
+
+```{r}
+linear.mod.avg
+```
+
+## Test Set Submission
+
+```{r}
+pred.test.lda <- predict(lda.pca, test.dv[, -1])
+pred.test.pls <- predict(pls.dv, test.dv[, -c(1, hc.dv)])
+pred.test.glmnet <- predict(glmnet.mca, test.mca)
+pred.test.nsc <- predict(nsc.dv, test.dv[, -1])
+
+test.avg <- data_frame(lda = pred.test.lda,
+                       pls = pred.test.pls,
+                       glmnet = pred.test.glmnet,
+                       nsc = pred.test.nsc)
+
+pred.linear.test <- predict(linear.mod.avg, test.avg)
+test_submission(pred.linear.test)
 ```
 
