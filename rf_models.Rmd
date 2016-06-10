@@ -223,7 +223,7 @@ if (!file.exists("models/prf_dv.Rds")) {
     prf.dv <- train(
         Party ~ .,
         data = train.dv[, -1],
-        method = "rf",
+        method = "parRF",
         trControl = ctrl,
         tuneGrid = rfGrid,
         metric = "ROC",
