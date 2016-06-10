@@ -76,7 +76,7 @@ testing$YOB[testing$YOB > 2005 | testing$YOB < 1910] <- NA
 # feature processing -------------------------------------------
 
 # create an "NA" level for factor vars before converting to dummy vars
-train.set <- select(train.data, -Party) %>%
+train.set <- dplyr::select(train.data, -Party) %>%
     mutate_each(funs(str_replace_na), -USER_ID, -YOB) %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB)
 
