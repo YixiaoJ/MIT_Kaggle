@@ -55,7 +55,7 @@ ctrl$seeds <- seeds
 ```{r}
 if (!file.exists("models/xgbL_dv.Rds")) {
     set.seed(1056)
-    xgb.dv <- train(
+    xgbL.dv <- train(
         Party ~ .,
         data = train.dv[, -1],
         method = "xgbLinear",
@@ -65,11 +65,20 @@ if (!file.exists("models/xgbL_dv.Rds")) {
         tuneLength = 10
     )
     
-    saveRDS(xgb.dv, "models/xgbL_dv.Rds")
+    saveRDS(xgbL.dv, "models/xgbL_dv.Rds")
 } else {
     library(xgboost)
-    xgb.dv <- readRDS("models/xgbL_dv.Rds")
+    xgbL.dv <- readRDS("models/xgbL_dv.Rds")
 }
+```
+
+```{r}
+xgbL.dv
+```
+
+```{r}
+pred.xgbL.dv <- predict(xgbL.dv, valid.dv[, -1])
+confusionMatrix(pred.xgbL.dv, valid.party)
 ```
 
 ## Stochastic Gradient Boosting
