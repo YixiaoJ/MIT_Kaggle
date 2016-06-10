@@ -44,6 +44,14 @@ ctrl <- trainControl(
     savePredictions = "all"
 )
 
+# function to create test submission
+test_submission <- function(pred) {
+    test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = pred)
+
+    mod <- str_replace_all(as.character(Sys.time()), "-|:| ", "")
+    write_csv(test.submit, paste0("submission_", mod, ".csv"))
+}
+
 # function to run multiple sets of models
 #' @param data A data frame with training data
 #' @param valid A data frame with validation data
