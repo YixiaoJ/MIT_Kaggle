@@ -11,12 +11,11 @@ source("2-model_tests.R")
 
 ### Grouped Categorical Data
 ```{r}
-rfGrid <- data.frame(mtry = c(5, 20, 50, 100, 250, 500, 1000)) # 10, 32
+d <- train.set
+rfGrid <- data.frame(mtry = c(2:9, seq(10, ncol(d) - 2, length.out = 5)))
 ```
 
 ```{r}
-rfGrid <- data.frame(mtry = c(5, 20, 50, 100))
-
 if (!file.exists("models/rf_set.Rds")) {
     set.seed(1056)
     rf.set <- train(
@@ -38,10 +37,28 @@ if (!file.exists("models/rf_set.Rds")) {
 }
 ```
 
-### Independent Categorical Data
 ```{r}
-rfGrid <- data.frame(mtry = c(5, 50, 100, 200, 300))
+rf.set
+```
 
+```{r}
+pred.rf.set <- predict(rf.set, valid.set[, -1])
+confusionMatrix(pred.rf.set, valid.party)
+```
+
+```{r}
+vi1 <- varImp(rf.set)
+plot(vi1, top = 30)
+```
+
+### Independent Categorical Data
+
+```{r}
+d <- train.dv
+rfGrid <- data.frame(mtry = c(2:9, seq(10, ncol(d) - 2, length.out = 5)))
+```
+
+```{r}
 if (!file.exists("models/rf_dv.Rds")) {
     set.seed(1056)
     rf.dv <- train(
@@ -64,44 +81,32 @@ if (!file.exists("models/rf_dv.Rds")) {
 ```
 
 ```{r}
-rf.set
-```
-
-```{r}
 rf.dv
 ```
 
 ```{r}
-pred1 <- predict(rf.set, valid.set[, -1])
-pred2 <- predict(rf.dv, valid.dv[, -1])
-```
-
-```{r}
-confusionMatrix(pred1, valid.party)
-```
-
-```{r}
-confusionMatrix(pred2, valid.party)
-```
-
-```{r}
-vi1 <- varImp(rf.set)
-plot(vi1, top = 20)
+pred.rf.dv <- predict(rf.dv, valid.dv[, -1])
+confusionMatrix(pred.rf.dv, valid.party)
 ```
 
 ```{r}
 vi2 <-varImp(rf.dv)
-plot(vi2, top = 20)
+plot(vi2, top = 30)
 ```
 
 ## Ranger Random Forest
 
-```{r}
-rfGrid <- data.frame(mtry = c(10, 15, 20, 25, 30))
+### Grouped Categorical Data
 
-if (!file.exists("models/rf2_set.Rds")) {
+```{r}
+d <- train.set
+rfGrid <- data.frame(mtry = c(2:9, seq(10, ncol(d) - 2, length.out = 5)))
+```
+
+```{r}
+if (!file.exists("models/ranger_set.Rds")) {
     set.seed(1056)
-    rf2.set <- train(
+    ranger.set <- train(
         Party ~ .,
         data = train.set[, -1],
         method = "ranger",
@@ -112,23 +117,33 @@ if (!file.exists("models/rf2_set.Rds")) {
         importance = "impurity"
     )
     
-    saveRDS(rf2.set, "models/rf2_set.Rds")
+    saveRDS(ranger.set, "models/ranger_set.Rds")
 
 } else {
     library(ranger)
-    rf2.set <- readRDS("models/rf2_set.Rds")
+    ranger.set <- readRDS("models/ranger_set.Rds")
 }
 ```
 ```{r}
-rf2.set
+ranger.set
 ```
 
 ```{r}
-rfGrid <- data.frame(mtry = c(40, 50, 60))
+pred.ranger.set <- predict(ranger.set, valid.set[, -1])
+confusionMatrix(pred.ranger.set, valid.party)
+```
 
-if (!file.exists("models/rf2_dv.Rds")) {
+### Independent Categorical Data
+
+```{r}
+d <- train.dv
+rfGrid <- data.frame(mtry = c(2:9, seq(10, ncol(d) - 2, length.out = 5)))
+```
+
+```{r}
+if (!file.exists("models/ranger_dv.Rds")) {
     set.seed(1056)
-    rf2.dv <- train(
+    ranger.dv <- train(
         Party ~ .,
         data = train.dv[, -1],
         method = "ranger",
@@ -139,28 +154,97 @@ if (!file.exists("models/rf2_dv.Rds")) {
         importance = "impurity"
     )
     
-    saveRDS(rf2.dv, "models/rf2_dv.Rds")
+    saveRDS(ranger.dv, "models/ranger_dv.Rds")
 
 } else {
     library(ranger)
-    rf2.dv <- readRDS("models/rf2_dv.Rds")
+    ranger.dv <- readRDS("models/ranger_dv.Rds")
 }
 ```
 
 ```{r}
-rf2.dv
+ranger.dv
 ```
 
 ```{r}
-pred3 <- predict(rf2.set, valid.set[, -1])
-pred4 <- predict(rf2.dv, valid.dv[, -1])
+pred.ranger.dv <- predict(ranger.dv, valid.dv[, -1])
+confusionMatrix(pred.ranger.dv, valid.party)
+```
+
+## Parallel Random Forest
+
+### Grouped Categorical Data
+```{r}
+d <- train.set
+rfGrid <- data.frame(mtry = c(2:9, seq(10, ncol(d) - 2, length.out = 5)))
 ```
 
 ```{r}
-confusionMatrix(pred3, valid.party)
+if (!file.exists("models/prf_set.Rds")) {
+    set.seed(1056)
+    prf.set <- train(
+        Party ~ .,
+        data = train.set[, -1],
+        method = "parRF",
+        trControl = ctrl,
+        tuneGrid = rfGrid,
+        metric = "ROC",
+        ntree = 1500,
+        importance = TRUE
+    )
+    
+    saveRDS(prf.set, "models/prf_set.Rds")
+
+} else {
+    library(randomForest)
+    prf.set <- readRDS("models/prf_set.Rds")
+}
 ```
 
 ```{r}
-confusionMatrix(pred4, valid.party)
+prf.set
 ```
+
+```{r}
+pred.prf.set <- predict(prf.set)
+confusionMatrix(pred.prf.set, valid.party)
 ```
+
+### Independent Categorical Data
+
+```{r}
+d <- train.dv
+rfGrid <- data.frame(mtry = c(2:9, seq(10, ncol(d) - 2, length.out = 5)))
+```
+
+```{r}
+if (!file.exists("models/prf_dv.Rds")) {
+    set.seed(1056)
+    prf.dv <- train(
+        Party ~ .,
+        data = train.dv[, -1],
+        method = "rf",
+        trControl = ctrl,
+        tuneGrid = rfGrid,
+        metric = "ROC",
+        ntree = 1500,
+        importance = TRUE
+    )
+    
+    saveRDS(prf.dv, "models/prf_dv.Rds")
+
+} else {
+    library(randomForest)
+    prf.dv <- readRDS("models/prf_dv.Rds")
+}
+```
+
+```{r}
+prf.dv
+```
+
+```{r}
+pred.prf.dv <- predict(prf.dv, valid.dv[, -1])
+confusionMatrix(pred.prf.dv, valid.party)
+```
+
