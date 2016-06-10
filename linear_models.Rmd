@@ -26,7 +26,6 @@ if (!file.exists("models/lda_pca.Rds")) {
     saveRDS(lda.pca, "models/lda_pca.Rds")
 
 } else {
-    library(lda)
     lda.pca <- readRDS("models/lda_pca.Rds")
 }
 ```
@@ -57,7 +56,6 @@ if (!file.exists("models/lda_ica.Rds")) {
     saveRDS(lda.ica, "models/lda_ica.Rds")
 
 } else {
-    library(lda)
     lda.ica <- readRDS("models/lda_ica.Rds")
 }
 ```
@@ -88,7 +86,6 @@ if (!file.exists("models/lda_mca.Rds")) {
     saveRDS(lda.mca, "models/lda_mca.Rds")
 
 } else {
-    library(lda)
     lda.mca <- readRDS("models/lda_mca.Rds")
 }
 ```
@@ -108,8 +105,6 @@ confusionMatrix(pred.lda.mca, valid.party)
 plsGrid <- expand.grid(.ncomp = 1:10)
 ```
 
-### PCA
-
 ```{r}
 if (!file.exists("models/pls_dv.Rds")) {
     set.seed(1056)
@@ -120,7 +115,7 @@ if (!file.exists("models/pls_dv.Rds")) {
         trControl = trCtrl,
         metric = "ROC",
         tuneGrid = plsGrid,
-        preProcess = c("nzv", "pca")
+        preProcess = c("center", "scale")
     )
     
     saveRDS(pls.dv, "models/pls_dv.Rds")
@@ -140,20 +135,58 @@ pred.pls.dv <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
 confusionMatrix(pred.pls.dv, valid.party)
 ```
 
+### PCA
+
+```{r}
+if (!file.exists("models/pls_dv_pca.Rds")) {
+    set.seed(1056)
+    pls.dv.pca <- train(
+        Party ~ .,
+        data = train.dv[, -c(1, hc.dv)],
+        method = "pls",
+        trControl = trCtrl,
+        metric = "ROC",
+        tuneGrid = plsGrid,
+        preProcess = c("nzv", "pca")
+    )
+    
+    saveRDS(pls.dv.pca, "models/pls_dv_pca.Rds")
+
+} else {
+    library(pls)
+    pls.dv.pca <- readRDS("models/pls_dv_pca.Rds")
+}
+```
+
+```{r}
+pls.dv.pca
+```
+
+```{r}
+pred.pls.dv.pca <- predict(pls.dv.pca, valid.dv[, -c(1, hc.dv)])
+confusionMatrix(pred.pls.dv.pca, valid.party)
+```
+
 ### Kernal PLS
 
 ```{r}
-set.seed(1056)
-kpls.dv <- train(
-    Party ~ .,
-    data = train.dv[, -c(1, hc.dv)],
-    # data = train.set[, -1],
-    method = "kernelpls",
-    trControl = trCtrl,
-    metric = "ROC",
-    tuneGrid = plsGrid,
-    preProcess = c("center", "scale")
-)
+if (!file.exists("models/kpls_dv.Rds")) {
+    set.seed(1056)
+    kpls.dv <- train(
+        Party ~ .,
+        data = train.dv[, -c(1, hc.dv)],
+        method = "kernelpls",
+        trControl = trCtrl,
+        metric = "ROC",
+        tuneGrid = plsGrid,
+        preProcess = c("center", "scale")
+    )
+    saveRDS(kpls.dv, "models/kpls_dv.Rds")
+    
+} else {
+    library(pls)
+    kpls.dv <- readRDS("models/kpls_dv.Rds")
+}
 ```
 
 ```{r}
@@ -174,8 +207,6 @@ glmnGrid <- expand.grid(
 )
 ```
 
-### PCA
-
 ```{r}
 if (!file.exists("models/glmnet_dv.Rds")) {
     set.seed(1056)
@@ -183,10 +214,10 @@ if (!file.exists("models/glmnet_dv.Rds")) {
         Party ~ .,
         data = train.dv[, -c(1, hc.dv)],
         method = "glmnet",
-        trControl = ctrl,
+        trControl = trCtrl,
         metric = "ROC",
         tuneGrid = glmnGrid,
-        preProcess = c("nzv", "pca")
+        preProcess = c("nzv", "center", "scale")
     )
     
     saveRDS(glmnet.dv, "models/glmnet_dv.Rds")
@@ -206,8 +237,40 @@ pred.glmnet.dv <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
 confusionMatrix(pred.glmnet.dv, valid.party)
 ```
 
+### PCA
+
 ```{r}
-varImp(glmnet.dv)
+if (!file.exists("models/glmnet_dv_pca.Rds")) {
+    set.seed(1056)
+    glmnet.dv.pca <- train(
+        Party ~ .,
+        data = train.dv[, -c(1, hc.dv)],
+        method = "glmnet",
+        trControl = ctrl,
+        metric = "ROC",
+        tuneGrid = glmnGrid,
+        preProcess = c("nzv", "pca")
+    )
+    
+    saveRDS(glmnet.dv.pca, "models/glmnet_dv_pca.Rds")
+
+} else {
+    library(glmnet)
+    glmnet.dv.pca <- readRDS("models/glmnet_dv_pca.Rds")
+}
+```
+
+```{r}
+glmnet.dv.pca
+```
+
+```{r}
+pred.glmnet.dv.pca <- predict(glmnet.dv.pca, valid.dv[, -c(1, hc.dv)])
+confusionMatrix(pred.glmnet.dv.pca, valid.party)
+```
+
+```{r}
+varImp(glmnet.dv.pca)
 ```
 
 ### MCA
@@ -257,9 +320,9 @@ if (!file.exists("models/nsc_dv.Rds")) {
     set.seed(1056)
     nsc.dv <- train(
         Party ~ .,
-        data = train.dv[, -c(1, hc.dv)],
+        data = train.dv[, -1],
         method = "pam",
-        trControl = ctrl,
+        trControl = trCtrl,
         metric = "ROC",
         tuneGrid = nscGrid,
         preProcess = "nzv"
@@ -278,7 +341,7 @@ nsc.dv
 ```
 
 ```{r}
-pred.nsc <- predict(nsc.dv, valid.dv[, -c(1, hc.dv)])
+pred.nsc <- predict(nsc.dv, valid.dv[, -1])
 confusionMatrix(pred.nsc, valid.party)
 ```
 
@@ -290,7 +353,7 @@ if (!file.exists("models/nsc_mca.Rds")) {
     nsc.mca <- train(
         Party ~ .,
         data = train.mca[, -1],
-        method = "nsc",
+        method = "pam",
         trControl = trCtrl,
         metric = "ROC",
         tuneGrid = nscGrid
