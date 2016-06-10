@@ -8,14 +8,23 @@ source("2-model_tests.R")
 ```
 
 ```{r}
+lda.pca <- readRDS("models/lda_pca.Rds")
+lda.ica <- readRDS("models/lda_ica.Rds")
+lda.mca <- readRDS("models/lda_mca.Rds")
+
 library(pls)
 pls.dv <- readRDS("models/pls_dv.Rds")
+pls.dv.pca <- readRDS("models/pls_dv_pca.Rds")
+pls.pval.dv <- readRDS("models/pls_pval_dv.Rds")
 
 library(glmnet)
 glmnet.dv <- readRDS("models/glmnet_dv.Rds")
+glmnet.dv.pca <- readRDS("models/glmnet_dv_pca.Rds")
+glmnet.mca <- readRDS("models/glmnet_mca.Rds")
 
 library(pamr)
 nsc.dv <- readRDS("models/nsc_dv.Rds")
+nsc.mca <- readRDS("models/nsc_mca.Rds")
 
 library(earth)
 mars.dv <- readRDS("models/mars_dv.Rds")
@@ -31,8 +40,8 @@ rf.set <- readRDS("models/rf_set.Rds")
 rf.dv <- readRDS("models/rf_dv.Rds")
 
 library(ranger)
-rf2.set <- readRDS("models/rf2_set.Rds")
-rf2.dv <- readRDS("models/rf2_dv.Rds")
+ranger.set <- readRDS("models/ranger_set.Rds")
+ranger.dv <- readRDS("models/ranger_dv.Rds")
 
 library(C50)
 c50.data <- readRDS("models/c50_data.Rds")
@@ -49,7 +58,62 @@ gbm.dv <- readRDS("models/gbm_dv.Rds")
 ```
 
 ```{r}
-resamps <- resamples(list(pls = pls.dv, glmnet = glmnet.dv, nsc = nsc.dv, mars = mars.dv, svm = svm.dv, svmL = svmL.dv, nnet = nnet.dv, rfset = rf.set, rfdv = rf.dv, rf2set = rf2.set, rf2dv = rf2.dv, c50data = c50.data, c50set = c50.set, c50dv = c50.dv, xgb = xgb.dv, xgbL = xgbL.dv, gbmset = gbm.set, gbmdv = gbm.dv))
+resamps <- resamples(list(mars = mars.dv, svm = svm.dv, svmL = svmL.dv, nnet = nnet.dv, rfset = rf.set, rfdv = rf.dv, rangerset = ranger.set, rangerdv = ranger.dv, c50data = c50.data, c50set = c50.set, c50dv = c50.dv, xgb = xgb.dv, xgbL = xgbL.dv, gbmset = gbm.set, gbmdv = gbm.dv))
 modelCor(resamps, metric = "ROC")
+```
+
+```{r}
+pred.xgbL.dv <- predict(xgbL.dv, valid.dv[, -1])
+pred.rf.set <- predict(rf.set, valid.set[, -1])
+pred.mars <- predict(mars.dv, valid.dv[, -1])
+pred.c50.set <- predict(c50.set, valid.set[, -1])
+pred.svm.dv <- predict(svm.dv, valid.dv[, -1])
+pred.nnet.dv <- predict(nnet.dv, valid.dv[, -1])
+
+valid.avg <- data_frame(xgb = pred.xgbL.dv,
+                        rf = pred.rf.set,
+                        mars = pred.mars,
+                        c50 = pred.c50.set,
+                        svm = pred.svm.dv,
+                        lda = pred.lda.pca,
+                        pls = pred.pls.dv,
+                        glmnet = pred.glmnet.mca,
+                        nsc = pred.nsc)
+
+mix.mod.avg <- train(
+    x = valid.avg,
+    y = valid.party, 
+    method = "rf"
+)
+
+pred.mix.avg.valid <- predict(mix.mod.avg, valid.avg)
+confusionMatrix(pred.mix.avg.valid, valid.party)
+```
+
+## Test Set Submission
+
+```{r}
+pred.test.xgbL <- predict(xgbL.dv, test.dv[, -1])
+pred.test.rf <- predict(rf.set, test.set[, -1])
+pred.test.mars <- predict(mars.dv, test.dv[, -1])
+pred.test.c50 <- predict(c50.set, test.set[, -1])
+pred.test.svm <- predict(svm.dv, test.dv[, -1])
+pred.test.lda <- predict(lda.pca, test.dv[, -1])
+pred.test.pls <- predict(pls.dv, test.dv[, -c(1, hc.dv)])
+pred.test.glmnet <- predict(glmnet.mca, test.mca)
+pred.test.nsc <- predict(nsc.dv, test.dv[, -1])
+
+test.avg <- data_frame(xgb = pred.test.xgbL,
+                       rf = pred.test.rf,
+                       mars = pred.test.mars,
+                       c50 = pred.test.c50,
+                       svm = pred.test.svm,
+                       lda = pred.test.lda,
+                       pls = pred.test.pls,
+                       glmnet = pred.test.glmnet,
+                       nsc = pred.test.nsc)
+
+pred.mix.test <- predict(mix.mod.avg, test.avg)
+test_submission(pred.mix.test)
 ```
 
