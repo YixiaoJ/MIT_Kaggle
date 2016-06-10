@@ -22,6 +22,7 @@ mars.dv <- readRDS("models/mars_dv.Rds")
 
 library(kernlab)
 svm.dv <- readRDS("models/svm_dv.Rds")
+svmL.dv <- readRDS("models/svm_dv.Rds")
 
 nnet.dv <- readRDS("models/nnet_dv.Rds")
 
@@ -40,6 +41,7 @@ c50.dv <- readRDS("models/c50_dv.Rds")
 
 library(xgboost)
 xgb.dv <- readRDS("models/xgb_dv.Rds")
+xgbL.dv <- readRDS("models/xgbL_dv.Rds")
 
 library(gbm)
 gbm.set <- readRDS("models/gbm_set.Rds")
@@ -47,7 +49,7 @@ gbm.dv <- readRDS("models/gbm_dv.Rds")
 ```
 
 ```{r}
-resamps <- resamples(list(pls = pls.dv, glmnet = glmnet.dv, nsc = nsc.dv, mars = mars.dv, svm = svm.dv, nnet = nnet.dv, rfset = rf.set, rfdv = rf.dv, rf2set = rf2.set, rf2dv = rf2.dv, c50data = c50.data, c50set = c50.set, c50dv = c50.dv, xgb = xgb.dv, gbmset = gbm.set, gbmdv = gbm.dv))
+resamps <- resamples(list(pls = pls.dv, glmnet = glmnet.dv, nsc = nsc.dv, mars = mars.dv, svm = svm.dv, svmL = svmL.dv, nnet = nnet.dv, rfset = rf.set, rfdv = rf.dv, rf2set = rf2.set, rf2dv = rf2.dv, c50data = c50.data, c50set = c50.set, c50dv = c50.dv, xgb = xgb.dv, xgbL = xgbL.dv, gbmset = gbm.set, gbmdv = gbm.dv))
 modelCor(resamps, metric = "ROC")
 ```
 
