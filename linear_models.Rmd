@@ -8,9 +8,12 @@ source("2-model_tests.R")
 ```
 
 ## Partial Least Squares
+
 ```{r}
 plsGrid <- expand.grid(.ncomp = 1:10)
 ```
+
+### PCA
 
 ```{r}
 if (!file.exists("models/pls_dv.Rds")) {
@@ -34,47 +37,47 @@ if (!file.exists("models/pls_dv.Rds")) {
 ```
 
 ```{r}
-set.seed(1056)
-pls.dv <- train(
-    Party ~ .,
-    data = train.dv[, -c(1, hc.dv)],
-    method = "pls",
-    trControl = trCtrl,
-    metric = "ROC",
-    tuneGrid = expand.grid(.ncomp = 3),
-    preProcess = c("nzv", "pca")
-)
-
-```
-
-
-```{r}
-set.seed(1056)
-glmnet.mca <- train(
-    Party ~ .,
-    # data = train.dv[, -1],
-    data = train.mca[, -1],
-    method = "glmnet",
-    trControl = trCtrl,
-    metric = "ROC",
-    # tuneGrid = expand.grid(.alpha = 0.1, .lambda = 0.0044944)
-    tuneLength = 10
-    # tuneGrid = expand.grid(.ncomp = 1:5)
-    # preProcess = c("nzv", "ica")
-)
+pls.dv
 ```
 
 ```{r}
-lda.ica
+pred.pls.dv <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
+confusionMatrix(pred.pls.dv, valid.party)
+```
+
+### MCA
+
+```{r}
+if (!file.exists("models/pls_mca.Rds")) {
+    set.seed(1056)
+    pls.mca <- train(
+        Party ~ .,
+        data = train.mca[, -1],
+        method = "pls",
+        trControl = trCtrl,
+        metric = "ROC",
+        tuneGrid = plsGrid
+        # preProcess = c("center", "scale")
+    )
+    
+    saveRDS(pls.mca, "models/pls_mca.Rds")
+
+} else {
+    library(pls)
+    pls.mca <- readRDS("models/pls_mca.Rds")
+}
 ```
 
 ```{r}
-pred.glmnet.mca <- predict(glmnet.mca, valid.mca)
-confusionMatrix(pred.glmnet.mca, valid.party)
+pls.mca
 ```
 
+```{r}
+pred.pls.mca <- predict(pls.mca, valid.mca)
+confusionMatrix(pred.pls.mca, valid.party)
+```
 
-
+### Kernal PLS
 
 ```{r}
 set.seed(1056)
@@ -95,15 +98,9 @@ kpls.dv
 ```
 
 ```{r}
-# pred.kpls.dv <- predict(kpls.dv, valid.set[, -1])
 pred.kpls.dv <- predict(kpls.dv, valid.dv[, -c(1, hc.dv)])
 confusionMatrix(pred.kpls.dv, valid.party)
 ```
-
-```{r}
-varImp(glmnet.mca)
-```
-
 
 ## Penalized Models
 
@@ -113,6 +110,8 @@ glmnGrid <- expand.grid(
     .lambda = seq(0.1, 0.2, length = 40)
 )
 ```
+
+### PCA
 
 ```{r}
 if (!file.exists("models/glmnet_dv.Rds")) {
@@ -134,28 +133,55 @@ if (!file.exists("models/glmnet_dv.Rds")) {
     glmnet.dv <- readRDS("models/glmnet_dv.Rds")
 }
 ```
-```{r}
-library(glmnet)
-glmnGrid <- expand.grid(
-    .alpha = c(0, 0.1, 0.2, 0.4, 0.6, 0.8, 1), 
-    .lambda = seq(0.1, 0.2, length = 40)
-)
-```
-
 
 ```{r}
-set.seed(1056)
-glmnet.dv <- train(
-    Party ~ .,
-    data = train.dv[, -c(1, hc.dv)],
-    method = "glmnet",
-    trControl = ctrl,
-    metric = "ROC",
-    tuneGrid = glmnGrid,
-    preProcess = c("nzv", "pca")
-)
+glmnet.dv
 ```
 
+```{r}
+pred.glmnet.dv <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
+confusionMatrix(pred.glmnet.dv, valid.party)
+```
+
+```{r}
+varImp(glmnet.dv)
+```
+
+### MCA
+
+```{r}
+if (!file.exists("models/glmnet_mca.Rds")) {
+    set.seed(1056)
+    glmnet.mca <- train(
+        Party ~ .,
+        # data = train.dv[, -1],
+        data = train.mca[, -1],
+        method = "glmnet",
+        trControl = trCtrl,
+        metric = "ROC",
+        tuneGrid = expand.grid(.alpha = 0.1, .lambda = 0.0044944)
+    )
+    
+    saveRDS(glmnet.mca, "models/glmnet_mca.Rds")
+
+} else {
+    library(glmnet)
+    glmnet.mca <- readRDS("models/glmnet_mca.Rds")
+}
+```
+
+```{r}
+glmnet.mca
+```
+
+```{r}
+pred.glmnet.mca <- predict(glmnet.mca, valid.mca)
+confusionMatrix(pred.glmnet.mca, valid.party)
+```
+
+```{r}
+varImp(glmnet.mca)
+```
 
 ## Nearest Shrunken Centroids
 
@@ -173,7 +199,7 @@ if (!file.exists("models/nsc_dv.Rds")) {
         trControl = ctrl,
         metric = "ROC",
         tuneGrid = nscGrid,
-        preProcess = c("center", "scale", "nzv")
+        preProcess = "nzv"
     )
     
     saveRDS(nsc.dv, "models/nsc_dv.Rds")
@@ -185,77 +211,43 @@ if (!file.exists("models/nsc_dv.Rds")) {
 ```
 
 ```{r}
-pls.dv
-```
-
-```{r}
-glmnet.dv
-```
-
-```{r}
 nsc.dv
 ```
 
 ```{r}
-pred1 <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
-pred2 <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
-pred3 <- predict(nsc.dv, valid.dv[, -c(1, hc.dv)])
+pred.nsc <- predict(nsc.dv, valid.dv[, -c(1, hc.dv)])
+confusionMatrix(pred.nsc, valid.party)
+```
+
+### MCA
+
+```{r}
+if (!file.exists("models/nsc_mca.Rds")) {
+    set.seed(1056)
+    nsc.mca <- train(
+        Party ~ .,
+        data = train.mca[, -1],
+        method = "nsc",
+        trControl = trCtrl,
+        metric = "ROC",
+        tuneGrid = nscGrid
+        # preProcess = c("center", "scale")
+    )
+    
+    saveRDS(nsc.mca, "models/nsc_mca.Rds")
+
+} else {
+    library(nsc)
+    nsc.mca <- readRDS("models/nsc_mca.Rds")
+}
 ```
 
 ```{r}
-confusionMatrix(pred1, valid.party)
+nsc.mca
 ```
 
 ```{r}
-confusionMatrix(pred2, valid.party)
+pred.nsc.mca <- predict(nsc.mca, valid.mca)
+confusionMatrix(pred.nsc.mca, valid.party)
 ```
-
-```{r}
-confusionMatrix(pred3, valid.party)
-```
-
-```{r}
-resamps <- resamples(list(pls = pls.dv, glmnet = glmnet.mca))
-modelCor(resamps)
-```
-
-```{r}
-pred.pls <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
-pred.glmnet <- predict(glmnet.mca, valid.mca)
-```
-
-```{r}
-valid.avg <- data_frame(pred.pls, pred.glmnet)
-mod.avg <- train(x = valid.avg, y = valid.party, method = "rf")
-pred.avg.valid <- predict(mod.avg, valid.avg)
-confusionMatrix(pred.avg.valid, valid.party)
-```
-
-```{r}
-pred.test.pls <- predict(pls.dv, test.dv[, -c(1, hc.dv)])
-pred.test.glmnet <- predict(glmnet.mca, test.mca)
-test.avg <- data_frame(pred.pls = pred.test.pls, pred.glmnet = pred.test.glmnet)
-pred.test.avg <- predict(mod.avg, test.avg)
-```
-
-```{r}
-test.submit <- data_frame(USER_ID = testing$USER_ID, Predictions = pred.test.avg)
-
-mod <- str_replace_all(as.character(Sys.time()), "-|:| ", "")
-write_csv(test.submit, paste0("submission_", mod, ".csv"))
-```
-
-```{r}
-d <- full_join(train.ica, train.mca, by = c("USER_ID", "Party"))
-library(AppliedPredictiveModeling)
-transparentTheme(trans = 0.4)
-# ggplot(d, aes(x = ICA2, y = mca5, color = Party)) +
-    # geom_point()
-featurePlot(x = d[, 3:12], y = d$Party, plot = "pairs", auto.key = list(columns = 2))
-```
-
-```{r}
-cor(d[, -c(1, 2)])
-```
-
 
