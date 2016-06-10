@@ -41,6 +41,16 @@ if (!file.exists("models/xgb_dv.Rds")) {
 }
 ```
 
+```{r}
+xgb.dv
+```
+
+```{r}
+pred.xgb.dv <- predict(xgb.dv, valid.dv[, -1])
+confusionMatrix(pred.xgb.dv, valid.party)
+```
+
+
 ### Linear
 
 ```{r}
