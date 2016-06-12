@@ -9,8 +9,19 @@ library(caret)
 library(purrr)
 library(mice)
 
-# use saved imputed data set if it exists, else do imputing (slow)
+#' Use saved imputed data set if it exists, else do imputing using mice
+#'
+#' @param file.save
+#' @param set
+#' @param method
+#'
+#' @return A mids object
+#' @export
+#'
+#' @examples
 get_impute <- function(file.save, set, method = NULL) {
+    require(mice)
+
     if (file.exists(file.save)) {
         imp <- readRDS(file.save)
     } else {
@@ -21,7 +32,27 @@ get_impute <- function(file.save, set, method = NULL) {
         }
         saveRDS(imp, file.save)
     }
+
     imp
+}
+
+#' Check if two variables are significantly correlated
+#'
+#' @param x predictor variable
+#' @param y outcome variable
+#'
+#' @return A p-value from an h.test object
+#' @export
+#'
+#' @examples
+pScore <- function(x, y) {
+    numX <- length(unique(x))
+    if (numX > 2) {
+        out <- t.test(x ~ y)$p.value
+    } else {
+        out <- fisher.test(factor(x), y)$p.value
+    }
+    out
 }
 
 # set ordered factor levels
@@ -56,10 +87,32 @@ training <- read_csv("train2016.csv") %>%
            HouseholdStatus = str_replace_all(HouseholdStatus, household),
            EducationLevel = str_replace_all(EducationLevel, education))
 
+# add counts of number of NA responses
+train.na <- dplyr::select(training, -USER_ID, -Party) %>%
+    mutate_each(funs(is.na))
+
+training$NumNA <- rowSums(train.na)
+training$NumNA.Desc <- rowSums(train.na[, 1:5])
+training$NumNA.Ques <- rowSums(train.na[, 6:106])
+# training$NumNA.Pval <- rowSums(train.na[, names(pval)])
+
+train.dv <- training %>%
+    mutate_each(funs(str_replace_na), -USER_ID, -YOB, -Party)
+    # mutate(Income = ordered(Income, levels = income),
+    #        EducationLevel = ordered(EducationLevel, levels = education)) %>%
+    # mutate_each(funs(as.factor), -USER_ID, -YOB)
+
+dv <- dummyVars(~ . - Party, data = training, sep = "_")
+train.dv <- predict(dv, newdata = train.dv) %>% as_data_frame()
+
+
 testing <- read_csv("test2016.csv") %>%
     mutate(Income = str_replace_all(Income, income),
            HouseholdStatus = str_replace_all(HouseholdStatus, household),
-           EducationLevel = str_replace_all(EducationLevel, education))
+           EducationLevel = str_replace_all(EducationLevel, education)) %>%
+    mutate(Income = ordered(Income, levels = income),
+           EducationLevel = ordered(EducationLevel, levels = education)) %>%
+    mutate_each(funs(as.factor), -USER_ID, -YOB)
 
 # train / validate sets --------------------------------
 
@@ -76,38 +129,62 @@ testing$YOB[testing$YOB > 2005 | testing$YOB < 1910] <- NA
 # feature processing -------------------------------------------
 
 # create an "NA" level for factor vars before converting to dummy vars
-train.set <- dplyr::select(train.data, -Party) %>%
-    mutate_each(funs(str_replace_na), -USER_ID, -YOB) %>%
-    mutate_each(funs(as.factor), -USER_ID, -YOB)
+# train.set <- dplyr::select(train.data, -Party) %>%
+#     mutate_each(funs(str_replace_na), -USER_ID, -YOB) %>%
+#     mutate_each(funs(as.factor), -USER_ID, -YOB)
 
 # make factors for original data set (keeps NA's)
-train.data <- train.data %>%
-    mutate(Income = ordered(Income, levels = income),
-           EducationLevel = ordered(EducationLevel, levels = education)) %>%
-    mutate_each(funs(as.factor), -USER_ID, -YOB)
+# train.data <- train.data %>%
+#     mutate(Income = ordered(Income, levels = income),
+#            EducationLevel = ordered(EducationLevel, levels = education)) %>%
+#     mutate_each(funs(as.factor), -USER_ID, -YOB)
+
+# convert factors to numeric
+train.data.n <- dmap_if(train.data, is.factor, as.numeric)
+
+# determine which predictors are signicantly associated with outcome
+scores <- apply(X = train.data.n[, -c(1, 7)], MARGIN = 2, FUN = pScore, y = train.data.n$Party)
+pval <- sort(scores[scores < 0.05])
+
 
 # make outcome vectors
 train.party <- train.data$Party
 
 # impute missing data (should only be YOB variable)
-train.mice <- get_impute("train_mice.Rds", train.set)
-train.imp <- complete(train.mice)
+# train.mice <- get_impute("train_mice.Rds", train.set)
+# train.imp <- complete(train.mice)
 
 # replace the YOB variable with imputed values (done this way to avoid
 # warnings about dropped contrasts)
-train.set$YOB <- train.imp$YOB
+# train.set$YOB <- train.imp$YOB
+
+# impute all missing data
+# train.data.mice <- get_impute("train_data_mice.Rds", train.data)
+# train.data.imp <- complete(train.data.mice)
 
 # convert factors to numeric
-train.data.n <- dmap_if(train.data, is.factor, as.numeric)
-train.set.n <- dmap_if(train.set, is.factor, as.numeric)
+# train.set.n <- dmap_if(train.set, is.factor, as.numeric)
+# train.data.imp.n <- dmap_if(train.data.imp, is.factor, as.numeric)
 
-# make dummy variables for factor data
-dv <- dummyVars(~ ., data = train.set)
-train.dv <- predict(dv, newdata = train.set) %>% as_data_frame()
+# make dummy variables for data with NA as an outcome
+# dv <- dummyVars(~ ., data = train.set)
+# train.dv <- predict(dv, newdata = train.set) %>% as_data_frame()
 
-train.set <- train.set %>%
-    mutate(Income = ordered(Income, levels = c("NA", income)),
-           EducationLevel = ordered(EducationLevel, levels = c("NA", education)))
+dv <- dummyVars(~ . - Party, data = train.data)
+train.dv <- predict(dv, newdata = train.data) %>% as_data_frame()
+train.dv$Party <- train.party
+
+imp <- preProcess(train.dv, "bagImpute", outcome = "Party")
+train.imp <- predict(imp, newdata = train.data[, -c(1, 7)])
+
+
+# make dummy vars on imputed data
+# dv.imp <- dummyVars(~ . - Party, data = train.data.imp)
+# train.imp.dv <- predict(dv.imp, newdata = train.data.imp) %>% as_data_frame()
+
+# train.set <- train.set %>%
+#     mutate(Income = ordered(Income, levels = c("NA", income)),
+#            EducationLevel = ordered(EducationLevel, levels = c("NA", education)))
 
 # repeat for validation set
 valid.set <- select(valid.data, -Party) %>%
@@ -119,6 +196,13 @@ valid.data <- valid.data %>%
            EducationLevel = ordered(EducationLevel, levels = education)) %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB)
 
+valid.na <- dplyr::select(valid.data, -USER_ID, -Party) %>%
+    mutate_each(funs(is.na))
+
+valid.data$NumNA <- rowSums(valid.na)
+valid.data$NumNA.Desc <- rowSums(valid.na[, 1:5])
+valid.data$NumNA.Ques <- rowSums(valid.na[, 6:106])
+
 valid.party <- valid.data$Party
 
 valid.mice <- get_impute("valid_mice.Rds", valid.set, train.mice$method)
@@ -126,8 +210,14 @@ valid.imp <- complete(valid.mice)
 
 valid.set$YOB <- valid.imp$YOB
 
+valid.data.mice <- get_impute("valid_data_mice.Rds", valid.data, train.data.mice$method)
+valid.data.imp <- complete(valid.data.mice)
+
+valid.imp.dv <- predict(dv.imp, newdata = valid.data.imp) %>% as_data_frame()
+
 valid.data.n <- dmap_if(valid.data, is.factor, as.numeric)
 valid.set.n <- dmap_if(valid.set, is.factor, as.numeric)
+valid.data.imp.n <- dmap_if(valid.data.imp, is.factor, as.numeric)
 
 valid.dv <- predict(dv, newdata = valid.set) %>% as_data_frame()
 
@@ -145,13 +235,26 @@ test.data <- testing %>%
            EducationLevel = ordered(EducationLevel, levels = education)) %>%
     mutate_each(funs(as.factor), -USER_ID, -YOB)
 
+test.na <- dplyr::select(test.data, -USER_ID) %>%
+    mutate_each(funs(is.na))
+
+test.data$NumNA <- rowSums(test.na)
+test.data$NumNA.Desc <- rowSums(test.na[, 1:5])
+test.data$NumNA.Ques <- rowSums(test.na[, 6:106])
+
 test.mice <- get_impute("test_mice.Rds", test.set, train.mice$method)
 test.imp <- complete(test.mice)
 
 test.set$YOB <- test.imp$YOB
 
+test.data.mice <- get_impute("test_data_mice.Rds", test.data, train.data.mice$method)
+test.data.imp <- complete(test.data.mice)
+
+test.imp.dv <- predict(dv.imp, newdata = test.data.imp) %>% as_data_frame()
+
 test.data.n <- dmap_if(test.data, is.factor, as.numeric)
 test.set.n <- dmap_if(test.set, is.factor, as.numeric)
+test.data.imp.n <- dmap_if(test.data.imp, is.factor, as.numeric)
 
 test.dv <- predict(dv, newdata = test.set) %>% as_data_frame()
 
@@ -161,11 +264,17 @@ test.set <- test.set %>%
 
 # high correlation -------------------------------------
 
-hcor.set <- cor(train.set.n, use = "na.or.complete")
-hc.set <- findCorrelation(hcor.set)
+# hcor.set <- cor(train.set.n, use = "na.or.complete")
+# hc.set <- findCorrelation(hcor.set)
 
 hcor.dv <- cor(train.dv, use = "na.or.complete")
 hc.dv <- findCorrelation(hcor.dv)
+
+# hcor.imp <- cor(train.data.imp.n[, -c(1, 108)], use = "na.or.complete")
+# hc.imp <- findCorrelation(hcor.imp)
+
+hcor.imp.dv <- cor(train.imp.dv, use = "na.or.complete")
+hc.imp.dv <- findCorrelation(hcor.imp.dv)
 
 # party ------------------------------------------------
 
@@ -173,6 +282,7 @@ hc.dv <- findCorrelation(hcor.dv)
 train.dv$Party <- train.party
 train.set$Party <- train.party
 train.set.n$Party <- train.party
+train.imp.dv$Party <- train.party
 
 # new features -----------------------------------------
 
@@ -180,10 +290,12 @@ train.ftr <- train.data %>%
     by_row(function(x) sum(is.na(x)), .to = "num.na", .collate = "cols") %>%
     select(USER_ID, Party, num.na)
 
-ica <- preProcess(train.dv[, -c(1, 331)], c("ica", "nzv"), n.comp = 10)
-train.ica <- predict(ica, train.dv)
-valid.ica <- predict(ica, valid.dv)
-test.ica <- predict(ica, test.dv)
+pca <- preProcess(train.dv[, -c(1, 331)], "pca", thresh = 0.85)
+train.pca <- predict(pca, train.dv)
+valid.pca <- predict(pca, valid.dv)
+test.pca <- predict(pca, test.dv)
+
+pca.imp <- preProcess(train.imp.dv[, -c(1, 224)], "pca", thresh = 0.85)
 
 # linear_combo <- findLinearCombos()
 # centroids <- classDist(train.data[, 3], train.party)
@@ -211,3 +323,4 @@ names(valid.mca) <- paste0("mca", names(valid.mca))
 names(test.mca) <- paste0("mca", names(test.mca))
 
 train.mca <- bind_cols(train.data[, c("USER_ID", "Party")], train.mca)
+
