@@ -178,6 +178,7 @@ scores <- apply(X = select(train.data, -USER_ID, -Party), MARGIN = 2,
                 FUN = pScore, y = train.data$Party)
 pval <- sort(scores[scores < 0.05])
 
+# nzv <- nearZeroVar(train.data)
 
 # make outcome vectors
 # train.party <- train.data$Party
@@ -356,3 +357,5 @@ test.pca <- predict(pca, test.data)
 #
 # train.mca <- bind_cols(train.data[, c("USER_ID", "Party")], train.mca)
 #
+train.party <- train.data$Party
+rm(train.dv, train.na, test.na)
