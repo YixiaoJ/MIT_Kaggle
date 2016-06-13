@@ -110,7 +110,10 @@ if (!file.exists("models/pls_dv.Rds")) {
     set.seed(1056)
     pls.dv <- train(
         Party ~ .,
-        data = train.dv[, -c(1, hc.dv)],
+        data = train.pca[, -1],
+        # data = train.dv[, -c(1, hc.dv)],
+        # x = train.data[, names(pval)],
+        # y = train.data$Party,
         method = "pls",
         trControl = trCtrl,
         metric = "ROC",
@@ -131,8 +134,11 @@ pls.dv
 ```
 
 ```{r}
-pred.pls.dv <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
-confusionMatrix(pred.pls.dv, valid.party)
+# pred.pls.dv <- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
+# pred.pls.dv <- predict(pls.dv, valid.data[, -c(1, 338)])
+# pred.pls.dv <- predict(pls.dv, valid.data[, names(pval)])
+pred.pls.dv <- predict(pls.dv, valid.pca)
+confusionMatrix(pred.pls.dv, valid.data$Party)
 ```
 
 ### PCA
@@ -211,8 +217,10 @@ glmnGrid <- expand.grid(
 if (!file.exists("models/glmnet_dv.Rds")) {
     set.seed(1056)
     glmnet.dv <- train(
-        Party ~ .,
-        data = train.dv[, -c(1, hc.dv)],
+        # Party ~ .,
+        # data = train.dv[, -c(1, hc.dv)],
+        x = train.data[, names(pval)],
+        y = train.data$Party,
         method = "glmnet",
         trControl = trCtrl,
         metric = "ROC",
@@ -233,8 +241,9 @@ glmnet.dv
 ```
 
 ```{r}
-pred.glmnet.dv <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
-confusionMatrix(pred.glmnet.dv, valid.party)
+# pred.glmnet.dv <- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
+pred.glmnet.dv <- predict(glmnet.dv, valid.data[, names(pval)])
+confusionMatrix(pred.glmnet.dv, valid.data$Party)
 ```
 
 ### PCA
@@ -319,8 +328,10 @@ nscGrid <- data.frame(.threshold = 0:25)
 if (!file.exists("models/nsc_dv.Rds")) {
     set.seed(1056)
     nsc.dv <- train(
-        Party ~ .,
-        data = train.dv[, -1],
+        # Party ~ .,
+        # data = train.dv[, -1],
+        x = train.data[, names(pval)],
+        y = train.data$Party,
         method = "pam",
         trControl = trCtrl,
         metric = "ROC",
@@ -341,8 +352,9 @@ nsc.dv
 ```
 
 ```{r}
-pred.nsc <- predict(nsc.dv, valid.dv[, -1])
-confusionMatrix(pred.nsc, valid.party)
+# pred.nsc <- predict(nsc.dv, valid.dv[, -1])
+pred.nsc <- predict(nsc.dv, valid.data[, names(pval)])
+confusionMatrix(pred.nsc, valid.data$Party)
 ```
 
 ### MCA
@@ -377,6 +389,81 @@ pred.nsc.mca <- predict(nsc.mca, valid.mca)
 confusionMatrix(pred.nsc.mca, valid.party)
 ```
 
+## Logistic Regression
+
+```{r}
+if (!file.exists("models/glm.Rds")) {
+    set.seed(1056)
+    mod.glm <- train(
+        Party ~ .,
+        data = train.pca[, -1],
+        # data = train.data[, -1],
+        # data = train.data[, -c(1, hc)],
+        # x = train.data[, names(pval)],
+        # y = train.data$Party,
+        method = "glm",
+        trControl = trCtrl,
+        metric = "ROC",
+        # tuneLength = 10,
+        # tuneGrid = nscGrid,
+        preProcess = c("center", "scale")
+    )
+    
+    saveRDS(mod.glm, "models/glm.Rds")
+
+} else {
+    mod.glm <- readRDS("models/glm.Rds")
+}
+```
+
+```{r}
+# pred.glm <- predict(mod.glm, valid.data[, -1])
+# pred.glm <- predict(mod.glm, valid.data[, names(pval)])
+pred.glm <- predict(mod.glm, valid.pca[, -1])
+confusionMatrix(pred.glm, valid.data$Party)
+```
+
+## Binary Discriminant Analysis
+
+```{r}
+# nscGrid <- data.frame(.threshold = 0:25)
+```
+
+```{r}
+if (!file.exists("models/binda.Rds")) {
+    set.seed(1056)
+    binda <- train(
+        # Party ~ .,
+        # data = train.data[, -c(1, hc, 334:337)],
+        x = train.data[, names(pval)],
+        y = train.data$Party,
+        method = "binda",
+        trControl = trCtrl,
+        metric = "ROC",
+        tuneLength = 10,
+        # tuneGrid = nscGrid,
+        preProcess = "nzv"
+    )
+    
+    saveRDS(binda, "models/binda.Rds")
+
+} else {
+    library(binda)
+    binda <- readRDS("models/binda.Rds")
+}
+```
+
+```{r}
+binda
+```
+
+```{r}
+# pred.binda <- predict(binda, valid.data[, -c(1, hc, 334:338)])
+pred.binda <- predict(binda, valid.data[, names(pval)])
+confusionMatrix(pred.binda, valid.data$Party)
+```
+
+
 ## Compare Models
 
 ```{r}
@@ -395,23 +482,38 @@ resamps <- resamples(list(lda.pca = lda.pca,
 modelCor(resamps, metric = "ROC")
 ```
 
+```{r}
+resamps <- resamples(list(glm = mod.glm, 
+                          pls = pls.dv,
+                          binda = binda,
+                          glmnet = glmnet.dv,
+                          nsc = nsc.dv))
+modelCor(resamps, metric = "ROC")
+```
+
+
 ## Linear Model Averaging
 
 ```{r}
-valid.avg <- data_frame(lda = pred.lda.pca,
+# valid.avg <- data_frame(lda = pred.lda.pca,
+#                         pls = pred.pls.dv,
+#                         glmnet = pred.glmnet.mca,
+#                         nsc = pred.nsc)
+
+valid.avg <- data_frame(glm = pred.glm,
                         pls = pred.pls.dv,
-                        glmnet = pred.glmnet.mca,
+                        binda = pred.binda,
+                        glmnet = pred.glmnet.dv,
                         nsc = pred.nsc)
 
 linear.mod.avg <- train(
     x = valid.avg,
-    y = valid.party, 
-    method = "rf", 
-    tuneGrid = expand.grid(.mtry = c(2:5))
+    y = valid.data$Party, 
+    method = "rf"
 )
 
 pred.avg.valid <- predict(linear.mod.avg, valid.avg)
-confusionMatrix(pred.avg.valid, valid.party)
+confusionMatrix(pred.avg.valid, valid.data$Party)
 ```
 
 ```{r}
@@ -435,3 +537,19 @@ pred.linear.test <- predict(linear.mod.avg, test.avg)
 test_submission(pred.linear.test)
 ```
 
+```{r}
+pred.test.glm <- predict(mod.glm, test.data[, names(pval)])
+pred.test.pls <- predict(pls.dv, test.data[, names(pval)])
+pred.test.glmnet <- predict(glmnet.dv, test.data[, names(pval)])
+pred.test.nsc <- predict(nsc.dv, test.data[, names(pval)])
+pred.test.binda <- predict(binda, test.data[, names(pval)])
+
+test.avg <- data_frame(glm = pred.test.glm,
+                        pls = pred.test.pls,
+                        binda = pred.test.binda,
+                        glmnet = pred.test.glmnet,
+                        nsc = pred.test.nsc)
+
+pred.linear.test <- predict(linear.mod.avg, test.avg)
+test_submission(pred.linear.test)
+```

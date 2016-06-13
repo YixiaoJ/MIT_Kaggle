@@ -23,8 +23,8 @@ if (!file.exists("models/c50_data.Rds")) {
         Party ~ .,
         data = train.data[, -1],
         method = "C5.0",
-        trControl = ctrl,
-        na.action = na.pass,
+        trControl = trCtrl,
+        # na.action = na.pass,
         metric = "ROC",
         tuneGrid = c50Grid
     )
@@ -36,6 +36,12 @@ if (!file.exists("models/c50_data.Rds")) {
     c50.data <- readRDS("models/c50_data.Rds")
 }
 ```
+
+```{r}
+pred.c50 <- predict(c50.data, newdata = valid.data[, -c(1, 338)])
+confusionMatrix(pred.c50, valid.data$Party)
+```
+
 
 ```{r}
 if (!file.exists("models/c50_set.Rds")) {
@@ -80,6 +86,33 @@ if (!file.exists("models/c50_dv.Rds")) {
 ```
 
 ```{r}
+if (!file.exists("models/c50_mice.Rds")) {
+    set.seed(1056)
+    c50.mice <- train(
+        Party ~ .,
+        data = train.data.imp[, -1],
+        method = "C5.0",
+        trControl = trCtrl,
+        # na.action = na.pass,
+        metric = "ROC",
+        tuneGrid = c50Grid
+    )
+    
+    saveRDS(c50.mice, "models/c50_mice.Rds")
+
+} else {
+    library(C50)
+    c50.mice <- readRDS("models/c50_mice.Rds")
+}
+```
+
+```{r}
+pred.c50.mice <- predict(c50.mice, valid.imp[, -1])
+confusionMatrix(pred.c50.mice, valid.party)
+```
+
+
+```{r}
 c50.data
 ```
 
@@ -122,6 +155,11 @@ plot(vi2, top = 20)
 ```{r}
 vi3 <-varImp(c50.dv)
 plot(vi3, top = 20)
+```
+
+```{r}
+vi4 <-varImp(c50.mice)
+plot(vi4, top = 20)
 ```
 
 ```{r}

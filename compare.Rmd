@@ -58,7 +58,10 @@ gbm.dv <- readRDS("models/gbm_dv.Rds")
 ```
 
 ```{r}
-resamps <- resamples(list(mars = mars.dv, svm = svm.dv, svmL = svmL.dv, nnet = nnet.dv, rfset = rf.set, rfdv = rf.dv, rangerset = ranger.set, rangerdv = ranger.dv, c50data = c50.data, c50set = c50.set, c50dv = c50.dv, xgb = xgb.dv, xgbL = xgbL.dv, gbmset = gbm.set, gbmdv = gbm.dv))
+resamps <- resamples(list(mars = mars.dv, svm = svm.dv, svmL = svmL.dv, nnet = nnet.dv, rfset = rf.set, rfdv = rf.dv, rangerset = ranger.set, rangerdv = ranger.dv, c50data = c50.data, c50set = c50.set, c50dv = c50.dv, c50mice = c50.mice, xgb = xgb.dv, xgbL = xgbL.dv, gbmset = gbm.set, gbmdv = gbm.dv))
+
+resamps <- resamples(list(c50mice = c50.mice, rangerMice = ranger.mice))
+
 modelCor(resamps, metric = "ROC")
 ```
 

@@ -144,6 +144,9 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>source(&quot;2-model_tests.R&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="linear-discriminant-analysis" class="section level2">
@@ -165,6 +168,7 @@ $(document).ready(function () {
     )
     
     saveRDS(lda.pca, &quot;models/lda_pca.Rds&quot;)
+
 } else {
     lda.pca &lt;- readRDS(&quot;models/lda_pca.Rds&quot;)
 }</code></pre>
@@ -176,24 +180,6 @@ $(document).ready(function () {
 <!-- rnb-source-begin -->
 <pre class="r"><code>lda.pca</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGluZWFyIERpc2NyaW1pbmFudCBBbmFseXNpcyBcblxuNDQ1NSBzYW1wbGVzXG4gMzI5IHByZWRpY3RvclxuICAgMiBjbGFzc2VzOiAnRGVtb2NyYXQnLCAnUmVwdWJsaWNhbicgXG5cblByZS1wcm9jZXNzaW5nOiBwcmluY2lwYWwgY29tcG9uZW50IHNpZ25hbCBleHRyYWN0aW9uICgzMjMpLCBjZW50ZXJlZCAoMzIzKSwgc2NhbGVkICgzMjMpLFxuIHJlbW92ZSAoNikgXG5SZXNhbXBsaW5nOiBDcm9zcy1WYWxpZGF0ZWQgKDEwIGZvbGQsIHJlcGVhdGVkIDUgdGltZXMpIFxuU3VtbWFyeSBvZiBzYW1wbGUgc2l6ZXM6IDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIC4uLiBcblJlc2FtcGxpbmcgcmVzdWx0czpcblxuICBST0MgICAgICAgIFNlbnMgICAgICAgU3BlYyAgICAgXG4gIDAuNjYzNTIyNyAgMC42NTg5NTAyICAwLjU2MDM3OTFcblxuIFxuIn0= -->
-<pre><code>Linear Discriminant Analysis 
-
-4455 samples
- 329 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: principal component signal extraction (323), centered (323), scaled (323),
- remove (6) 
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results:
-
-  ROC        Sens       Spec     
-  0.6635227  0.6589502  0.5603791
-
- </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -202,34 +188,6 @@ Resampling results:
 <pre class="r"><code>pred.lda.pca &lt;- predict(lda.pca, valid.dv[, -1])
 confusionMatrix(pred.lda.pca, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICAzOTAgICAgICAgIDIxN1xuICBSZXB1YmxpY2FuICAgICAgMjAwICAgICAgICAzMDZcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYyNTMgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU5NjEsIDAuNjUzOSlcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA4LjllLTExICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yNDY2ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjQzMzMgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC42NjEwICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjU4NTEgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjQyNSAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MDQ3ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzUwNCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41NDU0ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYyMzEgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        390        217
-  Republican      200        306
-                                          
-               Accuracy : 0.6253          
-                 95% CI : (0.5961, 0.6539)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 8.9e-11         
-                                          
-                  Kappa : 0.2466          
- Mcnemar's Test P-Value : 0.4333          
-                                          
-            Sensitivity : 0.6610          
-            Specificity : 0.5851          
-         Pos Pred Value : 0.6425          
-         Neg Pred Value : 0.6047          
-             Prevalence : 0.5301          
-         Detection Rate : 0.3504          
-   Detection Prevalence : 0.5454          
-      Balanced Accuracy : 0.6231          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -250,6 +208,7 @@ Prediction   Democrat Republican
     )
     
     saveRDS(lda.ica, &quot;models/lda_ica.Rds&quot;)
+
 } else {
     lda.ica &lt;- readRDS(&quot;models/lda_ica.Rds&quot;)
 }</code></pre>
@@ -261,24 +220,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>lda.ica</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGluZWFyIERpc2NyaW1pbmFudCBBbmFseXNpcyBcblxuNDQ1NSBzYW1wbGVzXG4gMzI5IHByZWRpY3RvclxuICAgMiBjbGFzc2VzOiAnRGVtb2NyYXQnLCAnUmVwdWJsaWNhbicgXG5cblByZS1wcm9jZXNzaW5nOiBpbmRlcGVuZGVudCBjb21wb25lbnQgc2lnbmFsIGV4dHJhY3Rpb24gKDMyMyksIGNlbnRlcmVkICgzMjMpLCBzY2FsZWRcbiAoMzIzKSwgcmVtb3ZlICg2KSBcblJlc2FtcGxpbmc6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCwgcmVwZWF0ZWQgNSB0aW1lcykgXG5TdW1tYXJ5IG9mIHNhbXBsZSBzaXplczogNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgLi4uIFxuUmVzYW1wbGluZyByZXN1bHRzOlxuXG4gIFJPQyAgICAgICAgU2VucyAgICAgIFNwZWMgICAgICBcbiAgMC41MjI5MzkxICAwLjk3Njc5NSAgMC4wMjIyNTg4M1xuXG4gXG4ifQ== -->
-<pre><code>Linear Discriminant Analysis 
-
-4455 samples
- 329 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: independent component signal extraction (323), centered (323), scaled
- (323), remove (6) 
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results:
-
-  ROC        Sens      Spec      
-  0.5229391  0.976795  0.02225883
-
- </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -287,34 +228,6 @@ Resampling results:
 <pre class="r"><code>pred.lda.ica &lt;- predict(lda.ica, valid.dv[, -1])
 confusionMatrix(pred.lda.ica, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA1NzMgICAgICAgIDUxMVxuICBSZXB1YmxpY2FuICAgICAgIDE3ICAgICAgICAgMTJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjUyNTYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjQ5NTgsIDAuNTU1MylcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAwLjYyOTYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogLTAuMDA2MiAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA8MmUtMTYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC45NzExOSAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjAyMjk0ICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNTI4NjAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC40MTM3OSAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEwICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNTE0ODIgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC45NzM5NCAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjQ5NzA3ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        573        511
-  Republican       17         12
-                                          
-               Accuracy : 0.5256          
-                 95% CI : (0.4958, 0.5553)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 0.6296          
-                                          
-                  Kappa : -0.0062         
- Mcnemar's Test P-Value : &lt;2e-16          
-                                          
-            Sensitivity : 0.97119         
-            Specificity : 0.02294         
-         Pos Pred Value : 0.52860         
-         Neg Pred Value : 0.41379         
-             Prevalence : 0.53010         
-         Detection Rate : 0.51482         
-   Detection Prevalence : 0.97394         
-      Balanced Accuracy : 0.49707         
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -335,6 +248,7 @@ Prediction   Democrat Republican
     )
     
     saveRDS(lda.mca, &quot;models/lda_mca.Rds&quot;)
+
 } else {
     lda.mca &lt;- readRDS(&quot;models/lda_mca.Rds&quot;)
 }</code></pre>
@@ -346,23 +260,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>lda.mca</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGluZWFyIERpc2NyaW1pbmFudCBBbmFseXNpcyBcblxuNDQ1NSBzYW1wbGVzXG4gIDEwIHByZWRpY3RvclxuICAgMiBjbGFzc2VzOiAnRGVtb2NyYXQnLCAnUmVwdWJsaWNhbicgXG5cblByZS1wcm9jZXNzaW5nOiBjZW50ZXJlZCAoMTApLCBzY2FsZWQgKDEwKSBcblJlc2FtcGxpbmc6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCwgcmVwZWF0ZWQgNSB0aW1lcykgXG5TdW1tYXJ5IG9mIHNhbXBsZSBzaXplczogNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgLi4uIFxuUmVzYW1wbGluZyByZXN1bHRzOlxuXG4gIFJPQyAgICAgICBTZW5zICAgICAgIFNwZWMgICAgIFxuICAwLjY2NDAxOSAgMC43MDg0Mjc3ICAwLjUwODkwMzJcblxuIFxuIn0= -->
-<pre><code>Linear Discriminant Analysis 
-
-4455 samples
-  10 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: centered (10), scaled (10) 
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results:
-
-  ROC       Sens       Spec     
-  0.664019  0.7084277  0.5089032
-
- </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -371,34 +268,6 @@ Resampling results:
 <pre class="r"><code>pred.lda.mca &lt;- predict(lda.mca, valid.mca)
 confusionMatrix(pred.lda.mca, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MjkgICAgICAgIDI1M1xuICBSZXB1YmxpY2FuICAgICAgMTYxICAgICAgICAyNzBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYyOCAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU5ODksIDAuNjU2NSlcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAyLjY0NWUtMTEgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yNDU4ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA3LjczNGUtMDYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MjcxICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjUxNjMgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjI5MCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MjY1ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzg1NCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC42MTI4ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYyMTcgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        429        253
-  Republican      161        270
-                                          
-               Accuracy : 0.628           
-                 95% CI : (0.5989, 0.6565)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 2.645e-11       
-                                          
-                  Kappa : 0.2458          
- Mcnemar's Test P-Value : 7.734e-06       
-                                          
-            Sensitivity : 0.7271          
-            Specificity : 0.5163          
-         Pos Pred Value : 0.6290          
-         Neg Pred Value : 0.6265          
-             Prevalence : 0.5301          
-         Detection Rate : 0.3854          
-   Detection Prevalence : 0.6128          
-      Balanced Accuracy : 0.6217          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -415,35 +284,24 @@ Prediction   Democrat Republican
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>if (!file.exists(&quot;models/pls_dv.Rds&quot;)) {
-    set.seed(1056)
+<pre class="r"><code>set.seed(1056)
     pls.dv &lt;- train(
-        Party ~ .,
-        data = train.dv[, -c(1, hc.dv)],
+        # Party ~ .,
+        # data = train.dv[, -c(1, hc.dv)],
+        x = train.data[, names(pval)],
+        y = train.data$Party,
         method = &quot;pls&quot;,
         trControl = trCtrl,
         metric = &quot;ROC&quot;,
         tuneGrid = plsGrid,
         preProcess = c(&quot;center&quot;, &quot;scale&quot;)
     )
-    
-    saveRDS(pls.dv, &quot;models/pls_dv.Rds&quot;)
-} else {
-    library(pls)
-    pls.dv &lt;- readRDS(&quot;models/pls_dv.Rds&quot;)
-}</code></pre>
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogw6LigqzLnHBsc8Oi4oKs4oSiXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIMOi4oKsy5xwYWNrYWdlOmNhcmV0w6LigqzihKI6XG5cbiAgICBSMlxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpzdGF0c8Oi4oKs4oSiOlxuXG4gICAgbG9hZGluZ3NcbiJ9 -->
-<pre><code>
-Attaching package: â€˜plsâ€™
-
-The following object is masked from â€˜package:caretâ€™:
-
-    R2
-
-The following object is masked from â€˜package:statsâ€™:
-
-    loadings</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuU2VsZWN0aW5nIHR1bmluZyBwYXJhbWV0ZXJzXG5GaXR0aW5nIG5jb21wID0gMiBvbiBmdWxsIHRyYWluaW5nIHNldFxuIn0= -->
+<pre><code>Aggregating results
+Selecting tuning parameters
+Fitting ncomp = 2 on full training set</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -452,65 +310,40 @@ The following object is masked from â€˜package:statsâ€™:
 <!-- rnb-source-begin -->
 <pre class="r"><code>pls.dv</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFydGlhbCBMZWFzdCBTcXVhcmVzIFxuXG40NDU1IHNhbXBsZXNcbiAzMTUgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuUHJlLXByb2Nlc3Npbmc6IGNlbnRlcmVkICgzMTUpLCBzY2FsZWQgKDMxNSkgXG5SZXNhbXBsaW5nOiBDcm9zcy1WYWxpZGF0ZWQgKDEwIGZvbGQsIHJlcGVhdGVkIDUgdGltZXMpIFxuU3VtbWFyeSBvZiBzYW1wbGUgc2l6ZXM6IDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIC4uLiBcblJlc2FtcGxpbmcgcmVzdWx0cyBhY3Jvc3MgdHVuaW5nIHBhcmFtZXRlcnM6XG5cbiAgbmNvbXAgIFJPQyAgICAgICAgU2VucyAgICAgICBTcGVjICAgICBcbiAgIDEgICAgIDAuNjE3NzE5MCAgMC43MTE0NjE0ICAwLjQ3NDIxMDVcbiAgIDIgICAgIDAuNjcxMzk4NSAgMC42ODQ4NjM4ICAwLjU0OTc2NjJcbiAgIDMgICAgIDAuNjc1OTgzMCAgMC42ODE4MTY1ICAwLjU1OTEyNTVcbiAgIDQgICAgIDAuNjcxNTg2OSAgMC42NjY5MDkxICAwLjU3MjMxMTJcbiAgIDUgICAgIDAuNjY0NjMyMiAgMC42NTQ4ODIwICAwLjU2NzQ0MDlcbiAgIDYgICAgIDAuNjYwOTE1NCAgMC42NDk4ODgxICAwLjU2NzQzODFcbiAgIDcgICAgIDAuNjU4NDEwMCAgMC42NDIxNzY2ICAwLjU3MTA2NDVcbiAgIDggICAgIDAuNjU3OTQyNiAgMC42NDIyNjI0ICAwLjU2ODU4MDVcbiAgIDkgICAgIDAuNjU3NjUxMCAgMC42NDMxMDYzICAwLjU2ODk1NjVcbiAgMTAgICAgIDAuNjU3MjA4MSAgMC42NDExNTcxICAwLjU2ODQ4MDdcblxuUk9DIHdhcyB1c2VkIHRvIHNlbGVjdCB0aGUgb3B0aW1hbCBtb2RlbCB1c2luZyAgdGhlIGxhcmdlc3QgdmFsdWUuXG5UaGUgZmluYWwgdmFsdWUgdXNlZCBmb3IgdGhlIG1vZGVsIHdhcyBuY29tcCA9IDMuIFxuIn0= -->
-<pre><code>Partial Least Squares 
-
-4455 samples
- 315 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: centered (315), scaled (315) 
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results across tuning parameters:
-
-  ncomp  ROC        Sens       Spec     
-   1     0.6177190  0.7114614  0.4742105
-   2     0.6713985  0.6848638  0.5497662
-   3     0.6759830  0.6818165  0.5591255
-   4     0.6715869  0.6669091  0.5723112
-   5     0.6646322  0.6548820  0.5674409
-   6     0.6609154  0.6498881  0.5674381
-   7     0.6584100  0.6421766  0.5710645
-   8     0.6579426  0.6422624  0.5685805
-   9     0.6576510  0.6431063  0.5689565
-  10     0.6572081  0.6411571  0.5684807
-
-ROC was used to select the optimal model using  the largest value.
-The final value used for the model was ncomp = 3. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>pred.pls.dv &lt;- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
-confusionMatrix(pred.pls.dv, valid.party)</code></pre>
+<pre class="r"><code># pred.pls.dv &lt;- predict(pls.dv, valid.dv[, -c(1, hc.dv)])
+# pred.pls.dv &lt;- predict(pls.dv, valid.data[, -c(1, 338)])
+pred.pls.dv &lt;- predict(pls.dv, valid.data[, names(pval)])
+confusionMatrix(pred.pls.dv, valid.data$Party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MTUgICAgICAgIDIxNlxuICBSZXB1YmxpY2FuICAgICAgMTc1ICAgICAgICAzMDdcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY0ODcgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYxOTgsIDAuNjc2OClcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA3LjcyN2UtMTYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yOTE3ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjA0MzA4ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MDM0ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjU4NzAgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjU3NyAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MzY5ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzcyOSAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41NjY5ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjY0NTIgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MTQgICAgICAgIDIxMlxuICBSZXB1YmxpY2FuICAgICAgMTc2ICAgICAgICAzMTFcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY1MTQgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYyMjYsIDAuNjc5NClcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8IDJlLTE2ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yOTc1ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjA3NTU5ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MDE3ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjU5NDYgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjYxMyAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42Mzg2ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzcyMCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41NjI0ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjY0ODIgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
             Reference
 Prediction   Democrat Republican
-  Democrat        415        216
-  Republican      175        307
+  Democrat        414        212
+  Republican      176        311
                                           
-               Accuracy : 0.6487          
-                 95% CI : (0.6198, 0.6768)
+               Accuracy : 0.6514          
+                 95% CI : (0.6226, 0.6794)
     No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 7.727e-16       
+    P-Value [Acc &gt; NIR] : &lt; 2e-16         
                                           
-                  Kappa : 0.2917          
- Mcnemar's Test P-Value : 0.04308         
+                  Kappa : 0.2975          
+ Mcnemar's Test P-Value : 0.07559         
                                           
-            Sensitivity : 0.7034          
-            Specificity : 0.5870          
-         Pos Pred Value : 0.6577          
-         Neg Pred Value : 0.6369          
+            Sensitivity : 0.7017          
+            Specificity : 0.5946          
+         Pos Pred Value : 0.6613          
+         Neg Pred Value : 0.6386          
              Prevalence : 0.5301          
-         Detection Rate : 0.3729          
-   Detection Prevalence : 0.5669          
-      Balanced Accuracy : 0.6452          
+         Detection Rate : 0.3720          
+   Detection Prevalence : 0.5624          
+      Balanced Accuracy : 0.6482          
                                           
        'Positive' Class : Democrat        
                                           </code></pre>
@@ -535,6 +368,7 @@ Prediction   Democrat Republican
     )
     
     saveRDS(pls.dv.pca, &quot;models/pls_dv_pca.Rds&quot;)
+
 } else {
     library(pls)
     pls.dv.pca &lt;- readRDS(&quot;models/pls_dv_pca.Rds&quot;)
@@ -547,34 +381,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>pls.dv.pca</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFydGlhbCBMZWFzdCBTcXVhcmVzIFxuXG40NDU1IHNhbXBsZXNcbiAzMTUgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuUHJlLXByb2Nlc3Npbmc6IHByaW5jaXBhbCBjb21wb25lbnQgc2lnbmFsIGV4dHJhY3Rpb24gKDMwOSksIGNlbnRlcmVkICgzMDkpLCBzY2FsZWQgKDMwOSksXG4gcmVtb3ZlICg2KSBcblJlc2FtcGxpbmc6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCkgXG5TdW1tYXJ5IG9mIHNhbXBsZSBzaXplczogNDAxMCwgNDAwOSwgNDAwOSwgNDAxMCwgNDAwOSwgNDAwOSwgLi4uIFxuUmVzYW1wbGluZyByZXN1bHRzIGFjcm9zcyB0dW5pbmcgcGFyYW1ldGVyczpcblxuICBuY29tcCAgUk9DICAgICAgICBTZW5zICAgICAgIFNwZWMgICAgIFxuICAgMSAgICAgMC42MTczMDYwICAwLjcxNDA4NTAgIDAuNDc1MTc4OVxuICAgMiAgICAgMC42NjgwNDg0ICAwLjY4OTk2MjggIDAuNTQzNDQ5NVxuICAgMyAgICAgMC42NzU4NjM0ICAwLjY5NTQ2MjMgIDAuNTQ5MTc1MlxuICAgNCAgICAgMC42NjkzMDMzICAwLjY2NzkyNTMgIDAuNTU5MjIwOFxuICAgNSAgICAgMC42NjQ3NzI0ICAwLjY2NTM4NjUgIDAuNTYxNjA0MFxuICAgNiAgICAgMC42NjMyNDkzICAwLjY2NDExNTQgIDAuNTU4NzI0MVxuICAgNyAgICAgMC42NjIzNzYyICAwLjY1NzM1MDAgIDAuNTU4NzMzMlxuICAgOCAgICAgMC42NjIyMjcwICAwLjY1NjUwNjEgIDAuNTU1ODY2OVxuICAgOSAgICAgMC42NjIyNjk2ICAwLjY1NzM1MTggIDAuNTU3MjkxMFxuICAxMCAgICAgMC42NjIxNTg1ICAwLjY1Nzc3NzMgIDAuNTU4NzI4NlxuXG5ST0Mgd2FzIHVzZWQgdG8gc2VsZWN0IHRoZSBvcHRpbWFsIG1vZGVsIHVzaW5nICB0aGUgbGFyZ2VzdCB2YWx1ZS5cblRoZSBmaW5hbCB2YWx1ZSB1c2VkIGZvciB0aGUgbW9kZWwgd2FzIG5jb21wID0gMy4gXG4ifQ== -->
-<pre><code>Partial Least Squares 
-
-4455 samples
- 315 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: principal component signal extraction (309), centered (309), scaled (309),
- remove (6) 
-Resampling: Cross-Validated (10 fold) 
-Summary of sample sizes: 4010, 4009, 4009, 4010, 4009, 4009, ... 
-Resampling results across tuning parameters:
-
-  ncomp  ROC        Sens       Spec     
-   1     0.6173060  0.7140850  0.4751789
-   2     0.6680484  0.6899628  0.5434495
-   3     0.6758634  0.6954623  0.5491752
-   4     0.6693033  0.6679253  0.5592208
-   5     0.6647724  0.6653865  0.5616040
-   6     0.6632493  0.6641154  0.5587241
-   7     0.6623762  0.6573500  0.5587332
-   8     0.6622270  0.6565061  0.5558669
-   9     0.6622696  0.6573518  0.5572910
-  10     0.6621585  0.6577773  0.5587286
-
-ROC was used to select the optimal model using  the largest value.
-The final value used for the model was ncomp = 3. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -583,34 +389,6 @@ The final value used for the model was ncomp = 3. </code></pre>
 <pre class="r"><code>pred.pls.dv.pca &lt;- predict(pls.dv.pca, valid.dv[, -c(1, hc.dv)])
 confusionMatrix(pred.pls.dv.pca, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MTggICAgICAgIDIxNFxuICBSZXB1YmxpY2FuICAgICAgMTcyICAgICAgICAzMDlcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY1MzIgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYyNDQsIDAuNjgxMilcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8MmUtMTYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4zMDA3ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjAzNjkgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MDg1ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjU5MDggICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjYxNCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42NDI0ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzc1NiAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41Njc4ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjY0OTYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        418        214
-  Republican      172        309
-                                          
-               Accuracy : 0.6532          
-                 95% CI : (0.6244, 0.6812)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : &lt;2e-16          
-                                          
-                  Kappa : 0.3007          
- Mcnemar's Test P-Value : 0.0369          
-                                          
-            Sensitivity : 0.7085          
-            Specificity : 0.5908          
-         Pos Pred Value : 0.6614          
-         Neg Pred Value : 0.6424          
-             Prevalence : 0.5301          
-         Detection Rate : 0.3756          
-   Detection Prevalence : 0.5678          
-      Balanced Accuracy : 0.6496          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -644,33 +422,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>kpls.dv</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFydGlhbCBMZWFzdCBTcXVhcmVzIFxuXG40NDU1IHNhbXBsZXNcbiAzMTUgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuUHJlLXByb2Nlc3Npbmc6IGNlbnRlcmVkICgzMTUpLCBzY2FsZWQgKDMxNSkgXG5SZXNhbXBsaW5nOiBDcm9zcy1WYWxpZGF0ZWQgKDEwIGZvbGQsIHJlcGVhdGVkIDUgdGltZXMpIFxuU3VtbWFyeSBvZiBzYW1wbGUgc2l6ZXM6IDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIC4uLiBcblJlc2FtcGxpbmcgcmVzdWx0cyBhY3Jvc3MgdHVuaW5nIHBhcmFtZXRlcnM6XG5cbiAgbmNvbXAgIFJPQyAgICAgICAgU2VucyAgICAgICBTcGVjICAgICBcbiAgIDEgICAgIDAuNjE3NzE5MCAgMC43MTE0NjE0ICAwLjQ3NDIxMDVcbiAgIDIgICAgIDAuNjcxMzk4NSAgMC42ODQ4NjM4ICAwLjU0OTc2NjJcbiAgIDMgICAgIDAuNjc1OTgzMCAgMC42ODE4MTY1ICAwLjU1OTEyNTVcbiAgIDQgICAgIDAuNjcxNTg2OSAgMC42NjY5MDkxICAwLjU3MjMxMTJcbiAgIDUgICAgIDAuNjY0NjMyMiAgMC42NTQ4ODIwICAwLjU2NzQ0MDlcbiAgIDYgICAgIDAuNjYwOTE1NCAgMC42NDk4ODgxICAwLjU2NzQzODFcbiAgIDcgICAgIDAuNjU4NDEwMCAgMC42NDIxNzY2ICAwLjU3MTA2NDVcbiAgIDggICAgIDAuNjU3OTQyNiAgMC42NDIyNjI0ICAwLjU2ODU4MDVcbiAgIDkgICAgIDAuNjU3NjUxMCAgMC42NDMxMDYzICAwLjU2ODk1NjVcbiAgMTAgICAgIDAuNjU3MjA4MSAgMC42NDExNTcxICAwLjU2ODQ4MDdcblxuUk9DIHdhcyB1c2VkIHRvIHNlbGVjdCB0aGUgb3B0aW1hbCBtb2RlbCB1c2luZyAgdGhlIGxhcmdlc3QgdmFsdWUuXG5UaGUgZmluYWwgdmFsdWUgdXNlZCBmb3IgdGhlIG1vZGVsIHdhcyBuY29tcCA9IDMuIFxuIn0= -->
-<pre><code>Partial Least Squares 
-
-4455 samples
- 315 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: centered (315), scaled (315) 
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results across tuning parameters:
-
-  ncomp  ROC        Sens       Spec     
-   1     0.6177190  0.7114614  0.4742105
-   2     0.6713985  0.6848638  0.5497662
-   3     0.6759830  0.6818165  0.5591255
-   4     0.6715869  0.6669091  0.5723112
-   5     0.6646322  0.6548820  0.5674409
-   6     0.6609154  0.6498881  0.5674381
-   7     0.6584100  0.6421766  0.5710645
-   8     0.6579426  0.6422624  0.5685805
-   9     0.6576510  0.6431063  0.5689565
-  10     0.6572081  0.6411571  0.5684807
-
-ROC was used to select the optimal model using  the largest value.
-The final value used for the model was ncomp = 3. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -679,34 +430,6 @@ The final value used for the model was ncomp = 3. </code></pre>
 <pre class="r"><code>pred.kpls.dv &lt;- predict(kpls.dv, valid.dv[, -c(1, hc.dv)])
 confusionMatrix(pred.kpls.dv, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MTUgICAgICAgIDIxNlxuICBSZXB1YmxpY2FuICAgICAgMTc1ICAgICAgICAzMDdcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY0ODcgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYxOTgsIDAuNjc2OClcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA3LjcyN2UtMTYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yOTE3ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjA0MzA4ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MDM0ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjU4NzAgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjU3NyAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MzY5ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzcyOSAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41NjY5ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjY0NTIgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        415        216
-  Republican      175        307
-                                          
-               Accuracy : 0.6487          
-                 95% CI : (0.6198, 0.6768)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 7.727e-16       
-                                          
-                  Kappa : 0.2917          
- Mcnemar's Test P-Value : 0.04308         
-                                          
-            Sensitivity : 0.7034          
-            Specificity : 0.5870          
-         Pos Pred Value : 0.6577          
-         Neg Pred Value : 0.6369          
-             Prevalence : 0.5301          
-         Detection Rate : 0.3729          
-   Detection Prevalence : 0.5669          
-      Balanced Accuracy : 0.6452          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -726,28 +449,29 @@ Prediction   Democrat Republican
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>if (!file.exists(&quot;models/glmnet_dv.Rds&quot;)) {
-    set.seed(1056)
+<pre class="r"><code>set.seed(1056)
     glmnet.dv &lt;- train(
-        Party ~ .,
-        data = train.dv[, -c(1, hc.dv)],
+        # Party ~ .,
+        # data = train.dv[, -c(1, hc.dv)],
+        x = train.data[, names(pval)],
+        y = train.data$Party,
         method = &quot;glmnet&quot;,
         trControl = trCtrl,
         metric = &quot;ROC&quot;,
         tuneGrid = glmnGrid,
         preProcess = c(&quot;nzv&quot;, &quot;center&quot;, &quot;scale&quot;)
     )
-    
-    saveRDS(glmnet.dv, &quot;models/glmnet_dv.Rds&quot;)
-} else {
-    library(glmnet)
-    glmnet.dv &lt;- readRDS(&quot;models/glmnet_dv.Rds&quot;)
-}</code></pre>
+</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBnbG1uZXRcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogTWF0cml4XG5Mb2FkZWQgZ2xtbmV0IDIuMC01XG4ifQ== -->
 <pre><code>Loading required package: glmnet
 Loading required package: Matrix
 Loaded glmnet 2.0-5</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuU2VsZWN0aW5nIHR1bmluZyBwYXJhbWV0ZXJzXG5GaXR0aW5nIGFscGhhID0gMCwgbGFtYmRhID0gMC4yIG9uIGZ1bGwgdHJhaW5pbmcgc2V0XG4ifQ== -->
+<pre><code>Aggregating results
+Selecting tuning parameters
+Fitting alpha = 0, lambda = 0.2 on full training set</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -756,338 +480,42 @@ Loaded glmnet 2.0-5</code></pre>
 <!-- rnb-source-begin -->
 <pre class="r"><code>glmnet.dv</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiZ2xtbmV0IFxuXG40NDU1IHNhbXBsZXNcbiAzMTUgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuUHJlLXByb2Nlc3Npbmc6IGNlbnRlcmVkICgzMDkpLCBzY2FsZWQgKDMwOSksIHJlbW92ZSAoNikgXG5SZXNhbXBsaW5nOiBDcm9zcy1WYWxpZGF0ZWQgKDEwIGZvbGQsIHJlcGVhdGVkIDUgdGltZXMpIFxuU3VtbWFyeSBvZiBzYW1wbGUgc2l6ZXM6IDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIDQwMTAsIDQwMDksIC4uLiBcblJlc2FtcGxpbmcgcmVzdWx0cyBhY3Jvc3MgdHVuaW5nIHBhcmFtZXRlcnM6XG5cbiAgYWxwaGEgIGxhbWJkYSAgICAgUk9DICAgICAgICBTZW5zICAgICAgIFNwZWMgICAgICAgXG4gIDAuMCAgICAwLjEwMDAwMDAgIDAuNjY5NDY3OCAgMC42ODI2NjU0ICAwLjU0NTg1MzI3MFxuICAwLjAgICAgMC4xMDI1NjQxICAwLjY2OTU4OTEgIDAuNjgzMDg5MSAgMC41NDUzNzM4ODlcbiAgMC4wICAgIDAuMTA1MTI4MiAgMC42Njk3MjA1ICAwLjY4MzUxMjEgIDAuNTQ0NTEyNjQ1XG4gIDAuMCAgICAwLjEwNzY5MjMgIDAuNjY5ODQyMyAgMC42ODQxMDUzICAwLjU0NDMyMjE2OVxuICAwLjAgICAgMC4xMTAyNTY0ICAwLjY2OTk2MDAgIDAuNjg1MjA2MyAgMC41NDQ1MTM1NTdcbiAgMC4wICAgIDAuMTEyODIwNSAgMC42NzAwNzcyICAwLjY4NTcxNDQgIDAuNTQzOTQwMzA1XG4gIDAuMCAgICAwLjExNTM4NDYgIDAuNjcwMTcyNiAgMC42ODYxMzc4ICAwLjU0MzU1ODg5N1xuICAwLjAgICAgMC4xMTc5NDg3ICAwLjY3MDIyMjggIDAuNjg3MDY5MyAgMC41NDMzNjkzMzJcbiAgMC4wICAgIDAuMTIwNTEyOCAgMC42NzAzMzgyICAwLjY4NzQwNzkgIDAuNTQyNzk2MDgxXG4gIDAuMCAgICAwLjEyMzA3NjkgIDAuNjcwNDY1OSAgMC42ODc4MzE3ICAwLjU0MjUwOTAwMFxuICAwLjAgICAgMC4xMjU2NDEwICAwLjY3MDU4ODAgIDAuNjg4NDI1MiAgMC41NDE5MzYyMDRcbiAgMC4wICAgIDAuMTI4MjA1MSAgMC42NzA2NjgxICAwLjY4ODc2MzkgIDAuNTQxMjY4NjI2XG4gIDAuMCAgICAwLjEzMDc2OTIgIDAuNjcwNzI5NiAgMC42ODk2MTEzICAwLjU0MDk4MTU0NVxuICAwLjAgICAgMC4xMzMzMzMzICAwLjY3MDgzMDAgIDAuNjkwMjA0MiAgMC41NDA2OTQ5MTlcbiAgMC4wICAgIDAuMTM1ODk3NCAgMC42NzA5NDg5ICAwLjY5MTEzNjAgIDAuNTQwMDI1OTc0XG4gIDAuMCAgICAwLjEzODQ2MTUgIDAuNjcxMDIyNSAgMC42OTE1NjAxICAwLjU0MDIxNzgxN1xuICAwLjAgICAgMC4xNDEwMjU2ICAwLjY3MTE0OTkgIDAuNjkyNTc2MCAgMC41Mzk2NDQ1NjZcbiAgMC4wICAgIDAuMTQzNTg5NyAgMC42NzEyNTIzICAwLjY5MzE2ODUgIDAuNTM5MjY0MDY5XG4gIDAuMCAgICAwLjE0NjE1MzggIDAuNjcxMzYzMCAgMC42OTM2NzY2ICAwLjUzODMwODQ5OVxuICAwLjAgICAgMC4xNDg3MTc5ICAwLjY3MTQ0MjMgIDAuNjkzODQ2MSAgMC41Mzc2Mzk1NTNcbiAgMC4wICAgIDAuMTUxMjgyMSAgMC42NzE1NDI2ICAwLjY5NDM1NDYgIDAuNTM3MTYyNDUyXG4gIDAuMCAgICAwLjE1Mzg0NjIgIDAuNjcxNjE5NCAgMC42OTQ4NjI3ICAwLjUzNjk3MTUyMFxuICAwLjAgICAgMC4xNTY0MTAzICAwLjY3MTcwNjAgIDAuNjk1NjI0NyAgMC41MzYyMDc3OTJcbiAgMC4wICAgIDAuMTU4OTc0NCAgMC42NzE3NzkxICAwLjY5NjMwMjMgIDAuNTM2MjA3NzkyXG4gIDAuMCAgICAwLjE2MTUzODUgIDAuNjcxODc3MCAgMC42OTcxNDk4ICAwLjUzNTUzODg0N1xuICAwLjAgICAgMC4xNjQxMDI2ICAwLjY3MTk1OTUgIDAuNjk3NzQzMCAgMC41MzUzNDkyODJcbiAgMC4wICAgIDAuMTY2NjY2NyAgMC42NzIwMzQzICAwLjY5ODQyMDYgIDAuNTM0OTY3NDE5XG4gIDAuMCAgICAwLjE2OTIzMDggIDAuNjcyMTAxNSAgMC42OTkwMTM4ICAwLjUzNDg3MzA5MlxuICAwLjAgICAgMC4xNzE3OTQ5ICAwLjY3MjE2NTggIDAuNjk5NjkxNCAgMC41MzQ4NzMwOTJcbiAgMC4wICAgIDAuMTc0MzU5MCAgMC42NzIyMjI0ICAwLjcwMDE5OTkgIDAuNTM0NjgxNzA0XG4gIDAuMCAgICAwLjE3NjkyMzEgIDAuNjcyMjc1OCAgMC43MDA5NjI2ICAwLjUzNDU4NjQ2NlxuICAwLjAgICAgMC4xNzk0ODcyICAwLjY3MjM0ODIgIDAuNzAxMjE2NSAgMC41MzM5MTc5NzdcbiAgMC4wICAgIDAuMTgyMDUxMyAgMC42NzI0MTU3ICAwLjcwMTg5NDEgIDAuNTM0MDEzMjE1XG4gIDAuMCAgICAwLjE4NDYxNTQgIDAuNjcyNTAwMiAgMC43MDIyMzMxICAwLjUzMzcyNjEzNFxuICAwLjAgICAgMC4xODcxNzk1ICAwLjY3MjU2MzcgIDAuNzAyOTEwNyAgMC41MzMwNTY3MzNcbiAgMC4wICAgIDAuMTg5NzQzNiAgMC42NzI2MDIxICAwLjcwMzQxOTIgIDAuNTMyMjkxNjM4XG4gIDAuMCAgICAwLjE5MjMwNzcgIDAuNjcyNjQwNSAgMC43MDM5MjczICAwLjUzMTgxMjcxNFxuICAwLjAgICAgMC4xOTQ4NzE4ICAwLjY3MjY5OTYgIDAuNzA0MzUwNiAgMC41MzE0MzEzMDZcbiAgMC4wICAgIDAuMTk3NDM1OSAgMC42NzI3NzQ3ICAwLjcwNDY4OTYgIDAuNTMwODU4MDU0XG4gIDAuMCAgICAwLjIwMDAwMDAgIDAuNjcyODMzNyAgMC43MDUxMTM0ICAwLjUzMDM4MTQwOFxuICAwLjEgICAgMC4xMDAwMDAwICAwLjY4MDg2NDEgIDAuNzIzMzI5OCAgMC41MTQ4MTI5NDFcbiAgMC4xICAgIDAuMTAyNTY0MSAgMC42ODA5MDE1ICAwLjcyMzgzNzkgIDAuNTEzMTg5NzkzXG4gIDAuMSAgICAwLjEwNTEyODIgIDAuNjgwOTg4NSAgMC43MjU1MzEwICAwLjUxMTY2MTg4MlxuICAwLjEgICAgMC4xMDc2OTIzICAwLjY4MTEwMjggIDAuNzI2NTQ2NSAgMC41MTA2MTA2MTdcbiAgMC4xICAgIDAuMTEwMjU2NCAgMC42ODExOTg4ICAwLjcyNzk4NjggIDAuNTA4MTI4OTU5XG4gIDAuMSAgICAwLjExMjgyMDUgIDAuNjgxMjcyNyAgMC43Mjk1MTE5ICAwLjUwNjY5NDAwOFxuICAwLjEgICAgMC4xMTUzODQ2ICAwLjY4MTMxNDUgIDAuNzMwNzgyNCAgMC41MDQ3ODE0OTlcbiAgMC4xICAgIDAuMTE3OTQ4NyAgMC42ODEzNTc0ICAwLjczMTYyODggIDAuNTAzNzMwNjkwXG4gIDAuMSAgICAwLjEyMDUxMjggIDAuNjgxMzM5NyAgMC43MzM4MzIyICAwLjUwMjY4MDMzN1xuICAwLjEgICAgMC4xMjMwNzY5ICAwLjY4MTM4NzYgIDAuNzM1MDE4MiAgMC41MDE0Mzg1OTZcbiAgMC4xICAgIDAuMTI1NjQxMCAgMC42ODE0Mzk5ICAwLjczNTg2NTAgIDAuNTAwMzg3Nzg4XG4gIDAuMSAgICAwLjEyODIwNTEgIDAuNjgxMzgyMSAgMC43MzcxMzU4ICAwLjQ5ODc2MzcyOFxuICAwLjEgICAgMC4xMzA3NjkyICAwLjY4MTQ3NTMgIDAuNzM5MDgzOSAgMC40OTc0MjcyMDRcbiAgMC4xICAgIDAuMTMzMzMzMyAgMC42ODE1MzAwICAwLjc0MDE4NDkgIDAuNDk1OTk0MDc2XG4gIDAuMSAgICAwLjEzNTg5NzQgIDAuNjgxNTQwMyAgMC43NDE3OTQzICAwLjQ5NDc1NDE1OFxuICAwLjEgICAgMC4xMzg0NjE1ICAwLjY4MTU5NTYgIDAuNzQzNTczMyAgMC40OTM2MDgxMTFcbiAgMC4xICAgIDAuMTQxMDI1NiAgMC42ODE1ODc5ICAwLjc0NTE4MzQgIDAuNDkyMjcxMTMyXG4gIDAuMSAgICAwLjE0MzU4OTcgIDAuNjgxNTk2MSAgMC43NDcwNDc4ICAwLjQ5MDkzMzY5OFxuICAwLjEgICAgMC4xNDYxNTM4ICAwLjY4MTYyMDQgIDAuNzQ4OTk2NiAgMC40ODkxMTczMzlcbiAgMC4xICAgIDAuMTQ4NzE3OSAgMC42ODE2MDMzICAwLjc1MDUyMjEgIDAuNDg3NDkyODIzXG4gIDAuMSAgICAwLjE1MTI4MjEgIDAuNjgxNjAzMyAgMC43NTE3OTI1ICAwLjQ4NTU4Mzk2MFxuICAwLjEgICAgMC4xNTM4NDYyICAwLjY4MTY0NjAgIDAuNzUzMjMyNSAgMC40ODQ1MzA4NzNcbiAgMC4xICAgIDAuMTU2NDEwMyAgMC42ODE2NjI5ICAwLjc1MzkxMDEgIDAuNDgzMzg1NzM3XG4gIDAuMSAgICAwLjE1ODk3NDQgIDAuNjgxNjgxOCAgMC43NTU0MzU5ICAwLjQ4MTk1MTY5N1xuICAwLjEgICAgMC4xNjE1Mzg1ICAwLjY4MTY1NzkgIDAuNzU2MjgyNiAgMC40ODExODcwNTlcbiAgMC4xICAgIDAuMTY0MTAyNiAgMC42ODE2NjYxICAwLjc1NzA0NTAgIDAuNDc5MDg0OTg1XG4gIDAuMSAgICAwLjE2NjY2NjcgIDAuNjgxNjQ0NiAgMC43NTgyMzE0ICAwLjQ3ODMyMTcxM1xuICAwLjEgICAgMC4xNjkyMzA4ICAwLjY4MTU3NzIgIDAuNzU5NzU1OCAgMC40Nzc2NTM2ODBcbiAgMC4xICAgIDAuMTcxNzk0OSAgMC42ODE1ODM3ICAwLjc2MDc3MDYgIDAuNDc2NjA0MjM4XG4gIDAuMSAgICAwLjE3NDM1OTAgIDAuNjgxNTQ2NiAgMC43NjEzNjM4ICAwLjQ3NTg0MDk2NlxuICAwLjEgICAgMC4xNzY5MjMxICAwLjY4MTM5MjkgIDAuNzYyODAzOCAgMC40NzQ1OTk2ODFcbiAgMC4xICAgIDAuMTc5NDg3MiAgMC42ODEyNjExICAwLjc2MzM5NjYgIDAuNDczNDUyMjY3XG4gIDAuMSAgICAwLjE4MjA1MTMgIDAuNjgxMjA3OSAgMC43NjQwNzQyICAwLjQ3MjIxMDA3MVxuICAwLjEgICAgMC4xODQ2MTU0ICAwLjY4MTA2MzkgIDAuNzY0NjY3NSAgMC40NzA5Njc0MTlcbiAgMC4xICAgIDAuMTg3MTc5NSAgMC42ODA5MTc4ICAwLjc2NTI2MDcgIDAuNDY5OTE2NjEwXG4gMC4xICAgMC4xODk3NDM2IDAuNjgwODI1MiAwLjc2NTY4NDQgMC40Njk4MjE4MjdcbiAwLjEgICAwLjE5MjMwNzcgMC42ODA3NDQ2IDAuNzY2NTMxOSAwLjQ2ODg2NzE2OFxuIDAuMSAgIDAuMTk0ODcxOCAwLjY4MDY5OTcgMC43NjcyOTQ2IDAuNDY4MDA3MjkxXG4gMC4xICAgMC4xOTc0MzU5IDAuNjgwNTczNyAwLjc2NzQ2NDEgMC40NjgwMDc3NDdcbiAwLjEgICAwLjIwMDAwMDAgMC42ODA0NjAyIDAuNzY3NjMzNiAwLjQ2Njk1NzM5M1xuIDAuMiAgIDAuMTAwMDAwMCAwLjY3ODA4NDUgMC43NTQ0MTYxIDAuNDc5MTgyMDQ2XG4gMC4yICAgMC4xMDI1NjQxIDAuNjc3NzY5MSAwLjc1NTQzMjMgMC40Nzc4NDQ2MTJcbiAwLjIgICAwLjEwNTEyODIgMC42NzczNzQwIDAuNzU1NDMyMCAwLjQ3NzA4MDg4NFxuIDAuMiAgIDAuMTA3NjkyMyAwLjY3Njk3NDggMC43NTU3NzA5IDAuNDc2MTI1MzEzXG4gMC4yICAgMC4xMTAyNTY0IDAuNjc2NjcwMSAwLjc1NjE5MzYgMC40NzUyNjU4OTJcbiAwLjIgICAwLjExMjgyMDUgMC42NzYyNjg5IDAuNzU1ODU1MyAwLjQ3NDY5NDAwOFxuIDAuMiAgIDAuMTE1Mzg0NiAwLjY3NTkyNDcgMC43NTYxMDk5IDAuNDc0MjE2NDUwXG4gMC4yICAgMC4xMTc5NDg3IDAuNjc1NTM5MCAwLjc1NjcwMjggMC40NzM4MzQ1ODZcbiAwLjIgICAwLjEyMDUxMjggMC42NzUyNzc0IDAuNzU2Nzg3NSAwLjQ3MjU5MjM5MFxuIDAuMiAgIDAuMTIzMDc2OSAwLjY3NTAwOTAgMC43NTc1NTAyIDAuNDcxNjM1OTA4XG4gMC4yICAgMC4xMjU2NDEwIDAuNjc0NTc1OSAwLjc1Nzk3MzYgMC40NzA4NzI2MzZcbiAwLjIgICAwLjEyODIwNTEgMC42NzQzMDA1IDAuNzU4MjI4NiAwLjQ3MDIwMjc4MFxuIDAuMiAgIDAuMTMwNzY5MiAwLjY3NDE4MjYgMC43NTg0ODE3IDAuNDcwMjk3NTYyXG4gMC4yICAgMC4xMzMzMzMzIDAuNjc0MDcyNSAwLjc1ODgxOTYgMC40NjkzNDQyNzBcbiAwLjIgICAwLjEzNTg5NzQgMC42NzM4MzM5IDAuNzU5MjQzMCAwLjQ2ODM4ODY5OVxuIDAuMiAgIDAuMTM4NDYxNSAwLjY3MzU4NTcgMC43NTk4MzYyIDAuNDY4MjkzNDYxXG4gMC4yICAgMC4xNDEwMjU2IDAuNjczNTEyNiAwLjc1OTgzNjIgMC40Njc5MTExNDFcbiAwLjIgICAwLjE0MzU4OTcgMC42NzMwNjQyIDAuNzYwMzQ0NyAwLjQ2Njg1OTg3N1xuIDAuMiAgIDAuMTQ2MTUzOCAwLjY3Mjc0MTIgMC43NjEzNjE3IDAuNDY2MDk0NzgyXG4gMC4yICAgMC4xNDg3MTc5IDAuNjcyNjg2NyAwLjc2MTI3NjkgMC40NjU5MDQ3NjJcbiAwLjIgICAwLjE1MTI4MjEgMC42NzI0Nzg2IDAuNzYxNzAwNiAwLjQ2NTUyMjQ0MlxuIDAuMiAgIDAuMTUzODQ2MiAwLjY3MjUwNjUgMC43NjI2MzMyIDAuNDY1MzMxMDU1XG4gMC4yICAgMC4xNTY0MTAzIDAuNjcyMjk5MCAwLjc2MzE0MTAgMC40NjU2MTg1OTJcbiAwLjIgICAwLjE1ODk3NDQgMC42NzIxMzM0IDAuNzYzNDc5NiAwLjQ2NTIzNjI3MlxuIDAuMiAgIDAuMTYxNTM4NSAwLjY3MTk2MTIgMC43NjQxNTcyIDAuNDY0MjgwNzAyXG4gMC4yICAgMC4xNjQxMDI2IDAuNjcxOTEwMCAwLjc2NDMyNjMgMC40NjQxODU0NjRcbiAwLjIgICAwLjE2NjY2NjcgMC42NzIwNDI1IDAuNzY0ODM0MSAwLjQ2MzgwMjIzM1xuIDAuMiAgIDAuMTY5MjMwOCAwLjY3MTg1MzEgMC43NjU1MTEzIDAuNDYyMjc1Njg5XG4gMC4yICAgMC4xNzE3OTQ5IDAuNjcyMDk1NSAwLjc2Nzg4MTcgMC40NjA3NDgyMzRcbiAwLjIgICAwLjE3NDM1OTAgMC42NzIwNTQxIDAuNzY5MzIyMCAwLjQ1OTc5NDQ4NlxuIDAuMiAgIDAuMTc2OTIzMSAwLjY3MjIyNzYgMC43Njk4MzA1IDAuNDU5NjAzNTU0XG4gMC4yICAgMC4xNzk0ODcyIDAuNjcyMDgzMyAwLjc3MDA4NDcgMC40NTkxMjUwODVcbiAwLjIgICAwLjE4MjA1MTMgMC42NzIxMDY3IDAuNzcwNDIzNyAwLjQ1ODA3NDI3N1xuIDAuMiAgIDAuMTg0NjE1NCAwLjY3MTg1NDkgMC43NzA2NzgwIDAuNDU3NTAwMTE0XG4gMC4yICAgMC4xODcxNzk1IDAuNjcxNzc5NSAwLjc3MDkzMjIgMC40NTcwMjE2NDVcbiAwLjIgICAwLjE4OTc0MzYgMC42NzE2NDE1IDAuNzcxNjEwMiAwLjQ1NjczNTkzMVxuIDAuMiAgIDAuMTkyMzA3NyAwLjY3MTY1NDIgMC43NzE3Nzk3IDAuNDU2MzUzMTU2XG4gMC4yICAgMC4xOTQ4NzE4IDAuNjcxNTcyNCAwLjc3MjI4ODEgMC40NTQyNDkyNjBcbiAwLjIgICAwLjE5NzQzNTkgMC42NzEzODkxIDAuNzczNDcyMSAwLjQ1MjUyNjc3MVxuIDAuMiAgIDAuMjAwMDAwMCAwLjY3MTI5MTYgMC43NzM5ODA1IDAuNDUwOTAxODAwXG4gMC40ICAgMC4xMDAwMDAwIDAuNjcwNTU5MSAwLjc1MjM3ODYgMC40NzQyMTA1MjZcbiAwLjQgICAwLjEwMjU2NDEgMC42NzA0Mjc2IDAuNzUyMzc4NiAwLjQ3NDIxMDk4MlxuIDAuNCAgIDAuMTA1MTI4MiAwLjY3MDIxMjQgMC43NDk5MjAzIDAuNDc2MDI4MjUyXG4gMC40ICAgMC4xMDc2OTIzIDAuNjY5NzIyMSAwLjczOTY2NjAgMC40ODM1NjcxMDBcbiAwLjQgICAwLjExMDI1NjQgMC42Njk0MjE0IDAuNzM1MDg4MyAwLjQ4NjE0MjE3NFxuIDAuNCAgIDAuMTEyODIwNSAwLjY2ODgwMTAgMC43MzYxMDUzIDAuNDg0MDQ2NDgwXG4gMC40ICAgMC4xMTUzODQ2IDAuNjY4MzY0MiAwLjcyOTU3OTggMC40ODg5MTYzODJcbiAwLjQgICAwLjExNzk0ODcgMC42Njc5NDI2IDAuNzE4MzA4NyAwLjQ5NDkzMTQxOVxuIDAuNCAgIDAuMTIwNTEyOCAwLjY2NzA2MzMgMC43MTY1MjY1IDAuNDk1MTI5MTg3XG4gMC40ICAgMC4xMjMwNzY5IDAuNjY1ODYyNyAwLjcxNDE1MzYgMC40OTUzMTEwMDVcbiAwLjQgICAwLjEyNTY0MTAgMC42NjU1MjI1IDAuNzE0NjUxNyAwLjQ4MzU1NDM0MFxuIDAuNCAgIDAuMTI4MjA1MSAwLjY2NDkzNjIgMC43MTA5MzI5IDAuNDgxNzU3MTIwXG4gMC40ICAgMC4xMzA3NjkyIDAuNjYzMzczMSAwLjcxNjE4NzIgMC40Njg1OTg3NzBcbiAwLjQgICAwLjEzMzMzMzMgMC42NjA3MzcyIDAuNzIxMjg2OSAwLjQ1MzUyNTE3N1xuIDAuNCAgIDAuMTM1ODk3NCAwLjY1ODk2MDkgMC43MzU2OTA4IDAuNDI4Mzg1OTY1XG4gMC40ICAgMC4xMzg0NjE1IDAuNjU3NjAxMiAwLjc1NTQyMTYgMC40MDAyODYxNzBcbiAwLjQgICAwLjE0MTAyNTYgMC42NTU3OTI4IDAuNzcyNzk0NSAwLjM3NjE4MzY0MVxuIDAuNCAgIDAuMTQzNTg5NyAwLjY1MzgxNzkgMC44MDMzNTEyIDAuMzM1MTAxODQ2XG4gMC40ICAgMC4xNDYxNTM4IDAuNjUyMjc2MSAwLjgxMTE0NzggMC4zMjU1NjU3MzNcbiAwLjQgICAwLjE0ODcxNzkgMC42NTA5Mzc4IDAuODI4MDA5NyAwLjMwNjQ4MDI5MlxuIDAuNCAgIDAuMTUxMjgyMSAwLjY1MDYwOTEgMC44MzQwMjY3IDAuMzAwMDY4ODA4XG4gMC40ICAgMC4xNTM4NDYyIDAuNjUwNDg5MCAwLjg0NTg4OTMgMC4yODYzODczMzJcbiAwLjQgICAwLjE1NjQxMDMgMC42NTA1NDU2IDAuODY0MzU4OSAwLjI2Nzk0NDQwNlxuIDAuNCAgIDAuMTU4OTc0NCAwLjY1MDUzNzEgMC44ODE0Nzc1IDAuMjUxNTM4MzkxXG4gMC40ICAgMC4xNjE1Mzg1IDAuNjUwNjQ1MiAwLjg4ODA4NzcgMC4yNDQ2ODEyNDlcbiAwLjQgICAwLjE2NDEwMjYgMC42NTA4Nzc3IDAuODk0NDQzNiAwLjIzOTI1MjY3N1xuIDAuNCAgIDAuMTY2NjY2NyAwLjY1MTA4OTQgMC45MDAyMDYzIDAuMjMzNjMzNjMwXG4gMC40ICAgMC4xNjkyMzA4IDAuNjUxMTMwNCAwLjkwMDIwNjMgMC4yMzM2MzM2MzBcbiAwLjQgICAwLjE3MTc5NDkgMC42NTExMzA0IDAuOTEwMjg1NyAwLjIwMzEzMTkyMVxuIDAuNCAgIDAuMTc0MzU5MCAwLjY1MTEzMDQgMC45MjM4Mzg5IDAuMTY1MTExODcxXG4gMC40ICAgMC4xNzY5MjMxIDAuNjUxMjIxMiAwLjk1MzQxNTIgMC4xMDAwOTg4ODRcbiAwLjQgICAwLjE3OTQ4NzIgMC42NTEyMjEyIDAuOTcwMDI1NCAwLjA1OTYzMjcxOFxuIDAuNCAgIDAuMTgyMDUxMyAwLjY1MDU5MTIgMC45OTEwMTY5IDAuMDE1NzUzMDE5XG4gMC40ICAgMC4xODQ2MTU0IDAuNjUwNTU4NSAwLjk5NTMzOTAgMC4wMDc2MTkwNDhcbiAwLjQgICAwLjE4NzE3OTUgMC42NTAwOTk4IDAuOTk3ODgxNCAwLjAwMjk1MjM4MVxuIDAuNCAgIDAuMTg5NzQzNiAwLjY0NDEzNDUgMC45OTc4ODE0IDAuMDAyOTUyMzgxXG4gMC40ICAgMC4xOTIzMDc3IDAuNjM2OTU2MSAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjQgICAwLjE5NDg3MTggMC42MzMyNzg0IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNCAgIDAuMTk3NDM1OSAwLjYyNzE2OTIgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC40ICAgMC4yMDAwMDAwIDAuNjI2MjE5OSAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjEwMDAwMDAgMC42NTE0MzgzIDAuNzcwMTc1OSAwLjM3ODA5NTIzOFxuIDAuNiAgIDAuMTAyNTY0MSAwLjY1MTE4NTYgMC43ODU5MTU4IDAuMzU3NjYxODgyXG4gMC42ICAgMC4xMDUxMjgyIDAuNjUwOTg3MyAwLjgwOTUzNzcgMC4zMjgwNTQyMjZcbiAwLjYgICAwLjEwNzY5MjMgMC42NTA3ODAyIDAuODE5ODc0MSAwLjMxNTE4MDIyM1xuIDAuNiAgIDAuMTEwMjU2NCAwLjY1MDYwMzAgMC44MzQwMjY3IDAuMzAwMDY4ODA4XG4gMC42ICAgMC4xMTI4MjA1IDAuNjUwNzQ3OCAwLjg1NzE2MDUgMC4yNzU0MDU3ODdcbiAwLjYgICAwLjExNTM4NDYgMC42NTA2Mzk3IDAuODcxOTAxMiAwLjI1NzIyNzYxNFxuIDAuNiAgIDAuMTE3OTQ4NyAwLjY1MDc3ODkgMC45MDg4NDUwIDAuMTg0NzUyNzkxXG4gMC42ICAgMC4xMjA1MTI4IDAuNjUwMzYyMCAwLjk0NTg3MjggMC4xMTA5ODM4MjNcbiAwLjYgICAwLjEyMzA3NjkgMC42NDk3NDUwIDAuOTczNjUyMyAwLjA0MzMxMjgyOFxuIDAuNiAgIDAuMTI1NjQxMCAwLjY0ODE5MzQgMC45OTUzMzkwIDAuMDA3NjE5MDQ4XG4gMC42ICAgMC4xMjgyMDUxIDAuNjI4ODE4MSAwLjk5Nzg4MTQgMC4wMDI5NTIzODFcbiAwLjYgICAwLjEzMDc2OTIgMC42MTYwNDk2IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTMzMzMzMyAwLjYxMDkyMDEgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xMzU4OTc0IDAuNTk4MTQxMSAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjEzODQ2MTUgMC41ODUwODg1IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTQxMDI1NiAwLjU0OTY3OTAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xNDM1ODk3IDAuNTIwMzQ4NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjE0NjE1MzggMC41MTA1MzU3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTQ4NzE3OSAwLjQ5OTM4NjMgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xNTEyODIxIDAuNDY4NjY5MiAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjE1Mzg0NjIgMC40NTE0Mzg0IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTU2NDEwMyAwLjQyMzM0MDcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xNTg5NzQ0IDAuNDEzMTg1NCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjE2MTUzODUgMC40MTMxODU0IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTY0MTAyNiAwLjQxMzE4NTQgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xNjY2NjY3IDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjE2OTIzMDggMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTcxNzk0OSAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xNzQzNTkwIDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjE3NjkyMzEgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTc5NDg3MiAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xODIwNTEzIDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjE4NDYxNTQgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTg3MTc5NSAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xODk3NDM2IDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjE5MjMwNzcgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuNiAgIDAuMTk0ODcxOCAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC42ICAgMC4xOTc0MzU5IDAuNDIwODQ2NCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjYgICAwLjIwMDAwMDAgMC40MzYwMjI3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTAwMDAwMCAwLjYwMTk3NTggMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xMDI1NjQxIDAuNTc2MTY5OCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjEwNTEyODIgMC41Mjg0NjczIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTA3NjkyMyAwLjQ4MTk1NTMgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xMTAyNTY0IDAuNDY4ODU4NiAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjExMjgyMDUgMC40NTM2Mzg0IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTE1Mzg0NiAwLjQyNzIxNjYgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xMTc5NDg3IDAuNDEyMzIzOCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjEyMDUxMjggMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTIzMDc2OSAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xMjU2NDEwIDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjEyODIwNTEgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTMwNzY5MiAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xMzMzMzMzIDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjEzNTg5NzQgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTM4NDYxNSAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xNDEwMjU2IDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE0MzU4OTcgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTQ2MTUzOCAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xNDg3MTc5IDAuNDI1Mjk0NSAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE1MTI4MjEgMC40NDgwNTA1IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTUzODQ2MiAwLjQ3NTY2MjUgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xNTY0MTAzIDAuNDkzOTIxOSAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE1ODk3NDQgMC40OTg4ODY2IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTYxNTM4NSAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xNjQxMDI2IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE2NjY2NjcgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTY5MjMwOCAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xNzE3OTQ5IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE3NDM1OTAgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTc2OTIzMSAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xNzk0ODcyIDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE4MjA1MTMgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTg0NjE1NCAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xODcxNzk1IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE4OTc0MzYgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMTkyMzA3NyAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMC44ICAgMC4xOTQ4NzE4IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAwLjggICAwLjE5NzQzNTkgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDAuOCAgIDAuMjAwMDAwMCAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xMDAwMDAwIDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjEwMjU2NDEgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTA1MTI4MiAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xMDc2OTIzIDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjExMDI1NjQgMC40MDkwMDk3IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTEyODIwNSAwLjQwOTAwOTcgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xMTUzODQ2IDAuNDA5MDA5NyAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjExNzk0ODcgMC40MTM4NTM2IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTIwNTEyOCAwLjQ0MDA2MDMgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xMjMwNzY5IDAuNDc1NjYyNSAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjEyNTY0MTAgMC40OTM5MjE5IDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTI4MjA1MSAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xMzA3NjkyIDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjEzMzMzMzMgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTM1ODk3NCAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xMzg0NjE1IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE0MTAyNTYgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTQzNTg5NyAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xNDYxNTM4IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE0ODcxNzkgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTUxMjgyMSAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xNTM4NDYyIDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE1NjQxMDMgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTU4OTc0NCAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xNjE1Mzg1IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE2NDEwMjYgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTY2NjY2NyAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xNjkyMzA4IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE3MTc5NDkgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTc0MzU5MCAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xNzY5MjMxIDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE3OTQ4NzIgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTgyMDUxMyAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xODQ2MTU0IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE4NzE3OTUgMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTg5NzQzNiAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4xOTIzMDc3IDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcbiAxLjAgICAwLjE5NDg3MTggMC41MDAwMDAwIDEuMDAwMDAwMCAwLjAwMDAwMDAwMFxuIDEuMCAgIDAuMTk3NDM1OSAwLjUwMDAwMDAgMS4wMDAwMDAwIDAuMDAwMDAwMDAwXG4gMS4wICAgMC4yMDAwMDAwIDAuNTAwMDAwMCAxLjAwMDAwMDAgMC4wMDAwMDAwMDBcblxuUk9DIHdhcyB1c2VkIHRvIHNlbGVjdCB0aGUgb3B0aW1hbCBtb2RlbCB1c2luZyAgdGhlIGxhcmdlc3QgdmFsdWUuXG5UaGUgZmluYWwgdmFsdWVzIHVzZWQgZm9yIHRoZSBtb2RlbCB3ZXJlIGFscGhhID0gMC4xIGFuZCBsYW1iZGEgPSAwLjE1ODk3NDQuIFxuIn0= -->
-<pre><code>glmnet 
-
-4455 samples
- 315 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: centered (309), scaled (309), remove (6) 
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results across tuning parameters:
-
-  alpha  lambda     ROC        Sens       Spec       
-  0.0    0.1000000  0.6694678  0.6826654  0.545853270
-  0.0    0.1025641  0.6695891  0.6830891  0.545373889
-  0.0    0.1051282  0.6697205  0.6835121  0.544512645
-  0.0    0.1076923  0.6698423  0.6841053  0.544322169
-  0.0    0.1102564  0.6699600  0.6852063  0.544513557
-  0.0    0.1128205  0.6700772  0.6857144  0.543940305
-  0.0    0.1153846  0.6701726  0.6861378  0.543558897
-  0.0    0.1179487  0.6702228  0.6870693  0.543369332
-  0.0    0.1205128  0.6703382  0.6874079  0.542796081
-  0.0    0.1230769  0.6704659  0.6878317  0.542509000
-  0.0    0.1256410  0.6705880  0.6884252  0.541936204
-  0.0    0.1282051  0.6706681  0.6887639  0.541268626
-  0.0    0.1307692  0.6707296  0.6896113  0.540981545
-  0.0    0.1333333  0.6708300  0.6902042  0.540694919
-  0.0    0.1358974  0.6709489  0.6911360  0.540025974
-  0.0    0.1384615  0.6710225  0.6915601  0.540217817
-  0.0    0.1410256  0.6711499  0.6925760  0.539644566
-  0.0    0.1435897  0.6712523  0.6931685  0.539264069
-  0.0    0.1461538  0.6713630  0.6936766  0.538308499
-  0.0    0.1487179  0.6714423  0.6938461  0.537639553
-  0.0    0.1512821  0.6715426  0.6943546  0.537162452
-  0.0    0.1538462  0.6716194  0.6948627  0.536971520
-  0.0    0.1564103  0.6717060  0.6956247  0.536207792
-  0.0    0.1589744  0.6717791  0.6963023  0.536207792
-  0.0    0.1615385  0.6718770  0.6971498  0.535538847
-  0.0    0.1641026  0.6719595  0.6977430  0.535349282
-  0.0    0.1666667  0.6720343  0.6984206  0.534967419
-  0.0    0.1692308  0.6721015  0.6990138  0.534873092
-  0.0    0.1717949  0.6721658  0.6996914  0.534873092
-  0.0    0.1743590  0.6722224  0.7001999  0.534681704
-  0.0    0.1769231  0.6722758  0.7009626  0.534586466
-  0.0    0.1794872  0.6723482  0.7012165  0.533917977
-  0.0    0.1820513  0.6724157  0.7018941  0.534013215
-  0.0    0.1846154  0.6725002  0.7022331  0.533726134
-  0.0    0.1871795  0.6725637  0.7029107  0.533056733
-  0.0    0.1897436  0.6726021  0.7034192  0.532291638
-  0.0    0.1923077  0.6726405  0.7039273  0.531812714
-  0.0    0.1948718  0.6726996  0.7043506  0.531431306
-  0.0    0.1974359  0.6727747  0.7046896  0.530858054
-  0.0    0.2000000  0.6728337  0.7051134  0.530381408
-  0.1    0.1000000  0.6808641  0.7233298  0.514812941
-  0.1    0.1025641  0.6809015  0.7238379  0.513189793
-  0.1    0.1051282  0.6809885  0.7255310  0.511661882
-  0.1    0.1076923  0.6811028  0.7265465  0.510610617
-  0.1    0.1102564  0.6811988  0.7279868  0.508128959
-  0.1    0.1128205  0.6812727  0.7295119  0.506694008
-  0.1    0.1153846  0.6813145  0.7307824  0.504781499
-  0.1    0.1179487  0.6813574  0.7316288  0.503730690
-  0.1    0.1205128  0.6813397  0.7338322  0.502680337
-  0.1    0.1230769  0.6813876  0.7350182  0.501438596
-  0.1    0.1256410  0.6814399  0.7358650  0.500387788
-  0.1    0.1282051  0.6813821  0.7371358  0.498763728
-  0.1    0.1307692  0.6814753  0.7390839  0.497427204
-  0.1    0.1333333  0.6815300  0.7401849  0.495994076
-  0.1    0.1358974  0.6815403  0.7417943  0.494754158
-  0.1    0.1384615  0.6815956  0.7435733  0.493608111
-  0.1    0.1410256  0.6815879  0.7451834  0.492271132
-  0.1    0.1435897  0.6815961  0.7470478  0.490933698
-  0.1    0.1461538  0.6816204  0.7489966  0.489117339
-  0.1    0.1487179  0.6816033  0.7505221  0.487492823
-  0.1    0.1512821  0.6816033  0.7517925  0.485583960
-  0.1    0.1538462  0.6816460  0.7532325  0.484530873
-  0.1    0.1564103  0.6816629  0.7539101  0.483385737
-  0.1    0.1589744  0.6816818  0.7554359  0.481951697
-  0.1    0.1615385  0.6816579  0.7562826  0.481187059
-  0.1    0.1641026  0.6816661  0.7570450  0.479084985
-  0.1    0.1666667  0.6816446  0.7582314  0.478321713
-  0.1    0.1692308  0.6815772  0.7597558  0.477653680
-  0.1    0.1717949  0.6815837  0.7607706  0.476604238
-  0.1    0.1743590  0.6815466  0.7613638  0.475840966
-  0.1    0.1769231  0.6813929  0.7628038  0.474599681
-  0.1    0.1794872  0.6812611  0.7633966  0.473452267
-  0.1    0.1820513  0.6812079  0.7640742  0.472210071
-  0.1    0.1846154  0.6810639  0.7646675  0.470967419
-  0.1    0.1871795  0.6809178  0.7652607  0.469916610
- 0.1   0.1897436 0.6808252 0.7656844 0.469821827
- 0.1   0.1923077 0.6807446 0.7665319 0.468867168
- 0.1   0.1948718 0.6806997 0.7672946 0.468007291
- 0.1   0.1974359 0.6805737 0.7674641 0.468007747
- 0.1   0.2000000 0.6804602 0.7676336 0.466957393
- 0.2   0.1000000 0.6780845 0.7544161 0.479182046
- 0.2   0.1025641 0.6777691 0.7554323 0.477844612
- 0.2   0.1051282 0.6773740 0.7554320 0.477080884
- 0.2   0.1076923 0.6769748 0.7557709 0.476125313
- 0.2   0.1102564 0.6766701 0.7561936 0.475265892
- 0.2   0.1128205 0.6762689 0.7558553 0.474694008
- 0.2   0.1153846 0.6759247 0.7561099 0.474216450
- 0.2   0.1179487 0.6755390 0.7567028 0.473834586
- 0.2   0.1205128 0.6752774 0.7567875 0.472592390
- 0.2   0.1230769 0.6750090 0.7575502 0.471635908
- 0.2   0.1256410 0.6745759 0.7579736 0.470872636
- 0.2   0.1282051 0.6743005 0.7582286 0.470202780
- 0.2   0.1307692 0.6741826 0.7584817 0.470297562
- 0.2   0.1333333 0.6740725 0.7588196 0.469344270
- 0.2   0.1358974 0.6738339 0.7592430 0.468388699
- 0.2   0.1384615 0.6735857 0.7598362 0.468293461
- 0.2   0.1410256 0.6735126 0.7598362 0.467911141
- 0.2   0.1435897 0.6730642 0.7603447 0.466859877
- 0.2   0.1461538 0.6727412 0.7613617 0.466094782
- 0.2   0.1487179 0.6726867 0.7612769 0.465904762
- 0.2   0.1512821 0.6724786 0.7617006 0.465522442
- 0.2   0.1538462 0.6725065 0.7626332 0.465331055
- 0.2   0.1564103 0.6722990 0.7631410 0.465618592
- 0.2   0.1589744 0.6721334 0.7634796 0.465236272
- 0.2   0.1615385 0.6719612 0.7641572 0.464280702
- 0.2   0.1641026 0.6719100 0.7643263 0.464185464
- 0.2   0.1666667 0.6720425 0.7648341 0.463802233
- 0.2   0.1692308 0.6718531 0.7655113 0.462275689
- 0.2   0.1717949 0.6720955 0.7678817 0.460748234
- 0.2   0.1743590 0.6720541 0.7693220 0.459794486
- 0.2   0.1769231 0.6722276 0.7698305 0.459603554
- 0.2   0.1794872 0.6720833 0.7700847 0.459125085
- 0.2   0.1820513 0.6721067 0.7704237 0.458074277
- 0.2   0.1846154 0.6718549 0.7706780 0.457500114
- 0.2   0.1871795 0.6717795 0.7709322 0.457021645
- 0.2   0.1897436 0.6716415 0.7716102 0.456735931
- 0.2   0.1923077 0.6716542 0.7717797 0.456353156
- 0.2   0.1948718 0.6715724 0.7722881 0.454249260
- 0.2   0.1974359 0.6713891 0.7734721 0.452526771
- 0.2   0.2000000 0.6712916 0.7739805 0.450901800
- 0.4   0.1000000 0.6705591 0.7523786 0.474210526
- 0.4   0.1025641 0.6704276 0.7523786 0.474210982
- 0.4   0.1051282 0.6702124 0.7499203 0.476028252
- 0.4   0.1076923 0.6697221 0.7396660 0.483567100
- 0.4   0.1102564 0.6694214 0.7350883 0.486142174
- 0.4   0.1128205 0.6688010 0.7361053 0.484046480
- 0.4   0.1153846 0.6683642 0.7295798 0.488916382
- 0.4   0.1179487 0.6679426 0.7183087 0.494931419
- 0.4   0.1205128 0.6670633 0.7165265 0.495129187
- 0.4   0.1230769 0.6658627 0.7141536 0.495311005
- 0.4   0.1256410 0.6655225 0.7146517 0.483554340
- 0.4   0.1282051 0.6649362 0.7109329 0.481757120
- 0.4   0.1307692 0.6633731 0.7161872 0.468598770
- 0.4   0.1333333 0.6607372 0.7212869 0.453525177
- 0.4   0.1358974 0.6589609 0.7356908 0.428385965
- 0.4   0.1384615 0.6576012 0.7554216 0.400286170
- 0.4   0.1410256 0.6557928 0.7727945 0.376183641
- 0.4   0.1435897 0.6538179 0.8033512 0.335101846
- 0.4   0.1461538 0.6522761 0.8111478 0.325565733
- 0.4   0.1487179 0.6509378 0.8280097 0.306480292
- 0.4   0.1512821 0.6506091 0.8340267 0.300068808
- 0.4   0.1538462 0.6504890 0.8458893 0.286387332
- 0.4   0.1564103 0.6505456 0.8643589 0.267944406
- 0.4   0.1589744 0.6505371 0.8814775 0.251538391
- 0.4   0.1615385 0.6506452 0.8880877 0.244681249
- 0.4   0.1641026 0.6508777 0.8944436 0.239252677
- 0.4   0.1666667 0.6510894 0.9002063 0.233633630
- 0.4   0.1692308 0.6511304 0.9002063 0.233633630
- 0.4   0.1717949 0.6511304 0.9102857 0.203131921
- 0.4   0.1743590 0.6511304 0.9238389 0.165111871
- 0.4   0.1769231 0.6512212 0.9534152 0.100098884
- 0.4   0.1794872 0.6512212 0.9700254 0.059632718
- 0.4   0.1820513 0.6505912 0.9910169 0.015753019
- 0.4   0.1846154 0.6505585 0.9953390 0.007619048
- 0.4   0.1871795 0.6500998 0.9978814 0.002952381
- 0.4   0.1897436 0.6441345 0.9978814 0.002952381
- 0.4   0.1923077 0.6369561 1.0000000 0.000000000
- 0.4   0.1948718 0.6332784 1.0000000 0.000000000
- 0.4   0.1974359 0.6271692 1.0000000 0.000000000
- 0.4   0.2000000 0.6262199 1.0000000 0.000000000
- 0.6   0.1000000 0.6514383 0.7701759 0.378095238
- 0.6   0.1025641 0.6511856 0.7859158 0.357661882
- 0.6   0.1051282 0.6509873 0.8095377 0.328054226
- 0.6   0.1076923 0.6507802 0.8198741 0.315180223
- 0.6   0.1102564 0.6506030 0.8340267 0.300068808
- 0.6   0.1128205 0.6507478 0.8571605 0.275405787
- 0.6   0.1153846 0.6506397 0.8719012 0.257227614
- 0.6   0.1179487 0.6507789 0.9088450 0.184752791
- 0.6   0.1205128 0.6503620 0.9458728 0.110983823
- 0.6   0.1230769 0.6497450 0.9736523 0.043312828
- 0.6   0.1256410 0.6481934 0.9953390 0.007619048
- 0.6   0.1282051 0.6288181 0.9978814 0.002952381
- 0.6   0.1307692 0.6160496 1.0000000 0.000000000
- 0.6   0.1333333 0.6109201 1.0000000 0.000000000
- 0.6   0.1358974 0.5981411 1.0000000 0.000000000
- 0.6   0.1384615 0.5850885 1.0000000 0.000000000
- 0.6   0.1410256 0.5496790 1.0000000 0.000000000
- 0.6   0.1435897 0.5203487 1.0000000 0.000000000
- 0.6   0.1461538 0.5105357 1.0000000 0.000000000
- 0.6   0.1487179 0.4993863 1.0000000 0.000000000
- 0.6   0.1512821 0.4686692 1.0000000 0.000000000
- 0.6   0.1538462 0.4514384 1.0000000 0.000000000
- 0.6   0.1564103 0.4233407 1.0000000 0.000000000
- 0.6   0.1589744 0.4131854 1.0000000 0.000000000
- 0.6   0.1615385 0.4131854 1.0000000 0.000000000
- 0.6   0.1641026 0.4131854 1.0000000 0.000000000
- 0.6   0.1666667 0.4090097 1.0000000 0.000000000
- 0.6   0.1692308 0.4090097 1.0000000 0.000000000
- 0.6   0.1717949 0.4090097 1.0000000 0.000000000
- 0.6   0.1743590 0.4090097 1.0000000 0.000000000
- 0.6   0.1769231 0.4090097 1.0000000 0.000000000
- 0.6   0.1794872 0.4090097 1.0000000 0.000000000
- 0.6   0.1820513 0.4090097 1.0000000 0.000000000
- 0.6   0.1846154 0.4090097 1.0000000 0.000000000
- 0.6   0.1871795 0.4090097 1.0000000 0.000000000
- 0.6   0.1897436 0.4090097 1.0000000 0.000000000
- 0.6   0.1923077 0.4090097 1.0000000 0.000000000
- 0.6   0.1948718 0.4090097 1.0000000 0.000000000
- 0.6   0.1974359 0.4208464 1.0000000 0.000000000
- 0.6   0.2000000 0.4360227 1.0000000 0.000000000
- 0.8   0.1000000 0.6019758 1.0000000 0.000000000
- 0.8   0.1025641 0.5761698 1.0000000 0.000000000
- 0.8   0.1051282 0.5284673 1.0000000 0.000000000
- 0.8   0.1076923 0.4819553 1.0000000 0.000000000
- 0.8   0.1102564 0.4688586 1.0000000 0.000000000
- 0.8   0.1128205 0.4536384 1.0000000 0.000000000
- 0.8   0.1153846 0.4272166 1.0000000 0.000000000
- 0.8   0.1179487 0.4123238 1.0000000 0.000000000
- 0.8   0.1205128 0.4090097 1.0000000 0.000000000
- 0.8   0.1230769 0.4090097 1.0000000 0.000000000
- 0.8   0.1256410 0.4090097 1.0000000 0.000000000
- 0.8   0.1282051 0.4090097 1.0000000 0.000000000
- 0.8   0.1307692 0.4090097 1.0000000 0.000000000
- 0.8   0.1333333 0.4090097 1.0000000 0.000000000
- 0.8   0.1358974 0.4090097 1.0000000 0.000000000
- 0.8   0.1384615 0.4090097 1.0000000 0.000000000
- 0.8   0.1410256 0.4090097 1.0000000 0.000000000
- 0.8   0.1435897 0.4090097 1.0000000 0.000000000
- 0.8   0.1461538 0.4090097 1.0000000 0.000000000
- 0.8   0.1487179 0.4252945 1.0000000 0.000000000
- 0.8   0.1512821 0.4480505 1.0000000 0.000000000
- 0.8   0.1538462 0.4756625 1.0000000 0.000000000
- 0.8   0.1564103 0.4939219 1.0000000 0.000000000
- 0.8   0.1589744 0.4988866 1.0000000 0.000000000
- 0.8   0.1615385 0.5000000 1.0000000 0.000000000
- 0.8   0.1641026 0.5000000 1.0000000 0.000000000
- 0.8   0.1666667 0.5000000 1.0000000 0.000000000
- 0.8   0.1692308 0.5000000 1.0000000 0.000000000
- 0.8   0.1717949 0.5000000 1.0000000 0.000000000
- 0.8   0.1743590 0.5000000 1.0000000 0.000000000
- 0.8   0.1769231 0.5000000 1.0000000 0.000000000
- 0.8   0.1794872 0.5000000 1.0000000 0.000000000
- 0.8   0.1820513 0.5000000 1.0000000 0.000000000
- 0.8   0.1846154 0.5000000 1.0000000 0.000000000
- 0.8   0.1871795 0.5000000 1.0000000 0.000000000
- 0.8   0.1897436 0.5000000 1.0000000 0.000000000
- 0.8   0.1923077 0.5000000 1.0000000 0.000000000
- 0.8   0.1948718 0.5000000 1.0000000 0.000000000
- 0.8   0.1974359 0.5000000 1.0000000 0.000000000
- 0.8   0.2000000 0.5000000 1.0000000 0.000000000
- 1.0   0.1000000 0.4090097 1.0000000 0.000000000
- 1.0   0.1025641 0.4090097 1.0000000 0.000000000
- 1.0   0.1051282 0.4090097 1.0000000 0.000000000
- 1.0   0.1076923 0.4090097 1.0000000 0.000000000
- 1.0   0.1102564 0.4090097 1.0000000 0.000000000
- 1.0   0.1128205 0.4090097 1.0000000 0.000000000
- 1.0   0.1153846 0.4090097 1.0000000 0.000000000
- 1.0   0.1179487 0.4138536 1.0000000 0.000000000
- 1.0   0.1205128 0.4400603 1.0000000 0.000000000
- 1.0   0.1230769 0.4756625 1.0000000 0.000000000
- 1.0   0.1256410 0.4939219 1.0000000 0.000000000
- 1.0   0.1282051 0.5000000 1.0000000 0.000000000
- 1.0   0.1307692 0.5000000 1.0000000 0.000000000
- 1.0   0.1333333 0.5000000 1.0000000 0.000000000
- 1.0   0.1358974 0.5000000 1.0000000 0.000000000
- 1.0   0.1384615 0.5000000 1.0000000 0.000000000
- 1.0   0.1410256 0.5000000 1.0000000 0.000000000
- 1.0   0.1435897 0.5000000 1.0000000 0.000000000
- 1.0   0.1461538 0.5000000 1.0000000 0.000000000
- 1.0   0.1487179 0.5000000 1.0000000 0.000000000
- 1.0   0.1512821 0.5000000 1.0000000 0.000000000
- 1.0   0.1538462 0.5000000 1.0000000 0.000000000
- 1.0   0.1564103 0.5000000 1.0000000 0.000000000
- 1.0   0.1589744 0.5000000 1.0000000 0.000000000
- 1.0   0.1615385 0.5000000 1.0000000 0.000000000
- 1.0   0.1641026 0.5000000 1.0000000 0.000000000
- 1.0   0.1666667 0.5000000 1.0000000 0.000000000
- 1.0   0.1692308 0.5000000 1.0000000 0.000000000
- 1.0   0.1717949 0.5000000 1.0000000 0.000000000
- 1.0   0.1743590 0.5000000 1.0000000 0.000000000
- 1.0   0.1769231 0.5000000 1.0000000 0.000000000
- 1.0   0.1794872 0.5000000 1.0000000 0.000000000
- 1.0   0.1820513 0.5000000 1.0000000 0.000000000
- 1.0   0.1846154 0.5000000 1.0000000 0.000000000
- 1.0   0.1871795 0.5000000 1.0000000 0.000000000
- 1.0   0.1897436 0.5000000 1.0000000 0.000000000
- 1.0   0.1923077 0.5000000 1.0000000 0.000000000
- 1.0   0.1948718 0.5000000 1.0000000 0.000000000
- 1.0   0.1974359 0.5000000 1.0000000 0.000000000
- 1.0   0.2000000 0.5000000 1.0000000 0.000000000
-
-ROC was used to select the optimal model using  the largest value.
-The final values used for the model were alpha = 0.1 and lambda = 0.1589744. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>pred.glmnet.dv &lt;- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
-confusionMatrix(pred.glmnet.dv, valid.party)</code></pre>
+<pre class="r"><code># pred.glmnet.dv &lt;- predict(glmnet.dv, valid.dv[, -c(1, hc.dv)])
+pred.glmnet.dv &lt;- predict(glmnet.dv, valid.data[, names(pval)])
+confusionMatrix(pred.glmnet.dv, valid.data$Party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0NDEgICAgICAgIDI2M1xuICBSZXB1YmxpY2FuICAgICAgMTQ5ICAgICAgICAyNjBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYyOTggICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYwMDcsIDAuNjU4MylcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAxLjE1NmUtMTEgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yNDc3ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAyLjU5MGUtMDggICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43NDc1ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjQ5NzEgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjI2NCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MzU3ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzk2MiAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC42MzI1ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYyMjMgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MjkgICAgICAgIDI0MFxuICBSZXB1YmxpY2FuICAgICAgMTYxICAgICAgICAyODNcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICBBY2N1cmFjeSA6IDAuNjM5NyAgICAgICAgIFxuICAgICAgICAgICAgICAgICA5NSUgQ0kgOiAoMC42MTA3LCAwLjY2OClcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgXG4gICAgUC1WYWx1ZSBbQWNjID4gTklSXSA6IDkuMjgxZS0xNCAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yNzA1ICAgICAgICAgXG4gTWNuZW1hcidzIFRlc3QgUC1WYWx1ZSA6IDkuODE0ZS0wNSAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MjcxICAgICAgICAgXG4gICAgICAgICAgICBTcGVjaWZpY2l0eSA6IDAuNTQxMSAgICAgICAgIFxuICAgICAgICAgUG9zIFByZWQgVmFsdWUgOiAwLjY0MTMgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42Mzc0ICAgICAgICAgXG4gICAgICAgICAgICAgUHJldmFsZW5jZSA6IDAuNTMwMSAgICAgICAgIFxuICAgICAgICAgRGV0ZWN0aW9uIFJhdGUgOiAwLjM4NTQgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC42MDExICAgICAgICAgXG4gICAgICBCYWxhbmNlZCBBY2N1cmFjeSA6IDAuNjM0MSAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIn0= -->
 <pre><code>Confusion Matrix and Statistics
 
             Reference
 Prediction   Democrat Republican
-  Democrat        441        263
-  Republican      149        260
-                                          
-               Accuracy : 0.6298          
-                 95% CI : (0.6007, 0.6583)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 1.156e-11       
-                                          
-                  Kappa : 0.2477          
- Mcnemar's Test P-Value : 2.590e-08       
-                                          
-            Sensitivity : 0.7475          
-            Specificity : 0.4971          
-         Pos Pred Value : 0.6264          
-         Neg Pred Value : 0.6357          
-             Prevalence : 0.5301          
-         Detection Rate : 0.3962          
-   Detection Prevalence : 0.6325          
-      Balanced Accuracy : 0.6223          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
+  Democrat        429        240
+  Republican      161        283
+                                         
+               Accuracy : 0.6397         
+                 95% CI : (0.6107, 0.668)
+    No Information Rate : 0.5301         
+    P-Value [Acc &gt; NIR] : 9.281e-14      
+                                         
+                  Kappa : 0.2705         
+ Mcnemar's Test P-Value : 9.814e-05      
+                                         
+            Sensitivity : 0.7271         
+            Specificity : 0.5411         
+         Pos Pred Value : 0.6413         
+         Neg Pred Value : 0.6374         
+             Prevalence : 0.5301         
+         Detection Rate : 0.3854         
+   Detection Prevalence : 0.6011         
+      Balanced Accuracy : 0.6341         
+                                         
+       'Positive' Class : Democrat       
+                                         </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1102,22 +530,19 @@ Prediction   Democrat Republican
         Party ~ .,
         data = train.dv[, -c(1, hc.dv)],
         method = &quot;glmnet&quot;,
-        trControl = ctrl,
+        trControl = trCtrl,
         metric = &quot;ROC&quot;,
         tuneGrid = expand.grid(.alpha = 0.1, .lambda = 0.1),
         preProcess = c(&quot;nzv&quot;, &quot;pca&quot;)
     )
     
     saveRDS(glmnet.dv.pca, &quot;models/glmnet_dv_pca.Rds&quot;)
+
 } else {
     library(glmnet)
     glmnet.dv.pca &lt;- readRDS(&quot;models/glmnet_dv_pca.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuRml0dGluZyBmaW5hbCBtb2RlbCBvbiBmdWxsIHRyYWluaW5nIHNldFxuIn0= -->
-<pre><code>Aggregating results
-Fitting final model on full training set</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1125,27 +550,6 @@ Fitting final model on full training set</code></pre>
 <!-- rnb-source-begin -->
 <pre class="r"><code>glmnet.dv.pca</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiZ2xtbmV0IFxuXG40NDU1IHNhbXBsZXNcbiAzMTUgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuUHJlLXByb2Nlc3Npbmc6IHByaW5jaXBhbCBjb21wb25lbnQgc2lnbmFsIGV4dHJhY3Rpb24gKDMwOSksIGNlbnRlcmVkICgzMDkpLCBzY2FsZWQgKDMwOSksXG4gcmVtb3ZlICg2KSBcblJlc2FtcGxpbmc6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCkgXG5TdW1tYXJ5IG9mIHNhbXBsZSBzaXplczogNDAxMCwgNDAwOSwgNDAwOSwgNDAxMCwgNDAwOSwgNDAwOSwgLi4uIFxuUmVzYW1wbGluZyByZXN1bHRzOlxuXG4gIFJPQyAgICAgICAgU2VucyAgICAgICBTcGVjICAgICBcbiAgMC42NjQ4NDU1ICAwLjc0MTYzMjcgIDAuNDYxMzM1MlxuXG5UdW5pbmcgcGFyYW1ldGVyICdhbHBoYScgd2FzIGhlbGQgY29uc3RhbnQgYXQgYSB2YWx1ZSBvZiAwLjFcblR1bmluZyBwYXJhbWV0ZXIgJ2xhbWJkYScgd2FzXG4gaGVsZCBjb25zdGFudCBhdCBhIHZhbHVlIG9mIDAuMVxuIFxuIn0= -->
-<pre><code>glmnet 
-
-4455 samples
- 315 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: principal component signal extraction (309), centered (309), scaled (309),
- remove (6) 
-Resampling: Cross-Validated (10 fold) 
-Summary of sample sizes: 4010, 4009, 4009, 4010, 4009, 4009, ... 
-Resampling results:
-
-  ROC        Sens       Spec     
-  0.6648455  0.7416327  0.4613352
-
-Tuning parameter 'alpha' was held constant at a value of 0.1
-Tuning parameter 'lambda' was
- held constant at a value of 0.1
- </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1154,34 +558,6 @@ Tuning parameter 'lambda' was
 <pre class="r"><code>pred.glmnet.dv.pca &lt;- predict(glmnet.dv.pca, valid.dv[, -c(1, hc.dv)])
 confusionMatrix(pred.glmnet.dv.pca, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0NjMgICAgICAgIDI3MVxuICBSZXB1YmxpY2FuICAgICAgMTI3ICAgICAgICAyNTJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY0MjQgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYxMzUsIDAuNjcwNilcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAyLjI5OGUtMTQgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yNzA4ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA3LjYxM2UtMTMgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43ODQ3ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjQ4MTggICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjMwOCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42NjQ5ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNDE2MCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC42NTk1ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYzMzMgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        463        271
-  Republican      127        252
-                                          
-               Accuracy : 0.6424          
-                 95% CI : (0.6135, 0.6706)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 2.298e-14       
-                                          
-                  Kappa : 0.2708          
- Mcnemar's Test P-Value : 7.613e-13       
-                                          
-            Sensitivity : 0.7847          
-            Specificity : 0.4818          
-         Pos Pred Value : 0.6308          
-         Neg Pred Value : 0.6649          
-             Prevalence : 0.5301          
-         Detection Rate : 0.4160          
-   Detection Prevalence : 0.6595          
-      Balanced Accuracy : 0.6333          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1189,33 +565,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>varImp(glmnet.dv.pca)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiZ2xtbmV0IHZhcmlhYmxlIGltcG9ydGFuY2VcblxuICBvbmx5IDIwIG1vc3QgaW1wb3J0YW50IHZhcmlhYmxlcyBzaG93biAob3V0IG9mIDE1MClcblxuICAgICAgT3ZlcmFsbFxuUEMxMCAgIDEwMC4wMFxuUEMxNyAgICA0MC41NVxuUEM5ICAgICAzOS4yMVxuUEM3ICAgICAzNy43OFxuUEM1ICAgICAzMi4yM1xuUEM5MyAgICAzMC43MlxuUEM5NyAgICAzMC40MVxuUEM3NiAgICAzMC4xNFxuUEM2ICAgICAyOC40OFxuUEMxOCAgICAyNy4yMFxuUEMyMSAgICAyMi40OVxuUEMxOSAgICAyMS4yNlxuUEMxNCAgICAxOS45NFxuUEMxMzkgICAxOS40MFxuUEMzNSAgICAxOS4zNVxuUEMxMDEgICAxOC44MVxuUEMxMzggICAxNy43M1xuUEMyNCAgICAxNy4zOVxuUEMxMiAgICAxNi40NFxuUEM3NSAgICAxNi4yNlxuIn0= -->
-<pre><code>glmnet variable importance
-
-  only 20 most important variables shown (out of 150)
-
-      Overall
-PC10   100.00
-PC17    40.55
-PC9     39.21
-PC7     37.78
-PC5     32.23
-PC93    30.72
-PC97    30.41
-PC76    30.14
-PC6     28.48
-PC18    27.20
-PC21    22.49
-PC19    21.26
-PC14    19.94
-PC139   19.40
-PC35    19.35
-PC101   18.81
-PC138   17.73
-PC24    17.39
-PC12    16.44
-PC75    16.26</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1237,15 +586,12 @@ PC75    16.26</code></pre>
     )
     
     saveRDS(glmnet.mca, &quot;models/glmnet_mca.Rds&quot;)
+
 } else {
     library(glmnet)
     glmnet.mca &lt;- readRDS(&quot;models/glmnet_mca.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBNYXRyaXhcbkxvYWRlZCBnbG1uZXQgMi4wLTVcbiJ9 -->
-<pre><code>Loading required package: Matrix
-Loaded glmnet 2.0-5</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1253,26 +599,6 @@ Loaded glmnet 2.0-5</code></pre>
 <!-- rnb-source-begin -->
 <pre class="r"><code>glmnet.mca</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiZ2xtbmV0IFxuXG40NDU1IHNhbXBsZXNcbiAgMTAgcHJlZGljdG9yXG4gICAyIGNsYXNzZXM6ICdEZW1vY3JhdCcsICdSZXB1YmxpY2FuJyBcblxuTm8gcHJlLXByb2Nlc3NpbmdcblJlc2FtcGxpbmc6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCwgcmVwZWF0ZWQgNSB0aW1lcykgXG5TdW1tYXJ5IG9mIHNhbXBsZSBzaXplczogNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgLi4uIFxuUmVzYW1wbGluZyByZXN1bHRzOlxuXG4gIFJPQyAgICAgICAgU2VucyAgICAgICBTcGVjICAgICBcbiAgMC42NjM5OTY2ICAwLjcwOTM1OTIgIDAuNTA3NTY0NFxuXG5UdW5pbmcgcGFyYW1ldGVyICdhbHBoYScgd2FzIGhlbGQgY29uc3RhbnQgYXQgYSB2YWx1ZSBvZiAwLjFcblR1bmluZyBwYXJhbWV0ZXIgJ2xhbWJkYScgd2FzXG4gaGVsZCBjb25zdGFudCBhdCBhIHZhbHVlIG9mIDAuMDA0NDk0NFxuIFxuIn0= -->
-<pre><code>glmnet 
-
-4455 samples
-  10 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-No pre-processing
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results:
-
-  ROC        Sens       Spec     
-  0.6639966  0.7093592  0.5075644
-
-Tuning parameter 'alpha' was held constant at a value of 0.1
-Tuning parameter 'lambda' was
- held constant at a value of 0.0044944
- </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1281,34 +607,6 @@ Tuning parameter 'lambda' was
 <pre class="r"><code>pred.glmnet.mca &lt;- predict(glmnet.mca, valid.mca)
 confusionMatrix(pred.glmnet.mca, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MjkgICAgICAgIDI1MlxuICBSZXB1YmxpY2FuICAgICAgMTYxICAgICAgICAyNzFcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYyODkgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU5OTgsIDAuNjU3NClcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAxLjc1MWUtMTEgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yNDc3ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA5LjQ4NGUtMDYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MjcxICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjUxODIgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjMwMCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MjczICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzg1NCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC42MTE5ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYyMjYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        429        252
-  Republican      161        271
-                                          
-               Accuracy : 0.6289          
-                 95% CI : (0.5998, 0.6574)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 1.751e-11       
-                                          
-                  Kappa : 0.2477          
- Mcnemar's Test P-Value : 9.484e-06       
-                                          
-            Sensitivity : 0.7271          
-            Specificity : 0.5182          
-         Pos Pred Value : 0.6300          
-         Neg Pred Value : 0.6273          
-             Prevalence : 0.5301          
-         Detection Rate : 0.3854          
-   Detection Prevalence : 0.6119          
-      Balanced Accuracy : 0.6226          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1316,21 +614,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>varImp(glmnet.mca)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiZ2xtbmV0IHZhcmlhYmxlIGltcG9ydGFuY2VcblxuICAgICAgT3ZlcmFsbFxubWNhNiAgIDEwMC4wMFxubWNhNCAgICA2Mi4yMlxubWNhNyAgICA0MC4zOVxubWNhNSAgICAzOC40MVxubWNhMiAgICAzNC44OFxubWNhOCAgICAzMS41M1xubWNhOSAgICAxOC4wN1xubWNhMSAgICAxNS45OFxubWNhMTAgICAxMS4zMlxubWNhMyAgICAgMC4wMFxuIn0= -->
-<pre><code>glmnet variable importance
-
-      Overall
-mca6   100.00
-mca4    62.22
-mca7    40.39
-mca5    38.41
-mca2    34.88
-mca8    31.53
-mca9    18.07
-mca1    15.98
-mca10   11.32
-mca3     0.00</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1347,33 +630,25 @@ mca3     0.00</code></pre>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>if (!file.exists(&quot;models/nsc_dv.Rds&quot;)) {
-    set.seed(1056)
+<pre class="r"><code>set.seed(1056)
     nsc.dv &lt;- train(
-        Party ~ .,
-        data = train.dv[, -1],
+        # Party ~ .,
+        # data = train.dv[, -1],
+        x = train.data[, names(pval)],
+        y = train.data$Party,
         method = &quot;pam&quot;,
         trControl = trCtrl,
         metric = &quot;ROC&quot;,
         tuneGrid = nscGrid,
         preProcess = &quot;nzv&quot;
     )
-    
-    saveRDS(nsc.dv, &quot;models/nsc_dv.Rds&quot;)
-} else {
-    library(pamr)
-    nsc.dv &lt;- readRDS(&quot;models/nsc_dv.Rds&quot;)
-}</code></pre>
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBjbHVzdGVyXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IHN1cnZpdmFsXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDDouKCrMucc3Vydml2YWzDouKCrOKEolxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDDouKCrMuccGFja2FnZTpjYXJldMOi4oKs4oSiOlxuXG4gICAgY2x1c3RlclxuIn0= -->
-<pre><code>Loading required package: cluster
-Loading required package: survival
-
-Attaching package: â€˜survivalâ€™
-
-The following object is masked from â€˜package:caretâ€™:
-
-    cluster</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuU2VsZWN0aW5nIHR1bmluZyBwYXJhbWV0ZXJzXG5GaXR0aW5nIHRocmVzaG9sZCA9IDIgb24gZnVsbCB0cmFpbmluZyBzZXRcbjFcbiJ9 -->
+<pre><code>Aggregating results
+Selecting tuning parameters
+Fitting threshold = 2 on full training set
+1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1382,81 +657,39 @@ The following object is masked from â€˜package:caretâ€™:
 <!-- rnb-source-begin -->
 <pre class="r"><code>nsc.dv</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTmVhcmVzdCBTaHJ1bmtlbiBDZW50cm9pZHMgXG5cbjQ0NTUgc2FtcGxlc1xuIDMyOSBwcmVkaWN0b3JcbiAgIDIgY2xhc3NlczogJ0RlbW9jcmF0JywgJ1JlcHVibGljYW4nIFxuXG5QcmUtcHJvY2Vzc2luZzogcmVtb3ZlICg2KSBcblJlc2FtcGxpbmc6IENyb3NzLVZhbGlkYXRlZCAoMTAgZm9sZCwgcmVwZWF0ZWQgNSB0aW1lcykgXG5TdW1tYXJ5IG9mIHNhbXBsZSBzaXplczogNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgNDAxMCwgNDAwOSwgLi4uIFxuUmVzYW1wbGluZyByZXN1bHRzIGFjcm9zcyB0dW5pbmcgcGFyYW1ldGVyczpcblxuICB0aHJlc2hvbGQgIFJPQyAgICAgICAgU2VucyAgICAgICBTcGVjICAgICBcbiAgIDAgICAgICAgICAwLjYwNzMxNzggIDAuNjY4NjgyMyAgMC40OTczMjU2XG4gICAxICAgICAgICAgMC42NzM2NTM0ICAwLjc5NDk5MzkgIDAuNDE0ODA4NFxuICAgMiAgICAgICAgIDAuNjc3NjgxOCAgMC44Mzg0NDkyICAwLjM1MDQyMTFcbiAgIDMgICAgICAgICAwLjY3MDczNTUgIDAuOTIxNjQzMSAgMC4xODkxMjI4XG4gICA0ICAgICAgICAgMC42NTQzMTkxICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuICAgNSAgICAgICAgIDAuNjIwMjg4MyAgMS4wMDAwMDAwICAwLjAwMDAwMDBcbiAgIDYgICAgICAgICAwLjYwMjU3MjQgIDEuMDAwMDAwMCAgMC4wMDAwMDAwXG4gICA3ICAgICAgICAgMC40ODgyMzM5ICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuICAgOCAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDBcbiAgIDkgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwXG4gIDEwICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuICAxMSAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDBcbiAgMTIgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwXG4gIDEzICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuICAxNCAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDBcbiAgMTUgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwXG4gIDE2ICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuICAxNyAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDBcbiAgMTggICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwXG4gIDE5ICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuICAyMCAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDBcbiAgMjEgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwXG4gIDIyICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuICAyMyAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDBcbiAgMjQgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwXG4gIDI1ICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMFxuXG5ST0Mgd2FzIHVzZWQgdG8gc2VsZWN0IHRoZSBvcHRpbWFsIG1vZGVsIHVzaW5nICB0aGUgbGFyZ2VzdCB2YWx1ZS5cblRoZSBmaW5hbCB2YWx1ZSB1c2VkIGZvciB0aGUgbW9kZWwgd2FzIHRocmVzaG9sZCA9IDIuIFxuIn0= -->
-<pre><code>Nearest Shrunken Centroids 
-
-4455 samples
- 329 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-Pre-processing: remove (6) 
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results across tuning parameters:
-
-  threshold  ROC        Sens       Spec     
-   0         0.6073178  0.6686823  0.4973256
-   1         0.6736534  0.7949939  0.4148084
-   2         0.6776818  0.8384492  0.3504211
-   3         0.6707355  0.9216431  0.1891228
-   4         0.6543191  1.0000000  0.0000000
-   5         0.6202883  1.0000000  0.0000000
-   6         0.6025724  1.0000000  0.0000000
-   7         0.4882339  1.0000000  0.0000000
-   8         0.5000000  1.0000000  0.0000000
-   9         0.5000000  1.0000000  0.0000000
-  10         0.5000000  1.0000000  0.0000000
-  11         0.5000000  1.0000000  0.0000000
-  12         0.5000000  1.0000000  0.0000000
-  13         0.5000000  1.0000000  0.0000000
-  14         0.5000000  1.0000000  0.0000000
-  15         0.5000000  1.0000000  0.0000000
-  16         0.5000000  1.0000000  0.0000000
-  17         0.5000000  1.0000000  0.0000000
-  18         0.5000000  1.0000000  0.0000000
-  19         0.5000000  1.0000000  0.0000000
-  20         0.5000000  1.0000000  0.0000000
-  21         0.5000000  1.0000000  0.0000000
-  22         0.5000000  1.0000000  0.0000000
-  23         0.5000000  1.0000000  0.0000000
-  24         0.5000000  1.0000000  0.0000000
-  25         0.5000000  1.0000000  0.0000000
-
-ROC was used to select the optimal model using  the largest value.
-The final value used for the model was threshold = 2. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>pred.nsc &lt;- predict(nsc.dv, valid.dv[, -1])
-confusionMatrix(pred.nsc, valid.party)</code></pre>
+<pre class="r"><code># pred.nsc &lt;- predict(nsc.dv, valid.dv[, -1])
+pred.nsc &lt;- predict(nsc.dv, valid.data[, names(pval)])
+confusionMatrix(pred.nsc, valid.data$Party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0ODYgICAgICAgIDMyMFxuICBSZXB1YmxpY2FuICAgICAgMTA0ICAgICAgICAyMDNcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYxOSAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU4OTgsIDAuNjQ3NylcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAxLjMyNWUtMDkgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yMTcgICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA8IDIuMmUtMTYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC44MjM3ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjM4ODEgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjAzMCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42NjEyICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNDM2NyAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC43MjQyICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYwNTkgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0ODMgICAgICAgIDMxMlxuICBSZXB1YmxpY2FuICAgICAgMTA3ICAgICAgICAyMTFcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYyMzUgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU5NDMsIDAuNjUyMSlcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAxLjk2MWUtMTAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yMjcxICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA8IDIuMmUtMTYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC44MTg2ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjQwMzQgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjA3NSAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42NjM1ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNDM0MCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC43MTQzICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYxMTAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
             Reference
 Prediction   Democrat Republican
-  Democrat        486        320
-  Republican      104        203
+  Democrat        483        312
+  Republican      107        211
                                           
-               Accuracy : 0.619           
-                 95% CI : (0.5898, 0.6477)
+               Accuracy : 0.6235          
+                 95% CI : (0.5943, 0.6521)
     No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : 1.325e-09       
+    P-Value [Acc &gt; NIR] : 1.961e-10       
                                           
-                  Kappa : 0.217           
+                  Kappa : 0.2271          
  Mcnemar's Test P-Value : &lt; 2.2e-16       
                                           
-            Sensitivity : 0.8237          
-            Specificity : 0.3881          
-         Pos Pred Value : 0.6030          
-         Neg Pred Value : 0.6612          
+            Sensitivity : 0.8186          
+            Specificity : 0.4034          
+         Pos Pred Value : 0.6075          
+         Neg Pred Value : 0.6635          
              Prevalence : 0.5301          
-         Detection Rate : 0.4367          
-   Detection Prevalence : 0.7242          
-      Balanced Accuracy : 0.6059          
+         Detection Rate : 0.4340          
+   Detection Prevalence : 0.7143          
+      Balanced Accuracy : 0.6110          
                                           
        'Positive' Class : Democrat        
                                           </code></pre>
@@ -1481,17 +714,12 @@ Prediction   Democrat Republican
     )
     
     saveRDS(nsc.mca, &quot;models/nsc_mca.Rds&quot;)
+
 } else {
     library(nsc)
     nsc.mca &lt;- readRDS(&quot;models/nsc_mca.Rds&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuU2VsZWN0aW5nIHR1bmluZyBwYXJhbWV0ZXJzXG5GaXR0aW5nIHRocmVzaG9sZCA9IDAgb24gZnVsbCB0cmFpbmluZyBzZXRcbjFcbiJ9 -->
-<pre><code>Aggregating results
-Selecting tuning parameters
-Fitting threshold = 0 on full training set
-1</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1499,49 +727,6 @@ Fitting threshold = 0 on full training set
 <!-- rnb-source-begin -->
 <pre class="r"><code>nsc.mca</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTmVhcmVzdCBTaHJ1bmtlbiBDZW50cm9pZHMgXG5cbjQ0NTUgc2FtcGxlc1xuICAxMCBwcmVkaWN0b3JcbiAgIDIgY2xhc3NlczogJ0RlbW9jcmF0JywgJ1JlcHVibGljYW4nIFxuXG5ObyBwcmUtcHJvY2Vzc2luZ1xuUmVzYW1wbGluZzogQ3Jvc3MtVmFsaWRhdGVkICgxMCBmb2xkLCByZXBlYXRlZCA1IHRpbWVzKSBcblN1bW1hcnkgb2Ygc2FtcGxlIHNpemVzOiA0MDEwLCA0MDA5LCA0MDEwLCA0MDA5LCA0MDEwLCA0MDA5LCAuLi4gXG5SZXNhbXBsaW5nIHJlc3VsdHMgYWNyb3NzIHR1bmluZyBwYXJhbWV0ZXJzOlxuXG4gIHRocmVzaG9sZCAgUk9DICAgICAgICBTZW5zICAgICAgIFNwZWMgICAgICAgIFxuICAgMCAgICAgICAgIDAuNjY0MDQ3NiAgMC44OTEyMjQzICAwLjI0NzU3NDM5MDVcbiAgIDEgICAgICAgICAwLjY1ODI2MjYgIDAuOTI5MTc3MiAgMC4xNjk2MzIyNjI1XG4gICAyICAgICAgICAgMC42NDQwMzA0ICAwLjk2NTY4OTggIDAuMDY4Njc0ODY5MFxuICAgMyAgICAgICAgIDAuNjI0MjU1NSAgMC45OTYyNzIzICAwLjAwODY5MjE4NTBcbiAgIDQgICAgICAgICAwLjYwNjM0NDkgIDEuMDAwMDAwMCAgMC4wMDAwOTUyMzgxXG4gICA1ICAgICAgICAgMC41OTkwMjQyICAxLjAwMDAwMDAgIDAuMDAwMDAwMDAwMFxuICAgNiAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDAwMDBcbiAgIDcgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwMDAwXG4gICA4ICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMDAwMFxuICAgOSAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDAwMDBcbiAgMTAgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwMDAwXG4gIDExICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMDAwMFxuICAxMiAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDAwMDBcbiAgMTMgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwMDAwXG4gIDE0ICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMDAwMFxuICAxNSAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDAwMDBcbiAgMTYgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwMDAwXG4gIDE3ICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMDAwMFxuICAxOCAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDAwMDBcbiAgMTkgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwMDAwXG4gIDIwICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMDAwMFxuICAyMSAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDAwMDBcbiAgMjIgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwMDAwXG4gIDIzICAgICAgICAgMC41MDAwMDAwICAxLjAwMDAwMDAgIDAuMDAwMDAwMDAwMFxuICAyNCAgICAgICAgIDAuNTAwMDAwMCAgMS4wMDAwMDAwICAwLjAwMDAwMDAwMDBcbiAgMjUgICAgICAgICAwLjUwMDAwMDAgIDEuMDAwMDAwMCAgMC4wMDAwMDAwMDAwXG5cblJPQyB3YXMgdXNlZCB0byBzZWxlY3QgdGhlIG9wdGltYWwgbW9kZWwgdXNpbmcgIHRoZSBsYXJnZXN0IHZhbHVlLlxuVGhlIGZpbmFsIHZhbHVlIHVzZWQgZm9yIHRoZSBtb2RlbCB3YXMgdGhyZXNob2xkID0gMC4gXG4ifQ== -->
-<pre><code>Nearest Shrunken Centroids 
-
-4455 samples
-  10 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-No pre-processing
-Resampling: Cross-Validated (10 fold, repeated 5 times) 
-Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
-Resampling results across tuning parameters:
-
-  threshold  ROC        Sens       Spec        
-   0         0.6640476  0.8912243  0.2475743905
-   1         0.6582626  0.9291772  0.1696322625
-   2         0.6440304  0.9656898  0.0686748690
-   3         0.6242555  0.9962723  0.0086921850
-   4         0.6063449  1.0000000  0.0000952381
-   5         0.5990242  1.0000000  0.0000000000
-   6         0.5000000  1.0000000  0.0000000000
-   7         0.5000000  1.0000000  0.0000000000
-   8         0.5000000  1.0000000  0.0000000000
-   9         0.5000000  1.0000000  0.0000000000
-  10         0.5000000  1.0000000  0.0000000000
-  11         0.5000000  1.0000000  0.0000000000
-  12         0.5000000  1.0000000  0.0000000000
-  13         0.5000000  1.0000000  0.0000000000
-  14         0.5000000  1.0000000  0.0000000000
-  15         0.5000000  1.0000000  0.0000000000
-  16         0.5000000  1.0000000  0.0000000000
-  17         0.5000000  1.0000000  0.0000000000
-  18         0.5000000  1.0000000  0.0000000000
-  19         0.5000000  1.0000000  0.0000000000
-  20         0.5000000  1.0000000  0.0000000000
-  21         0.5000000  1.0000000  0.0000000000
-  22         0.5000000  1.0000000  0.0000000000
-  23         0.5000000  1.0000000  0.0000000000
-  24         0.5000000  1.0000000  0.0000000000
-  25         0.5000000  1.0000000  0.0000000000
-
-ROC was used to select the optimal model using  the largest value.
-The final value used for the model was threshold = 0. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1550,37 +735,191 @@ The final value used for the model was threshold = 0. </code></pre>
 <pre class="r"><code>pred.nsc.mca &lt;- predict(nsc.mca, valid.mca)
 confusionMatrix(pred.nsc.mca, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA1MjkgICAgICAgIDM5MlxuICBSZXB1YmxpY2FuICAgICAgIDYxICAgICAgICAxMzFcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICBBY2N1cmFjeSA6IDAuNTkzICAgICAgICAgIFxuICAgICAgICAgICAgICAgICA5NSUgQ0kgOiAoMC41NjM1LCAwLjYyMilcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgXG4gICAgUC1WYWx1ZSBbQWNjID4gTklSXSA6IDEuMzk5ZS0wNSAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4xNTI2ICAgICAgICAgXG4gTWNuZW1hcidzIFRlc3QgUC1WYWx1ZSA6IDwgMi4yZS0xNiAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC44OTY2ICAgICAgICAgXG4gICAgICAgICAgICBTcGVjaWZpY2l0eSA6IDAuMjUwNSAgICAgICAgIFxuICAgICAgICAgUG9zIFByZWQgVmFsdWUgOiAwLjU3NDQgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42ODIzICAgICAgICAgXG4gICAgICAgICAgICAgUHJldmFsZW5jZSA6IDAuNTMwMSAgICAgICAgIFxuICAgICAgICAgRGV0ZWN0aW9uIFJhdGUgOiAwLjQ3NTMgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC44Mjc1ICAgICAgICAgXG4gICAgICBCYWxhbmNlZCBBY2N1cmFjeSA6IDAuNTczNSAgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIn0= -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="logistic-regression" class="section level2">
+<h2>Logistic Regression</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>set.seed(1056)
+    mod.glm &lt;- train(
+        Party ~ .,
+        data = train.pca[, -1],
+        # data = train.data[, -c(1, hc)],
+        # x = train.data[, names(pval)],
+        # y = train.data$Party,
+        method = &quot;glm&quot;,
+        trControl = trCtrl,
+        metric = &quot;ROC&quot;,
+        # tuneLength = 10,
+        # tuneGrid = nscGrid,
+        preProcess = c(&quot;center&quot;, &quot;scale&quot;, &quot;nzv&quot;)
+    )
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuRml0dGluZyBmaW5hbCBtb2RlbCBvbiBmdWxsIHRyYWluaW5nIHNldFxuIn0= -->
+<pre><code>Aggregating results
+Fitting final model on full training set</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code># pred.glm &lt;- predict(mod.glm, valid.data[, -c(1, hc)])
+# pred.glm &lt;- predict(mod.glm, valid.data[, names(pval)])
+pred.glm &lt;- predict(mod.glm, valid.pca[, -1])
+confusionMatrix(pred.glm, valid.data$Party)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICAzOTYgICAgICAgIDIwNVxuICBSZXB1YmxpY2FuICAgICAgMTk0ICAgICAgICAzMThcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY0MTUgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYxMjUsIDAuNjY5NylcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAzLjY3NGUtMTQgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yNzk2ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjYxNjYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC42NzEyICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjYwODAgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjU4OSAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42MjExICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzU1OCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41NDAwICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYzOTYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
             Reference
 Prediction   Democrat Republican
-  Democrat        529        392
-  Republican       61        131
-                                         
-               Accuracy : 0.593          
-                 95% CI : (0.5635, 0.622)
-    No Information Rate : 0.5301         
-    P-Value [Acc &gt; NIR] : 1.399e-05      
-                                         
-                  Kappa : 0.1526         
- Mcnemar's Test P-Value : &lt; 2.2e-16      
-                                         
-            Sensitivity : 0.8966         
-            Specificity : 0.2505         
-         Pos Pred Value : 0.5744         
-         Neg Pred Value : 0.6823         
-             Prevalence : 0.5301         
-         Detection Rate : 0.4753         
-   Detection Prevalence : 0.8275         
-      Balanced Accuracy : 0.5735         
-                                         
-       'Positive' Class : Democrat       
-                                         </code></pre>
+  Democrat        396        205
+  Republican      194        318
+                                          
+               Accuracy : 0.6415          
+                 95% CI : (0.6125, 0.6697)
+    No Information Rate : 0.5301          
+    P-Value [Acc &gt; NIR] : 3.674e-14       
+                                          
+                  Kappa : 0.2796          
+ Mcnemar's Test P-Value : 0.6166          
+                                          
+            Sensitivity : 0.6712          
+            Specificity : 0.6080          
+         Pos Pred Value : 0.6589          
+         Neg Pred Value : 0.6211          
+             Prevalence : 0.5301          
+         Detection Rate : 0.3558          
+   Detection Prevalence : 0.5400          
+      Balanced Accuracy : 0.6396          
+                                          
+       'Positive' Class : Democrat        
+                                          </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
+<div id="binary-discriminant-analysis" class="section level2">
+<h2>Binary Discriminant Analysis</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code># nscGrid &lt;- data.frame(.threshold = 0:25)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>set.seed(1056)
+    binda &lt;- train(
+        # Party ~ .,
+        # data = train.data[, -c(1, hc, 334:337)],
+        x = train.data[, names(pval)],
+        y = train.data$Party,
+        method = &quot;binda&quot;,
+        trControl = trCtrl,
+        metric = &quot;ROC&quot;,
+        tuneLength = 10,
+        # tuneGrid = nscGrid,
+        preProcess = &quot;nzv&quot;
+    )
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQWdncmVnYXRpbmcgcmVzdWx0c1xuU2VsZWN0aW5nIHR1bmluZyBwYXJhbWV0ZXJzXG5GaXR0aW5nIGxhbWJkYS5mcmVxcyA9IDAgb24gZnVsbCB0cmFpbmluZyBzZXRcbk51bWJlciBvZiB2YXJpYWJsZXM6IDcyIFxuTnVtYmVyIG9mIG9ic2VydmF0aW9uczogNDQ1NSBcbk51bWJlciBvZiBjbGFzc2VzOiAyIFxuXG5TcGVjaWZpZWQgc2hyaW5rYWdlIGludGVuc2l0eSBsYW1iZGEuZnJlcSAoZnJlcXVlbmNpZXMpOiAwIFxuIn0= -->
+<pre><code>Aggregating results
+Selecting tuning parameters
+Fitting lambda.freqs = 0 on full training set
+Number of variables: 72 
+Number of observations: 4455 
+Number of classes: 2 
+
+Specified shrinkage intensity lambda.freq (frequencies): 0 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>binda</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQmluYXJ5IERpc2NyaW1pbmFudCBBbmFseXNpcyBcblxuNDQ1NSBzYW1wbGVzXG4gIDczIHByZWRpY3RvclxuICAgMiBjbGFzc2VzOiAnRGVtb2NyYXQnLCAnUmVwdWJsaWNhbicgXG5cblByZS1wcm9jZXNzaW5nOiByZW1vdmUgKDEpIFxuUmVzYW1wbGluZzogQ3Jvc3MtVmFsaWRhdGVkICgxMCBmb2xkLCByZXBlYXRlZCA1IHRpbWVzKSBcblN1bW1hcnkgb2Ygc2FtcGxlIHNpemVzOiA0MDEwLCA0MDA5LCA0MDEwLCA0MDA5LCA0MDEwLCA0MDA5LCAuLi4gXG5SZXNhbXBsaW5nIHJlc3VsdHMgYWNyb3NzIHR1bmluZyBwYXJhbWV0ZXJzOlxuXG4gIGxhbWJkYS5mcmVxcyAgUk9DICAgICAgICBTZW5zICAgICAgIFNwZWMgICAgIFxuICAwLjAwMDAwMDAgICAgIDAuNjcxMjYxMiAgMC43MDUxMTg3ICAwLjUzMTcyMjBcbiAgMC4xMTExMTExICAgICAwLjY3MTI2MTIgIDAuNzAzMzQwMSAgMC41MzMxNTYxXG4gIDAuMjIyMjIyMiAgICAgMC42NzEyNjEyICAwLjcwMTk4NTMgIDAuNTM1NDQ3M1xuICAwLjMzMzMzMzMgICAgIDAuNjcxMjYxMiAgMC42OTk2OTg2ICAwLjUzODEyMTdcbiAgMC40NDQ0NDQ0ICAgICAwLjY3MTI2MTIgIDAuNjk3ODM0NSAgMC41NDAwMzE0XG4gIDAuNTU1NTU1NiAgICAgMC42NzEyNjEyICAwLjY5NjEzOTYgIDAuNTQyMTMyNlxuICAwLjY2NjY2NjcgICAgIDAuNjcxMjYxMiAgMC42OTQ0NDU0ICAwLjU0NDEzODFcbiAgMC43Nzc3Nzc4ICAgICAwLjY3MTI2MTIgIDAuNjkyMTU4MyAgMC41NDYzMzQ5XG4gIDAuODg4ODg4OSAgICAgMC42NzEyNjEyICAwLjY5MDk3MTkgIDAuNTQ4NzIyN1xuICAxLjAwMDAwMDAgICAgIDAuNjcxMjYxMiAgMC42ODg5MzkxICAwLjU1MDgyNTJcblxuUk9DIHdhcyB1c2VkIHRvIHNlbGVjdCB0aGUgb3B0aW1hbCBtb2RlbCB1c2luZyAgdGhlIGxhcmdlc3QgdmFsdWUuXG5UaGUgZmluYWwgdmFsdWUgdXNlZCBmb3IgdGhlIG1vZGVsIHdhcyBsYW1iZGEuZnJlcXMgPSAwLiBcbiJ9 -->
+<pre><code>Binary Discriminant Analysis 
+
+4455 samples
+  73 predictor
+   2 classes: 'Democrat', 'Republican' 
+
+Pre-processing: remove (1) 
+Resampling: Cross-Validated (10 fold, repeated 5 times) 
+Summary of sample sizes: 4010, 4009, 4010, 4009, 4010, 4009, ... 
+Resampling results across tuning parameters:
+
+  lambda.freqs  ROC        Sens       Spec     
+  0.0000000     0.6712612  0.7051187  0.5317220
+  0.1111111     0.6712612  0.7033401  0.5331561
+  0.2222222     0.6712612  0.7019853  0.5354473
+  0.3333333     0.6712612  0.6996986  0.5381217
+  0.4444444     0.6712612  0.6978345  0.5400314
+  0.5555556     0.6712612  0.6961396  0.5421326
+  0.6666667     0.6712612  0.6944454  0.5441381
+  0.7777778     0.6712612  0.6921583  0.5463349
+  0.8888889     0.6712612  0.6909719  0.5487227
+  1.0000000     0.6712612  0.6889391  0.5508252
+
+ROC was used to select the optimal model using  the largest value.
+The final value used for the model was lambda.freqs = 0. </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code># pred.binda &lt;- predict(binda, valid.data[, -c(1, hc, 334:338)])
+pred.binda &lt;- predict(binda, valid.data[, names(pval)])</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUHJlZGljdGlvbiB1c2VzIDcyIGZlYXR1cmVzLlxuIn0= -->
+<pre><code>Prediction uses 72 features.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>confusionMatrix(pred.binda, valid.data$Party)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICAzOTMgICAgICAgIDI0MVxuICBSZXB1YmxpY2FuICAgICAgMTk3ICAgICAgICAyODJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjYwNjUgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjU3NzEsIDAuNjM1MylcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiAxLjcwMmUtMDcgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yMDYzICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjAzOTkyICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC42NjYxICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjUzOTIgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjE5OSAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC41ODg3ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzUzMSAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41Njk2ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjYwMjYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<pre><code>Confusion Matrix and Statistics
+
+            Reference
+Prediction   Democrat Republican
+  Democrat        393        241
+  Republican      197        282
+                                          
+               Accuracy : 0.6065          
+                 95% CI : (0.5771, 0.6353)
+    No Information Rate : 0.5301          
+    P-Value [Acc &gt; NIR] : 1.702e-07       
+                                          
+                  Kappa : 0.2063          
+ Mcnemar's Test P-Value : 0.03992         
+                                          
+            Sensitivity : 0.6661          
+            Specificity : 0.5392          
+         Pos Pred Value : 0.6199          
+         Neg Pred Value : 0.5887          
+             Prevalence : 0.5301          
+         Detection Rate : 0.3531          
+   Detection Prevalence : 0.5696          
+      Balanced Accuracy : 0.6026          
+                                          
+       'Positive' Class : Democrat        
+                                          </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="compare-models" class="section level2">
 <h2>Compare Models</h2>
@@ -1589,19 +928,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>compare_models(lda.mca, glmnet.mca)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5cdE9uZSBTYW1wbGUgdC10ZXN0XG5cbmRhdGE6ICB4XG50ID0gMC4zNDgzNCwgZGYgPSA0OSwgcC12YWx1ZSA9IDAuNzI5MVxuYWx0ZXJuYXRpdmUgaHlwb3RoZXNpczogdHJ1ZSBtZWFuIGlzIG5vdCBlcXVhbCB0byAwXG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gLTAuMDAwMTA3MDE0NCAgMC4wMDAxNTE4OTMzXG5zYW1wbGUgZXN0aW1hdGVzOlxuICAgbWVhbiBvZiB4IFxuMi4yNDM5NDFlLTA1IFxuIn0= -->
-<pre><code>
-    One Sample t-test
-
-data:  x
-t = 0.34834, df = 49, p-value = 0.7291
-alternative hypothesis: true mean is not equal to 0
-95 percent confidence interval:
- -0.0001070144  0.0001518933
-sample estimates:
-   mean of x 
-2.243941e-05 </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1617,12 +943,25 @@ sample estimates:
                           nsc.dv = nsc.dv))
 modelCor(resamps, metric = &quot;ROC&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgIGxkYS5wY2EgICAgICAgcGxzIGdsbW5ldC5tY2EgICAgbnNjLmR2XG5sZGEucGNhICAgIDEuMDAwMDAwMCAwLjk0NDc3MjggIDAuNjkwMTc0NiAwLjcwMzU1OTVcbnBscyAgICAgICAgMC45NDQ3NzI4IDEuMDAwMDAwMCAgMC43OTkxOTUzIDAuNzQ2Njk5N1xuZ2xtbmV0Lm1jYSAwLjY5MDE3NDYgMC43OTkxOTUzICAxLjAwMDAwMDAgMC43MzA4MDI2XG5uc2MuZHYgICAgIDAuNzAzNTU5NSAwLjc0NjY5OTcgIDAuNzMwODAyNiAxLjAwMDAwMDBcbiJ9 -->
-<pre><code>             lda.pca       pls glmnet.mca    nsc.dv
-lda.pca    1.0000000 0.9447728  0.6901746 0.7035595
-pls        0.9447728 1.0000000  0.7991953 0.7466997
-glmnet.mca 0.6901746 0.7991953  1.0000000 0.7308026
-nsc.dv     0.7035595 0.7466997  0.7308026 1.0000000</code></pre>
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>resamps &lt;- resamples(list(glm = mod.glm, 
+                          pls = pls.dv,
+                          binda = binda,
+                          glmnet = glmnet.dv,
+                          nsc = nsc.dv))
+modelCor(resamps, metric = &quot;ROC&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgIGdsbSAgICAgICBwbHMgICAgIGJpbmRhICAgIGdsbW5ldCAgICAgICBuc2NcbmdsbSAgICAxLjAwMDAwMDAgMC45MTU5NjczIDAuNzI4MDc5NyAwLjk2MTMzODkgMC44MjU1NzY5XG5wbHMgICAgMC45MTU5NjczIDEuMDAwMDAwMCAwLjgxMTAxNjQgMC45NzQxMzcwIDAuODc4MzA3MlxuYmluZGEgIDAuNzI4MDc5NyAwLjgxMTAxNjQgMS4wMDAwMDAwIDAuODE2OTczOSAwLjg0MTM3NDVcbmdsbW5ldCAwLjk2MTMzODkgMC45NzQxMzcwIDAuODE2OTczOSAxLjAwMDAwMDAgMC44ODg1NzAzXG5uc2MgICAgMC44MjU1NzY5IDAuODc4MzA3MiAwLjg0MTM3NDUgMC44ODg1NzAzIDEuMDAwMDAwMFxuIn0= -->
+<pre><code>             glm       pls     binda    glmnet       nsc
+glm    1.0000000 0.9159673 0.7280797 0.9613389 0.8255769
+pls    0.9159673 1.0000000 0.8110164 0.9741370 0.8783072
+binda  0.7280797 0.8110164 1.0000000 0.8169739 0.8413745
+glmnet 0.9613389 0.9741370 0.8169739 1.0000000 0.8885703
+nsc    0.8255769 0.8783072 0.8413745 0.8885703 1.0000000</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1632,43 +971,47 @@ nsc.dv     0.7035595 0.7466997  0.7308026 1.0000000</code></pre>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin -->
-<pre class="r"><code>valid.avg &lt;- data_frame(lda = pred.lda.pca,
+<pre class="r"><code># valid.avg &lt;- data_frame(lda = pred.lda.pca,
+#                         pls = pred.pls.dv,
+#                         glmnet = pred.glmnet.mca,
+#                         nsc = pred.nsc)
+valid.avg &lt;- data_frame(glm = pred.glm,
                         pls = pred.pls.dv,
-                        glmnet = pred.glmnet.mca,
+                        binda = pred.binda,
+                        glmnet = pred.glmnet.dv,
                         nsc = pred.nsc)
 linear.mod.avg &lt;- train(
     x = valid.avg,
-    y = valid.party, 
-    method = &quot;rf&quot;, 
-    tuneGrid = expand.grid(.mtry = c(2:5))
+    y = valid.data$Party, 
+    method = &quot;rf&quot;
 )
 pred.avg.valid &lt;- predict(linear.mod.avg, valid.avg)
-confusionMatrix(pred.avg.valid, valid.party)</code></pre>
+confusionMatrix(pred.avg.valid, valid.data$Party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MTkgICAgICAgIDIxNlxuICBSZXB1YmxpY2FuICAgICAgMTcxICAgICAgICAzMDdcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY1MjMgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYyMzUsIDAuNjgwMylcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8IDJlLTE2ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4yOTg2ICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjAyNTMxICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MTAyICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjU4NzAgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjU5OCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42NDIzICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzc2NSAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41NzA1ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjY0ODYgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0MjUgICAgICAgIDIwOFxuICBSZXB1YmxpY2FuICAgICAgMTY1ICAgICAgICAzMTVcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY2NDkgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjYzNjMsIDAuNjkyNilcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8IDJlLTE2ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4zMjQxICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiAwLjAyOTY1ICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43MjAzICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjYwMjMgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjcxNCAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42NTYyICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuMzgxOSAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41Njg3ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjY2MTMgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
 <pre><code>Confusion Matrix and Statistics
 
             Reference
 Prediction   Democrat Republican
-  Democrat        419        216
-  Republican      171        307
+  Democrat        425        208
+  Republican      165        315
                                           
-               Accuracy : 0.6523          
-                 95% CI : (0.6235, 0.6803)
+               Accuracy : 0.6649          
+                 95% CI : (0.6363, 0.6926)
     No Information Rate : 0.5301          
     P-Value [Acc &gt; NIR] : &lt; 2e-16         
                                           
-                  Kappa : 0.2986          
- Mcnemar's Test P-Value : 0.02531         
+                  Kappa : 0.3241          
+ Mcnemar's Test P-Value : 0.02965         
                                           
-            Sensitivity : 0.7102          
-            Specificity : 0.5870          
-         Pos Pred Value : 0.6598          
-         Neg Pred Value : 0.6423          
+            Sensitivity : 0.7203          
+            Specificity : 0.6023          
+         Pos Pred Value : 0.6714          
+         Neg Pred Value : 0.6562          
              Prevalence : 0.5301          
-         Detection Rate : 0.3765          
-   Detection Prevalence : 0.5705          
-      Balanced Accuracy : 0.6486          
+         Detection Rate : 0.3819          
+   Detection Prevalence : 0.5687          
+      Balanced Accuracy : 0.6613          
                                           
        'Positive' Class : Democrat        
                                           </code></pre>
@@ -1680,27 +1023,6 @@ Prediction   Democrat Republican
 <!-- rnb-source-begin -->
 <pre class="r"><code>linear.mod.avg</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmFuZG9tIEZvcmVzdCBcblxuMTExMyBzYW1wbGVzXG4gICA0IHByZWRpY3RvclxuICAgMiBjbGFzc2VzOiAnRGVtb2NyYXQnLCAnUmVwdWJsaWNhbicgXG5cbk5vIHByZS1wcm9jZXNzaW5nXG5SZXNhbXBsaW5nOiBCb290c3RyYXBwZWQgKDI1IHJlcHMpIFxuU3VtbWFyeSBvZiBzYW1wbGUgc2l6ZXM6IDExMTMsIDExMTMsIDExMTMsIDExMTMsIDExMTMsIDExMTMsIC4uLiBcblJlc2FtcGxpbmcgcmVzdWx0cyBhY3Jvc3MgdHVuaW5nIHBhcmFtZXRlcnM6XG5cbiAgbXRyeSAgQWNjdXJhY3kgICBLYXBwYSAgICBcbiAgMiAgICAgMC42Mzg0MjQ3ICAwLjI2OTg3NjNcbiAgMyAgICAgMC42MzczNTcwICAwLjI2NzczNzNcbiAgNCAgICAgMC42MzcyODE4ICAwLjI2NzQ2NDlcbiAgNSAgICAgMC42MzYyMTI1ICAwLjI2NTExMTRcblxuQWNjdXJhY3kgd2FzIHVzZWQgdG8gc2VsZWN0IHRoZSBvcHRpbWFsIG1vZGVsIHVzaW5nICB0aGUgbGFyZ2VzdCB2YWx1ZS5cblRoZSBmaW5hbCB2YWx1ZSB1c2VkIGZvciB0aGUgbW9kZWwgd2FzIG10cnkgPSAyLiBcbiJ9 -->
-<pre><code>Random Forest 
-
-1113 samples
-   4 predictor
-   2 classes: 'Democrat', 'Republican' 
-
-No pre-processing
-Resampling: Bootstrapped (25 reps) 
-Summary of sample sizes: 1113, 1113, 1113, 1113, 1113, 1113, ... 
-Resampling results across tuning parameters:
-
-  mtry  Accuracy   Kappa    
-  2     0.6384247  0.2698763
-  3     0.6373570  0.2677373
-  4     0.6372818  0.2674649
-  5     0.6362125  0.2651114
-
-Accuracy was used to select the optimal model using  the largest value.
-The final value used for the model was mtry = 2. </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1713,19 +1035,39 @@ The final value used for the model was mtry = 2. </code></pre>
 pred.test.pls &lt;- predict(pls.dv, test.dv[, -c(1, hc.dv)])
 pred.test.glmnet &lt;- predict(glmnet.mca, test.mca)
 pred.test.nsc &lt;- predict(nsc.dv, test.dv[, -1])
+
 test.avg &lt;- data_frame(lda = pred.test.lda,
                        pls = pred.test.pls,
                        glmnet = pred.test.glmnet,
                        nsc = pred.test.nsc)
+
 pred.linear.test &lt;- predict(linear.mod.avg, test.avg)
 test_submission(pred.linear.test)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin -->
+<pre class="r"><code>pred.test.glm &lt;- predict(mod.glm, test.data[, names(pval)])
+pred.test.pls &lt;- predict(pls.dv, test.data[, names(pval)])
+pred.test.glmnet &lt;- predict(glmnet.dv, test.data[, names(pval)])
+pred.test.nsc &lt;- predict(nsc.dv, test.data[, names(pval)])
+pred.test.binda &lt;- predict(binda, test.data[, names(pval)])
+
+test.avg &lt;- data_frame(glm = pred.test.glm,
+                        pls = pred.test.pls,
+                        binda = pred.test.binda,
+                        glmnet = pred.test.glmnet,
+                        nsc = pred.test.nsc)
+
+pred.linear.test &lt;- predict(linear.mod.avg, test.avg)
+test_submission(pred.linear.test)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxpbmVhciBDbGFzc2lmaWNhdGlvbiBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnNvdXJjZSgiMi1tb2RlbF90ZXN0cy5SIikNCmBgYA0KDQojIyBMaW5lYXIgRGlzY3JpbWluYW50IEFuYWx5c2lzDQoNCiMjIyBQQ0ENCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvbGRhX3BjYS5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgbGRhLnBjYSA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJsZGEiLA0KICAgICAgICB0ckNvbnRyb2wgPSB0ckN0cmwsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygibnp2IiwgInBjYSIpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMobGRhLnBjYSwgIm1vZGVscy9sZGFfcGNhLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGRhLnBjYSA8LSByZWFkUkRTKCJtb2RlbHMvbGRhX3BjYS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KbGRhLnBjYQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5sZGEucGNhIDwtIHByZWRpY3QobGRhLnBjYSwgdmFsaWQuZHZbLCAtMV0pDQpjb25mdXNpb25NYXRyaXgocHJlZC5sZGEucGNhLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQojIyMgSUNBDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL2xkYV9pY2EuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIGxkYS5pY2EgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICBtZXRob2QgPSAibGRhIiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoIm56diIsICJpY2EiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGxkYS5pY2EsICJtb2RlbHMvbGRhX2ljYS5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxkYS5pY2EgPC0gcmVhZFJEUygibW9kZWxzL2xkYV9pY2EuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCmxkYS5pY2ENCmBgYA0KDQpgYGB7cn0NCnByZWQubGRhLmljYSA8LSBwcmVkaWN0KGxkYS5pY2EsIHZhbGlkLmR2WywgLTFdKQ0KY29uZnVzaW9uTWF0cml4KHByZWQubGRhLmljYSwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMjIE1DQQ0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9sZGFfbWNhLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBsZGEubWNhIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5tY2FbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJsZGEiLA0KICAgICAgICB0ckNvbnRyb2wgPSB0ckN0cmwsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhsZGEubWNhLCAibW9kZWxzL2xkYV9tY2EuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsZGEubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfbWNhLlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQpsZGEubWNhDQpgYGANCg0KYGBge3J9DQpwcmVkLmxkYS5tY2EgPC0gcHJlZGljdChsZGEubWNhLCB2YWxpZC5tY2EpDQpjb25mdXNpb25NYXRyaXgocHJlZC5sZGEubWNhLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQojIyBQYXJ0aWFsIExlYXN0IFNxdWFyZXMNCg0KYGBge3J9DQpwbHNHcmlkIDwtIGV4cGFuZC5ncmlkKC5uY29tcCA9IDE6MTApDQpgYGANCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvcGxzX2R2LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBwbHMuZHYgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLWMoMSwgaGMuZHYpXSwNCiAgICAgICAgbWV0aG9kID0gInBscyIsDQogICAgICAgIHRyQ29udHJvbCA9IHRyQ3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVHcmlkID0gcGxzR3JpZCwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoImNlbnRlciIsICJzY2FsZSIpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMocGxzLmR2LCAibW9kZWxzL3Bsc19kdi5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkocGxzKQ0KICAgIHBscy5kdiA8LSByZWFkUkRTKCJtb2RlbHMvcGxzX2R2LlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQpwbHMuZHYNCmBgYA0KDQpgYGB7cn0NCnByZWQucGxzLmR2IDwtIHByZWRpY3QocGxzLmR2LCB2YWxpZC5kdlssIC1jKDEsIGhjLmR2KV0pDQpjb25mdXNpb25NYXRyaXgocHJlZC5wbHMuZHYsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCiMjIyBQQ0ENCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvcGxzX2R2X3BjYS5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgcGxzLmR2LnBjYSA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtYygxLCBoYy5kdildLA0KICAgICAgICBtZXRob2QgPSAicGxzIiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBwbHNHcmlkLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygibnp2IiwgInBjYSIpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMocGxzLmR2LnBjYSwgIm1vZGVscy9wbHNfZHZfcGNhLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShwbHMpDQogICAgcGxzLmR2LnBjYSA8LSByZWFkUkRTKCJtb2RlbHMvcGxzX2R2X3BjYS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KcGxzLmR2LnBjYQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5wbHMuZHYucGNhIDwtIHByZWRpY3QocGxzLmR2LnBjYSwgdmFsaWQuZHZbLCAtYygxLCBoYy5kdildKQ0KY29uZnVzaW9uTWF0cml4KHByZWQucGxzLmR2LnBjYSwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMjIEtlcm5hbCBQTFMNCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMva3Bsc19kdi5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAga3Bscy5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtYygxLCBoYy5kdildLA0KICAgICAgICBtZXRob2QgPSAia2VybmVscGxzIiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBwbHNHcmlkLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgc2F2ZVJEUyhrcGxzLmR2LCAibW9kZWxzL2twbHNfZHYuUmRzIikNCiAgICANCn0gZWxzZSB7DQogICAgbGlicmFyeShwbHMpDQogICAga3Bscy5kdiA8LSByZWFkUkRTKCJtb2RlbHMva3Bsc19kdi5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0Ka3Bscy5kdg0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5rcGxzLmR2IDwtIHByZWRpY3Qoa3Bscy5kdiwgdmFsaWQuZHZbLCAtYygxLCBoYy5kdildKQ0KY29uZnVzaW9uTWF0cml4KHByZWQua3Bscy5kdiwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMgUGVuYWxpemVkIE1vZGVscw0KDQpgYGB7cn0NCmdsbW5HcmlkIDwtIGV4cGFuZC5ncmlkKA0KICAgIC5hbHBoYSA9IGMoMCwgMC4xLCAwLjIsIDAuNCwgMC42LCAwLjgsIDEpLCANCiAgICAubGFtYmRhID0gc2VxKDAuMSwgMC4yLCBsZW5ndGggPSA0MCkNCikNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9nbG1uZXRfZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIGdsbW5ldC5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtYygxLCBoYy5kdildLA0KICAgICAgICBtZXRob2QgPSAiZ2xtbmV0IiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBnbG1uR3JpZCwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoIm56diIsICJjZW50ZXIiLCAic2NhbGUiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGdsbW5ldC5kdiwgIm1vZGVscy9nbG1uZXRfZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KGdsbW5ldCkNCiAgICBnbG1uZXQuZHYgPC0gcmVhZFJEUygibW9kZWxzL2dsbW5ldF9kdi5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KZ2xtbmV0LmR2DQpgYGANCg0KYGBge3J9DQpwcmVkLmdsbW5ldC5kdiA8LSBwcmVkaWN0KGdsbW5ldC5kdiwgdmFsaWQuZHZbLCAtYygxLCBoYy5kdildKQ0KY29uZnVzaW9uTWF0cml4KHByZWQuZ2xtbmV0LmR2LCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQojIyMgUENBDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL2dsbW5ldF9kdl9wY2EuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIGdsbW5ldC5kdi5wY2EgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLWMoMSwgaGMuZHYpXSwNCiAgICAgICAgbWV0aG9kID0gImdsbW5ldCIsDQogICAgICAgIHRyQ29udHJvbCA9IHRyQ3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVHcmlkID0gZXhwYW5kLmdyaWQoLmFscGhhID0gMC4xLCAubGFtYmRhID0gMC4xKSwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoIm56diIsICJwY2EiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGdsbW5ldC5kdi5wY2EsICJtb2RlbHMvZ2xtbmV0X2R2X3BjYS5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkoZ2xtbmV0KQ0KICAgIGdsbW5ldC5kdi5wY2EgPC0gcmVhZFJEUygibW9kZWxzL2dsbW5ldF9kdl9wY2EuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCmdsbW5ldC5kdi5wY2ENCmBgYA0KDQpgYGB7cn0NCnByZWQuZ2xtbmV0LmR2LnBjYSA8LSBwcmVkaWN0KGdsbW5ldC5kdi5wY2EsIHZhbGlkLmR2WywgLWMoMSwgaGMuZHYpXSkNCmNvbmZ1c2lvbk1hdHJpeChwcmVkLmdsbW5ldC5kdi5wY2EsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCmBgYHtyfQ0KdmFySW1wKGdsbW5ldC5kdi5wY2EpDQpgYGANCg0KIyMjIE1DQQ0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9nbG1uZXRfbWNhLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBnbG1uZXQubWNhIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgICMgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICBkYXRhID0gdHJhaW4ubWNhWywgLTFdLA0KICAgICAgICBtZXRob2QgPSAiZ2xtbmV0IiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBleHBhbmQuZ3JpZCguYWxwaGEgPSAwLjEsIC5sYW1iZGEgPSAwLjAwNDQ5NDQpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMoZ2xtbmV0Lm1jYSwgIm1vZGVscy9nbG1uZXRfbWNhLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShnbG1uZXQpDQogICAgZ2xtbmV0Lm1jYSA8LSByZWFkUkRTKCJtb2RlbHMvZ2xtbmV0X21jYS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KZ2xtbmV0Lm1jYQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5nbG1uZXQubWNhIDwtIHByZWRpY3QoZ2xtbmV0Lm1jYSwgdmFsaWQubWNhKQ0KY29uZnVzaW9uTWF0cml4KHByZWQuZ2xtbmV0Lm1jYSwgdmFsaWQucGFydHkpDQpgYGANCg0KYGBge3J9DQp2YXJJbXAoZ2xtbmV0Lm1jYSkNCmBgYA0KDQojIyBOZWFyZXN0IFNocnVua2VuIENlbnRyb2lkcw0KDQpgYGB7cn0NCm5zY0dyaWQgPC0gZGF0YS5mcmFtZSgudGhyZXNob2xkID0gMDoyNSkNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9uc2NfZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIG5zYy5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJwYW0iLA0KICAgICAgICB0ckNvbnRyb2wgPSB0ckN0cmwsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICB0dW5lR3JpZCA9IG5zY0dyaWQsDQogICAgICAgIHByZVByb2Nlc3MgPSAibnp2Ig0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKG5zYy5kdiwgIm1vZGVscy9uc2NfZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KHBhbXIpDQogICAgbnNjLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9uc2NfZHYuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCm5zYy5kdg0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5uc2MgPC0gcHJlZGljdChuc2MuZHYsIHZhbGlkLmR2WywgLTFdKQ0KY29uZnVzaW9uTWF0cml4KHByZWQubnNjLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQojIyMgTUNBDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL25zY19tY2EuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIG5zYy5tY2EgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLm1jYVssIC0xXSwNCiAgICAgICAgbWV0aG9kID0gInBhbSIsDQogICAgICAgIHRyQ29udHJvbCA9IHRyQ3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVHcmlkID0gbnNjR3JpZA0KICAgICAgICAjIHByZVByb2Nlc3MgPSBjKCJjZW50ZXIiLCAic2NhbGUiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKG5zYy5tY2EsICJtb2RlbHMvbnNjX21jYS5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkobnNjKQ0KICAgIG5zYy5tY2EgPC0gcmVhZFJEUygibW9kZWxzL25zY19tY2EuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCm5zYy5tY2ENCmBgYA0KDQpgYGB7cn0NCnByZWQubnNjLm1jYSA8LSBwcmVkaWN0KG5zYy5tY2EsIHZhbGlkLm1jYSkNCmNvbmZ1c2lvbk1hdHJpeChwcmVkLm5zYy5tY2EsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCiMjIENvbXBhcmUgTW9kZWxzDQoNCmBgYHtyfQ0KY29tcGFyZV9tb2RlbHMobGRhLm1jYSwgZ2xtbmV0Lm1jYSkNCmBgYA0KDQpgYGB7cn0NCnJlc2FtcHMgPC0gcmVzYW1wbGVzKGxpc3QobGRhLnBjYSA9IGxkYS5wY2EsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAjIGxkYS5tY2EgPSBsZGEubWNhLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgcGxzID0gcGxzLmR2LA0KICAgICAgICAgICAgICAgICAgICAgICAgICAjIHBscy5wY2EgPSBwbHMuZHYucGNhLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAjIGdsbW5ldC5kdiA9IGdsbW5ldC5kdiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICMgZ2xtbmV0LnBjYSA9IGdsbW5ldC5kdi5wY2EsDQogICAgICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldC5tY2EgPSBnbG1uZXQubWNhLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgbnNjLmR2ID0gbnNjLmR2KSkNCm1vZGVsQ29yKHJlc2FtcHMsIG1ldHJpYyA9ICJST0MiKQ0KYGBgDQoNCiMjIExpbmVhciBNb2RlbCBBdmVyYWdpbmcNCg0KYGBge3J9DQp2YWxpZC5hdmcgPC0gZGF0YV9mcmFtZShsZGEgPSBwcmVkLmxkYS5wY2EsDQogICAgICAgICAgICAgICAgICAgICAgICBwbHMgPSBwcmVkLnBscy5kdiwNCiAgICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldCA9IHByZWQuZ2xtbmV0Lm1jYSwNCiAgICAgICAgICAgICAgICAgICAgICAgIG5zYyA9IHByZWQubnNjKQ0KDQpsaW5lYXIubW9kLmF2ZyA8LSB0cmFpbigNCiAgICB4ID0gdmFsaWQuYXZnLA0KICAgIHkgPSB2YWxpZC5wYXJ0eSwgDQogICAgbWV0aG9kID0gInJmIiwgDQogICAgdHVuZUdyaWQgPSBleHBhbmQuZ3JpZCgubXRyeSA9IGMoMjo1KSkNCikNCg0KcHJlZC5hdmcudmFsaWQgPC0gcHJlZGljdChsaW5lYXIubW9kLmF2ZywgdmFsaWQuYXZnKQ0KY29uZnVzaW9uTWF0cml4KHByZWQuYXZnLnZhbGlkLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQpgYGB7cn0NCmxpbmVhci5tb2QuYXZnDQpgYGANCg0KIyMgVGVzdCBTZXQgU3VibWlzc2lvbg0KDQpgYGB7cn0NCnByZWQudGVzdC5sZGEgPC0gcHJlZGljdChsZGEucGNhLCB0ZXN0LmR2WywgLTFdKQ0KcHJlZC50ZXN0LnBscyA8LSBwcmVkaWN0KHBscy5kdiwgdGVzdC5kdlssIC1jKDEsIGhjLmR2KV0pDQpwcmVkLnRlc3QuZ2xtbmV0IDwtIHByZWRpY3QoZ2xtbmV0Lm1jYSwgdGVzdC5tY2EpDQpwcmVkLnRlc3QubnNjIDwtIHByZWRpY3QobnNjLmR2LCB0ZXN0LmR2WywgLTFdKQ0KDQp0ZXN0LmF2ZyA8LSBkYXRhX2ZyYW1lKGxkYSA9IHByZWQudGVzdC5sZGEsDQogICAgICAgICAgICAgICAgICAgICAgIHBscyA9IHByZWQudGVzdC5wbHMsDQogICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldCA9IHByZWQudGVzdC5nbG1uZXQsDQogICAgICAgICAgICAgICAgICAgICAgIG5zYyA9IHByZWQudGVzdC5uc2MpDQoNCnByZWQubGluZWFyLnRlc3QgPC0gcHJlZGljdChsaW5lYXIubW9kLmF2ZywgdGVzdC5hdmcpDQp0ZXN0X3N1Ym1pc3Npb24ocHJlZC5saW5lYXIudGVzdCkNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxpbmVhciBDbGFzc2lmaWNhdGlvbiBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnNvdXJjZSgiMi1tb2RlbF90ZXN0cy5SIikNCmBgYA0KDQojIyBMaW5lYXIgRGlzY3JpbWluYW50IEFuYWx5c2lzDQoNCiMjIyBQQ0ENCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvbGRhX3BjYS5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgbGRhLnBjYSA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJsZGEiLA0KICAgICAgICB0ckNvbnRyb2wgPSB0ckN0cmwsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygibnp2IiwgInBjYSIpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMobGRhLnBjYSwgIm1vZGVscy9sZGFfcGNhLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGRhLnBjYSA8LSByZWFkUkRTKCJtb2RlbHMvbGRhX3BjYS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KbGRhLnBjYQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5sZGEucGNhIDwtIHByZWRpY3QobGRhLnBjYSwgdmFsaWQuZHZbLCAtMV0pDQpjb25mdXNpb25NYXRyaXgocHJlZC5sZGEucGNhLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQojIyMgSUNBDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL2xkYV9pY2EuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIGxkYS5pY2EgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICBtZXRob2QgPSAibGRhIiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoIm56diIsICJpY2EiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGxkYS5pY2EsICJtb2RlbHMvbGRhX2ljYS5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxkYS5pY2EgPC0gcmVhZFJEUygibW9kZWxzL2xkYV9pY2EuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCmxkYS5pY2ENCmBgYA0KDQpgYGB7cn0NCnByZWQubGRhLmljYSA8LSBwcmVkaWN0KGxkYS5pY2EsIHZhbGlkLmR2WywgLTFdKQ0KY29uZnVzaW9uTWF0cml4KHByZWQubGRhLmljYSwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMjIE1DQQ0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9sZGFfbWNhLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBsZGEubWNhIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5tY2FbLCAtMV0sDQogICAgICAgIG1ldGhvZCA9ICJsZGEiLA0KICAgICAgICB0ckNvbnRyb2wgPSB0ckN0cmwsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgDQogICAgc2F2ZVJEUyhsZGEubWNhLCAibW9kZWxzL2xkYV9tY2EuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsZGEubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfbWNhLlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQpsZGEubWNhDQpgYGANCg0KYGBge3J9DQpwcmVkLmxkYS5tY2EgPC0gcHJlZGljdChsZGEubWNhLCB2YWxpZC5tY2EpDQpjb25mdXNpb25NYXRyaXgocHJlZC5sZGEubWNhLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQojIyBQYXJ0aWFsIExlYXN0IFNxdWFyZXMNCg0KYGBge3J9DQpwbHNHcmlkIDwtIGV4cGFuZC5ncmlkKC5uY29tcCA9IDE6MTApDQpgYGANCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvcGxzX2R2LlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBwbHMuZHYgPC0gdHJhaW4oDQogICAgICAgICMgUGFydHkgfiAuLA0KICAgICAgICAjIGRhdGEgPSB0cmFpbi5kdlssIC1jKDEsIGhjLmR2KV0sDQogICAgICAgIHggPSB0cmFpbi5kYXRhWywgbmFtZXMocHZhbCldLA0KICAgICAgICB5ID0gdHJhaW4uZGF0YSRQYXJ0eSwNCiAgICAgICAgbWV0aG9kID0gInBscyIsDQogICAgICAgIHRyQ29udHJvbCA9IHRyQ3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVHcmlkID0gcGxzR3JpZCwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoImNlbnRlciIsICJzY2FsZSIpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMocGxzLmR2LCAibW9kZWxzL3Bsc19kdi5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkocGxzKQ0KICAgIHBscy5kdiA8LSByZWFkUkRTKCJtb2RlbHMvcGxzX2R2LlJkcyIpDQp9DQpgYGANCg0KYGBge3J9DQpwbHMuZHYNCmBgYA0KDQpgYGB7cn0NCiMgcHJlZC5wbHMuZHYgPC0gcHJlZGljdChwbHMuZHYsIHZhbGlkLmR2WywgLWMoMSwgaGMuZHYpXSkNCiMgcHJlZC5wbHMuZHYgPC0gcHJlZGljdChwbHMuZHYsIHZhbGlkLmRhdGFbLCAtYygxLCAzMzgpXSkNCnByZWQucGxzLmR2IDwtIHByZWRpY3QocGxzLmR2LCB2YWxpZC5kYXRhWywgbmFtZXMocHZhbCldKQ0KY29uZnVzaW9uTWF0cml4KHByZWQucGxzLmR2LCB2YWxpZC5kYXRhJFBhcnR5KQ0KYGBgDQoNCiMjIyBQQ0ENCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvcGxzX2R2X3BjYS5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAgcGxzLmR2LnBjYSA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtYygxLCBoYy5kdildLA0KICAgICAgICBtZXRob2QgPSAicGxzIiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBwbHNHcmlkLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygibnp2IiwgInBjYSIpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMocGxzLmR2LnBjYSwgIm1vZGVscy9wbHNfZHZfcGNhLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShwbHMpDQogICAgcGxzLmR2LnBjYSA8LSByZWFkUkRTKCJtb2RlbHMvcGxzX2R2X3BjYS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KcGxzLmR2LnBjYQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5wbHMuZHYucGNhIDwtIHByZWRpY3QocGxzLmR2LnBjYSwgdmFsaWQuZHZbLCAtYygxLCBoYy5kdildKQ0KY29uZnVzaW9uTWF0cml4KHByZWQucGxzLmR2LnBjYSwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMjIEtlcm5hbCBQTFMNCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMva3Bsc19kdi5SZHMiKSkgew0KICAgIHNldC5zZWVkKDEwNTYpDQogICAga3Bscy5kdiA8LSB0cmFpbigNCiAgICAgICAgUGFydHkgfiAuLA0KICAgICAgICBkYXRhID0gdHJhaW4uZHZbLCAtYygxLCBoYy5kdildLA0KICAgICAgICBtZXRob2QgPSAia2VybmVscGxzIiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBwbHNHcmlkLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIikNCiAgICApDQogICAgc2F2ZVJEUyhrcGxzLmR2LCAibW9kZWxzL2twbHNfZHYuUmRzIikNCiAgICANCn0gZWxzZSB7DQogICAgbGlicmFyeShwbHMpDQogICAga3Bscy5kdiA8LSByZWFkUkRTKCJtb2RlbHMva3Bsc19kdi5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0Ka3Bscy5kdg0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5rcGxzLmR2IDwtIHByZWRpY3Qoa3Bscy5kdiwgdmFsaWQuZHZbLCAtYygxLCBoYy5kdildKQ0KY29uZnVzaW9uTWF0cml4KHByZWQua3Bscy5kdiwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMgUGVuYWxpemVkIE1vZGVscw0KDQpgYGB7cn0NCmdsbW5HcmlkIDwtIGV4cGFuZC5ncmlkKA0KICAgIC5hbHBoYSA9IGMoMCwgMC4xLCAwLjIsIDAuNCwgMC42LCAwLjgsIDEpLCANCiAgICAubGFtYmRhID0gc2VxKDAuMSwgMC4yLCBsZW5ndGggPSA0MCkNCikNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9nbG1uZXRfZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIGdsbW5ldC5kdiA8LSB0cmFpbigNCiAgICAgICAgIyBQYXJ0eSB+IC4sDQogICAgICAgICMgZGF0YSA9IHRyYWluLmR2WywgLWMoMSwgaGMuZHYpXSwNCiAgICAgICAgeCA9IHRyYWluLmRhdGFbLCBuYW1lcyhwdmFsKV0sDQogICAgICAgIHkgPSB0cmFpbi5kYXRhJFBhcnR5LA0KICAgICAgICBtZXRob2QgPSAiZ2xtbmV0IiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBnbG1uR3JpZCwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoIm56diIsICJjZW50ZXIiLCAic2NhbGUiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGdsbW5ldC5kdiwgIm1vZGVscy9nbG1uZXRfZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KGdsbW5ldCkNCiAgICBnbG1uZXQuZHYgPC0gcmVhZFJEUygibW9kZWxzL2dsbW5ldF9kdi5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KZ2xtbmV0LmR2DQpgYGANCg0KYGBge3J9DQojIHByZWQuZ2xtbmV0LmR2IDwtIHByZWRpY3QoZ2xtbmV0LmR2LCB2YWxpZC5kdlssIC1jKDEsIGhjLmR2KV0pDQpwcmVkLmdsbW5ldC5kdiA8LSBwcmVkaWN0KGdsbW5ldC5kdiwgdmFsaWQuZGF0YVssIG5hbWVzKHB2YWwpXSkNCmNvbmZ1c2lvbk1hdHJpeChwcmVkLmdsbW5ldC5kdiwgdmFsaWQuZGF0YSRQYXJ0eSkNCmBgYA0KDQojIyMgUENBDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL2dsbW5ldF9kdl9wY2EuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIGdsbW5ldC5kdi5wY2EgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLmR2WywgLWMoMSwgaGMuZHYpXSwNCiAgICAgICAgbWV0aG9kID0gImdsbW5ldCIsDQogICAgICAgIHRyQ29udHJvbCA9IHRyQ3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVHcmlkID0gZXhwYW5kLmdyaWQoLmFscGhhID0gMC4xLCAubGFtYmRhID0gMC4xKSwNCiAgICAgICAgcHJlUHJvY2VzcyA9IGMoIm56diIsICJwY2EiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGdsbW5ldC5kdi5wY2EsICJtb2RlbHMvZ2xtbmV0X2R2X3BjYS5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkoZ2xtbmV0KQ0KICAgIGdsbW5ldC5kdi5wY2EgPC0gcmVhZFJEUygibW9kZWxzL2dsbW5ldF9kdl9wY2EuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCmdsbW5ldC5kdi5wY2ENCmBgYA0KDQpgYGB7cn0NCnByZWQuZ2xtbmV0LmR2LnBjYSA8LSBwcmVkaWN0KGdsbW5ldC5kdi5wY2EsIHZhbGlkLmR2WywgLWMoMSwgaGMuZHYpXSkNCmNvbmZ1c2lvbk1hdHJpeChwcmVkLmdsbW5ldC5kdi5wY2EsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCmBgYHtyfQ0KdmFySW1wKGdsbW5ldC5kdi5wY2EpDQpgYGANCg0KIyMjIE1DQQ0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9nbG1uZXRfbWNhLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBnbG1uZXQubWNhIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgICMgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICBkYXRhID0gdHJhaW4ubWNhWywgLTFdLA0KICAgICAgICBtZXRob2QgPSAiZ2xtbmV0IiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgdHVuZUdyaWQgPSBleHBhbmQuZ3JpZCguYWxwaGEgPSAwLjEsIC5sYW1iZGEgPSAwLjAwNDQ5NDQpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMoZ2xtbmV0Lm1jYSwgIm1vZGVscy9nbG1uZXRfbWNhLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShnbG1uZXQpDQogICAgZ2xtbmV0Lm1jYSA8LSByZWFkUkRTKCJtb2RlbHMvZ2xtbmV0X21jYS5SZHMiKQ0KfQ0KYGBgDQoNCmBgYHtyfQ0KZ2xtbmV0Lm1jYQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZC5nbG1uZXQubWNhIDwtIHByZWRpY3QoZ2xtbmV0Lm1jYSwgdmFsaWQubWNhKQ0KY29uZnVzaW9uTWF0cml4KHByZWQuZ2xtbmV0Lm1jYSwgdmFsaWQucGFydHkpDQpgYGANCg0KYGBge3J9DQp2YXJJbXAoZ2xtbmV0Lm1jYSkNCmBgYA0KDQojIyBOZWFyZXN0IFNocnVua2VuIENlbnRyb2lkcw0KDQpgYGB7cn0NCm5zY0dyaWQgPC0gZGF0YS5mcmFtZSgudGhyZXNob2xkID0gMDoyNSkNCmBgYA0KDQpgYGB7cn0NCmlmICghZmlsZS5leGlzdHMoIm1vZGVscy9uc2NfZHYuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIG5zYy5kdiA8LSB0cmFpbigNCiAgICAgICAgIyBQYXJ0eSB+IC4sDQogICAgICAgICMgZGF0YSA9IHRyYWluLmR2WywgLTFdLA0KICAgICAgICB4ID0gdHJhaW4uZGF0YVssIG5hbWVzKHB2YWwpXSwNCiAgICAgICAgeSA9IHRyYWluLmRhdGEkUGFydHksDQogICAgICAgIG1ldGhvZCA9ICJwYW0iLA0KICAgICAgICB0ckNvbnRyb2wgPSB0ckN0cmwsDQogICAgICAgIG1ldHJpYyA9ICJST0MiLA0KICAgICAgICB0dW5lR3JpZCA9IG5zY0dyaWQsDQogICAgICAgIHByZVByb2Nlc3MgPSAibnp2Ig0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKG5zYy5kdiwgIm1vZGVscy9uc2NfZHYuUmRzIikNCg0KfSBlbHNlIHsNCiAgICBsaWJyYXJ5KHBhbXIpDQogICAgbnNjLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9uc2NfZHYuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCm5zYy5kdg0KYGBgDQoNCmBgYHtyfQ0KIyBwcmVkLm5zYyA8LSBwcmVkaWN0KG5zYy5kdiwgdmFsaWQuZHZbLCAtMV0pDQpwcmVkLm5zYyA8LSBwcmVkaWN0KG5zYy5kdiwgdmFsaWQuZGF0YVssIG5hbWVzKHB2YWwpXSkNCmNvbmZ1c2lvbk1hdHJpeChwcmVkLm5zYywgdmFsaWQuZGF0YSRQYXJ0eSkNCmBgYA0KDQojIyMgTUNBDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL25zY19tY2EuUmRzIikpIHsNCiAgICBzZXQuc2VlZCgxMDU2KQ0KICAgIG5zYy5tY2EgPC0gdHJhaW4oDQogICAgICAgIFBhcnR5IH4gLiwNCiAgICAgICAgZGF0YSA9IHRyYWluLm1jYVssIC0xXSwNCiAgICAgICAgbWV0aG9kID0gInBhbSIsDQogICAgICAgIHRyQ29udHJvbCA9IHRyQ3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVHcmlkID0gbnNjR3JpZA0KICAgICAgICAjIHByZVByb2Nlc3MgPSBjKCJjZW50ZXIiLCAic2NhbGUiKQ0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKG5zYy5tY2EsICJtb2RlbHMvbnNjX21jYS5SZHMiKQ0KDQp9IGVsc2Ugew0KICAgIGxpYnJhcnkobnNjKQ0KICAgIG5zYy5tY2EgPC0gcmVhZFJEUygibW9kZWxzL25zY19tY2EuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCm5zYy5tY2ENCmBgYA0KDQpgYGB7cn0NCnByZWQubnNjLm1jYSA8LSBwcmVkaWN0KG5zYy5tY2EsIHZhbGlkLm1jYSkNCmNvbmZ1c2lvbk1hdHJpeChwcmVkLm5zYy5tY2EsIHZhbGlkLnBhcnR5KQ0KYGBgDQoNCiMjIExvZ2lzdGljIFJlZ3Jlc3Npb24NCg0KYGBge3J9DQppZiAoIWZpbGUuZXhpc3RzKCJtb2RlbHMvZ2xtLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBtb2QuZ2xtIDwtIHRyYWluKA0KICAgICAgICBQYXJ0eSB+IC4sDQogICAgICAgIGRhdGEgPSB0cmFpbi5wY2FbLCAtMV0sDQogICAgICAgICMgZGF0YSA9IHRyYWluLmRhdGFbLCAtYygxLCBoYyldLA0KICAgICAgICAjIHggPSB0cmFpbi5kYXRhWywgbmFtZXMocHZhbCldLA0KICAgICAgICAjIHkgPSB0cmFpbi5kYXRhJFBhcnR5LA0KICAgICAgICBtZXRob2QgPSAiZ2xtIiwNCiAgICAgICAgdHJDb250cm9sID0gdHJDdHJsLA0KICAgICAgICBtZXRyaWMgPSAiUk9DIiwNCiAgICAgICAgIyB0dW5lTGVuZ3RoID0gMTAsDQogICAgICAgICMgdHVuZUdyaWQgPSBuc2NHcmlkLA0KICAgICAgICBwcmVQcm9jZXNzID0gYygiY2VudGVyIiwgInNjYWxlIiwgIm56diIpDQogICAgKQ0KICAgIA0KICAgIHNhdmVSRFMobW9kLmdsbSwgIm1vZGVscy9nbG0uUmRzIikNCg0KfSBlbHNlIHsNCiAgICBtb2QuZ2xtIDwtIHJlYWRSRFMoIm1vZGVscy9nbG0uUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCiMgcHJlZC5nbG0gPC0gcHJlZGljdChtb2QuZ2xtLCB2YWxpZC5kYXRhWywgLWMoMSwgaGMpXSkNCiMgcHJlZC5nbG0gPC0gcHJlZGljdChtb2QuZ2xtLCB2YWxpZC5kYXRhWywgbmFtZXMocHZhbCldKQ0KcHJlZC5nbG0gPC0gcHJlZGljdChtb2QuZ2xtLCB2YWxpZC5wY2FbLCAtMV0pDQpjb25mdXNpb25NYXRyaXgocHJlZC5nbG0sIHZhbGlkLmRhdGEkUGFydHkpDQpgYGANCg0KIyMgQmluYXJ5IERpc2NyaW1pbmFudCBBbmFseXNpcw0KDQpgYGB7cn0NCiMgbnNjR3JpZCA8LSBkYXRhLmZyYW1lKC50aHJlc2hvbGQgPSAwOjI1KQ0KYGBgDQoNCmBgYHtyfQ0KaWYgKCFmaWxlLmV4aXN0cygibW9kZWxzL2JpbmRhLlJkcyIpKSB7DQogICAgc2V0LnNlZWQoMTA1NikNCiAgICBiaW5kYSA8LSB0cmFpbigNCiAgICAgICAgIyBQYXJ0eSB+IC4sDQogICAgICAgICMgZGF0YSA9IHRyYWluLmRhdGFbLCAtYygxLCBoYywgMzM0OjMzNyldLA0KICAgICAgICB4ID0gdHJhaW4uZGF0YVssIG5hbWVzKHB2YWwpXSwNCiAgICAgICAgeSA9IHRyYWluLmRhdGEkUGFydHksDQogICAgICAgIG1ldGhvZCA9ICJiaW5kYSIsDQogICAgICAgIHRyQ29udHJvbCA9IHRyQ3RybCwNCiAgICAgICAgbWV0cmljID0gIlJPQyIsDQogICAgICAgIHR1bmVMZW5ndGggPSAxMCwNCiAgICAgICAgIyB0dW5lR3JpZCA9IG5zY0dyaWQsDQogICAgICAgIHByZVByb2Nlc3MgPSAibnp2Ig0KICAgICkNCiAgICANCiAgICBzYXZlUkRTKGJpbmRhLCAibW9kZWxzL2JpbmRhLlJkcyIpDQoNCn0gZWxzZSB7DQogICAgbGlicmFyeShiaW5kYSkNCiAgICBiaW5kYSA8LSByZWFkUkRTKCJtb2RlbHMvYmluZGEuUmRzIikNCn0NCmBgYA0KDQpgYGB7cn0NCmJpbmRhDQpgYGANCg0KYGBge3J9DQojIHByZWQuYmluZGEgPC0gcHJlZGljdChiaW5kYSwgdmFsaWQuZGF0YVssIC1jKDEsIGhjLCAzMzQ6MzM4KV0pDQpwcmVkLmJpbmRhIDwtIHByZWRpY3QoYmluZGEsIHZhbGlkLmRhdGFbLCBuYW1lcyhwdmFsKV0pDQpjb25mdXNpb25NYXRyaXgocHJlZC5iaW5kYSwgdmFsaWQuZGF0YSRQYXJ0eSkNCmBgYA0KDQoNCiMjIENvbXBhcmUgTW9kZWxzDQoNCmBgYHtyfQ0KY29tcGFyZV9tb2RlbHMobGRhLm1jYSwgZ2xtbmV0Lm1jYSkNCmBgYA0KDQpgYGB7cn0NCnJlc2FtcHMgPC0gcmVzYW1wbGVzKGxpc3QobGRhLnBjYSA9IGxkYS5wY2EsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAjIGxkYS5tY2EgPSBsZGEubWNhLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgcGxzID0gcGxzLmR2LA0KICAgICAgICAgICAgICAgICAgICAgICAgICAjIHBscy5wY2EgPSBwbHMuZHYucGNhLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAjIGdsbW5ldC5kdiA9IGdsbW5ldC5kdiwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICMgZ2xtbmV0LnBjYSA9IGdsbW5ldC5kdi5wY2EsDQogICAgICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldC5tY2EgPSBnbG1uZXQubWNhLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgbnNjLmR2ID0gbnNjLmR2KSkNCm1vZGVsQ29yKHJlc2FtcHMsIG1ldHJpYyA9ICJST0MiKQ0KYGBgDQoNCmBgYHtyfQ0KcmVzYW1wcyA8LSByZXNhbXBsZXMobGlzdChnbG0gPSBtb2QuZ2xtLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgcGxzID0gcGxzLmR2LA0KICAgICAgICAgICAgICAgICAgICAgICAgICBiaW5kYSA9IGJpbmRhLA0KICAgICAgICAgICAgICAgICAgICAgICAgICBnbG1uZXQgPSBnbG1uZXQuZHYsDQogICAgICAgICAgICAgICAgICAgICAgICAgIG5zYyA9IG5zYy5kdikpDQptb2RlbENvcihyZXNhbXBzLCBtZXRyaWMgPSAiUk9DIikNCmBgYA0KDQoNCiMjIExpbmVhciBNb2RlbCBBdmVyYWdpbmcNCg0KYGBge3J9DQojIHZhbGlkLmF2ZyA8LSBkYXRhX2ZyYW1lKGxkYSA9IHByZWQubGRhLnBjYSwNCiMgICAgICAgICAgICAgICAgICAgICAgICAgcGxzID0gcHJlZC5wbHMuZHYsDQojICAgICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldCA9IHByZWQuZ2xtbmV0Lm1jYSwNCiMgICAgICAgICAgICAgICAgICAgICAgICAgbnNjID0gcHJlZC5uc2MpDQoNCnZhbGlkLmF2ZyA8LSBkYXRhX2ZyYW1lKGdsbSA9IHByZWQuZ2xtLA0KICAgICAgICAgICAgICAgICAgICAgICAgcGxzID0gcHJlZC5wbHMuZHYsDQogICAgICAgICAgICAgICAgICAgICAgICBiaW5kYSA9IHByZWQuYmluZGEsDQogICAgICAgICAgICAgICAgICAgICAgICBnbG1uZXQgPSBwcmVkLmdsbW5ldC5kdiwNCiAgICAgICAgICAgICAgICAgICAgICAgIG5zYyA9IHByZWQubnNjKQ0KDQpsaW5lYXIubW9kLmF2ZyA8LSB0cmFpbigNCiAgICB4ID0gdmFsaWQuYXZnLA0KICAgIHkgPSB2YWxpZC5kYXRhJFBhcnR5LCANCiAgICBtZXRob2QgPSAicmYiDQopDQoNCnByZWQuYXZnLnZhbGlkIDwtIHByZWRpY3QobGluZWFyLm1vZC5hdmcsIHZhbGlkLmF2ZykNCmNvbmZ1c2lvbk1hdHJpeChwcmVkLmF2Zy52YWxpZCwgdmFsaWQuZGF0YSRQYXJ0eSkNCmBgYA0KDQpgYGB7cn0NCmxpbmVhci5tb2QuYXZnDQpgYGANCg0KIyMgVGVzdCBTZXQgU3VibWlzc2lvbg0KDQpgYGB7cn0NCnByZWQudGVzdC5sZGEgPC0gcHJlZGljdChsZGEucGNhLCB0ZXN0LmR2WywgLTFdKQ0KcHJlZC50ZXN0LnBscyA8LSBwcmVkaWN0KHBscy5kdiwgdGVzdC5kdlssIC1jKDEsIGhjLmR2KV0pDQpwcmVkLnRlc3QuZ2xtbmV0IDwtIHByZWRpY3QoZ2xtbmV0Lm1jYSwgdGVzdC5tY2EpDQpwcmVkLnRlc3QubnNjIDwtIHByZWRpY3QobnNjLmR2LCB0ZXN0LmR2WywgLTFdKQ0KDQp0ZXN0LmF2ZyA8LSBkYXRhX2ZyYW1lKGxkYSA9IHByZWQudGVzdC5sZGEsDQogICAgICAgICAgICAgICAgICAgICAgIHBscyA9IHByZWQudGVzdC5wbHMsDQogICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldCA9IHByZWQudGVzdC5nbG1uZXQsDQogICAgICAgICAgICAgICAgICAgICAgIG5zYyA9IHByZWQudGVzdC5uc2MpDQoNCnByZWQubGluZWFyLnRlc3QgPC0gcHJlZGljdChsaW5lYXIubW9kLmF2ZywgdGVzdC5hdmcpDQp0ZXN0X3N1Ym1pc3Npb24ocHJlZC5saW5lYXIudGVzdCkNCmBgYA0KDQpgYGB7cn0NCnByZWQudGVzdC5nbG0gPC0gcHJlZGljdChtb2QuZ2xtLCB0ZXN0LmRhdGFbLCBuYW1lcyhwdmFsKV0pDQpwcmVkLnRlc3QucGxzIDwtIHByZWRpY3QocGxzLmR2LCB0ZXN0LmRhdGFbLCBuYW1lcyhwdmFsKV0pDQpwcmVkLnRlc3QuZ2xtbmV0IDwtIHByZWRpY3QoZ2xtbmV0LmR2LCB0ZXN0LmRhdGFbLCBuYW1lcyhwdmFsKV0pDQpwcmVkLnRlc3QubnNjIDwtIHByZWRpY3QobnNjLmR2LCB0ZXN0LmRhdGFbLCBuYW1lcyhwdmFsKV0pDQpwcmVkLnRlc3QuYmluZGEgPC0gcHJlZGljdChiaW5kYSwgdGVzdC5kYXRhWywgbmFtZXMocHZhbCldKQ0KDQp0ZXN0LmF2ZyA8LSBkYXRhX2ZyYW1lKGdsbSA9IHByZWQudGVzdC5nbG0sDQogICAgICAgICAgICAgICAgICAgICAgICBwbHMgPSBwcmVkLnRlc3QucGxzLA0KICAgICAgICAgICAgICAgICAgICAgICAgYmluZGEgPSBwcmVkLnRlc3QuYmluZGEsDQogICAgICAgICAgICAgICAgICAgICAgICBnbG1uZXQgPSBwcmVkLnRlc3QuZ2xtbmV0LA0KICAgICAgICAgICAgICAgICAgICAgICAgbnNjID0gcHJlZC50ZXN0Lm5zYykNCg0KcHJlZC5saW5lYXIudGVzdCA8LSBwcmVkaWN0KGxpbmVhci5tb2QuYXZnLCB0ZXN0LmF2ZykNCnRlc3Rfc3VibWlzc2lvbihwcmVkLmxpbmVhci50ZXN0KQ0KYGBgDQo=</div>
 
 
 

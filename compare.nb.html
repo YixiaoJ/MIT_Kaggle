@@ -166,6 +166,7 @@ pred.mars &lt;- predict(mars.dv, valid.dv[, -1])
 pred.c50.set &lt;- predict(c50.set, valid.set[, -1])
 pred.svm.dv &lt;- predict(svm.dv, valid.dv[, -1])
 pred.nnet.dv &lt;- predict(nnet.dv, valid.dv[, -1])
+
 valid.avg &lt;- data_frame(xgb = pred.xgbL.dv,
                         rf = pred.rf.set,
                         mars = pred.mars,
@@ -175,42 +176,16 @@ valid.avg &lt;- data_frame(xgb = pred.xgbL.dv,
                         pls = pred.pls.dv,
                         glmnet = pred.glmnet.mca,
                         nsc = pred.nsc)
+
 mix.mod.avg &lt;- train(
     x = valid.avg,
     y = valid.party, 
     method = &quot;rf&quot;
 )
+
 pred.mix.avg.valid &lt;- predict(mix.mod.avg, valid.avg)
 confusionMatrix(pred.mix.avg.valid, valid.party)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgICBSZWZlcmVuY2VcblByZWRpY3Rpb24gICBEZW1vY3JhdCBSZXB1YmxpY2FuXG4gIERlbW9jcmF0ICAgICAgICA0NTMgICAgICAgIDIxMVxuICBSZXB1YmxpY2FuICAgICAgMTM3ICAgICAgICAzMTJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgICAgQWNjdXJhY3kgOiAwLjY4NzMgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjY1OTIsIDAuNzE0NSlcbiAgICBObyBJbmZvcm1hdGlvbiBSYXRlIDogMC41MzAxICAgICAgICAgIFxuICAgIFAtVmFsdWUgW0FjYyA+IE5JUl0gOiA8IDIuMmUtMTYgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgIEthcHBhIDogMC4zNjczICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiA5LjEwOGUtMDUgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIFNlbnNpdGl2aXR5IDogMC43Njc4ICAgICAgICAgIFxuICAgICAgICAgICAgU3BlY2lmaWNpdHkgOiAwLjU5NjYgICAgICAgICAgXG4gICAgICAgICBQb3MgUHJlZCBWYWx1ZSA6IDAuNjgyMiAgICAgICAgICBcbiAgICAgICAgIE5lZyBQcmVkIFZhbHVlIDogMC42OTQ5ICAgICAgICAgIFxuICAgICAgICAgICAgIFByZXZhbGVuY2UgOiAwLjUzMDEgICAgICAgICAgXG4gICAgICAgICBEZXRlY3Rpb24gUmF0ZSA6IDAuNDA3MCAgICAgICAgICBcbiAgIERldGVjdGlvbiBQcmV2YWxlbmNlIDogMC41OTY2ICAgICAgICAgIFxuICAgICAgQmFsYW5jZWQgQWNjdXJhY3kgOiAwLjY4MjIgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAnUG9zaXRpdmUnIENsYXNzIDogRGVtb2NyYXQgICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   Democrat Republican
-  Democrat        453        211
-  Republican      137        312
-                                          
-               Accuracy : 0.6873          
-                 95% CI : (0.6592, 0.7145)
-    No Information Rate : 0.5301          
-    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
-                                          
-                  Kappa : 0.3673          
- Mcnemar's Test P-Value : 9.108e-05       
-                                          
-            Sensitivity : 0.7678          
-            Specificity : 0.5966          
-         Pos Pred Value : 0.6822          
-         Neg Pred Value : 0.6949          
-             Prevalence : 0.5301          
-         Detection Rate : 0.4070          
-   Detection Prevalence : 0.5966          
-      Balanced Accuracy : 0.6822          
-                                          
-       'Positive' Class : Democrat        
-                                          </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="test-set-submission" class="section level2">
@@ -227,10 +202,7 @@ pred.test.lda &lt;- predict(lda.pca, test.dv[, -1])
 pred.test.pls &lt;- predict(pls.dv, test.dv[, -c(1, hc.dv)])
 pred.test.glmnet &lt;- predict(glmnet.mca, test.mca)
 pred.test.nsc &lt;- predict(nsc.dv, test.dv[, -1])
-test.avg &lt;- data_frame(lda = pred.test.lda,
-                       pls = pred.test.pls,
-                       glmnet = pred.test.glmnet,
-                       nsc = pred.test.nsc)
+
 test.avg &lt;- data_frame(xgb = pred.test.xgbL,
                        rf = pred.test.rf,
                        mars = pred.test.mars,
@@ -240,6 +212,7 @@ test.avg &lt;- data_frame(xgb = pred.test.xgbL,
                        pls = pred.test.pls,
                        glmnet = pred.test.glmnet,
                        nsc = pred.test.nsc)
+
 pred.mix.test &lt;- predict(mix.mod.avg, test.avg)
 test_submission(pred.mix.test)</code></pre>
 <!-- rnb-source-end -->
@@ -248,7 +221,7 @@ test_submission(pred.mix.test)</code></pre>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNvbXBhcmUgTW9kZWxzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQpzb3VyY2UoIjItbW9kZWxfdGVzdHMuUiIpDQpgYGANCg0KYGBge3J9DQpsZGEucGNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfcGNhLlJkcyIpDQpsZGEuaWNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfaWNhLlJkcyIpDQpsZGEubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfbWNhLlJkcyIpDQoNCmxpYnJhcnkocGxzKQ0KcGxzLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9wbHNfZHYuUmRzIikNCnBscy5kdi5wY2EgPC0gcmVhZFJEUygibW9kZWxzL3Bsc19kdl9wY2EuUmRzIikNCnBscy5wdmFsLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9wbHNfcHZhbF9kdi5SZHMiKQ0KDQpsaWJyYXJ5KGdsbW5ldCkNCmdsbW5ldC5kdiA8LSByZWFkUkRTKCJtb2RlbHMvZ2xtbmV0X2R2LlJkcyIpDQpnbG1uZXQuZHYucGNhIDwtIHJlYWRSRFMoIm1vZGVscy9nbG1uZXRfZHZfcGNhLlJkcyIpDQpnbG1uZXQubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9nbG1uZXRfbWNhLlJkcyIpDQoNCmxpYnJhcnkocGFtcikNCm5zYy5kdiA8LSByZWFkUkRTKCJtb2RlbHMvbnNjX2R2LlJkcyIpDQpuc2MubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9uc2NfbWNhLlJkcyIpDQoNCmxpYnJhcnkoZWFydGgpDQptYXJzLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9tYXJzX2R2LlJkcyIpDQoNCmxpYnJhcnkoa2VybmxhYikNCnN2bS5kdiA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtX2R2LlJkcyIpDQpzdm1MLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9zdm1fZHYuUmRzIikNCg0Kbm5ldC5kdiA8LSByZWFkUkRTKCJtb2RlbHMvbm5ldF9kdi5SZHMiKQ0KDQpsaWJyYXJ5KHJhbmRvbUZvcmVzdCkNCnJmLnNldCA8LSByZWFkUkRTKCJtb2RlbHMvcmZfc2V0LlJkcyIpDQpyZi5kdiA8LSByZWFkUkRTKCJtb2RlbHMvcmZfZHYuUmRzIikNCg0KbGlicmFyeShyYW5nZXIpDQpyYW5nZXIuc2V0IDwtIHJlYWRSRFMoIm1vZGVscy9yYW5nZXJfc2V0LlJkcyIpDQpyYW5nZXIuZHYgPC0gcmVhZFJEUygibW9kZWxzL3Jhbmdlcl9kdi5SZHMiKQ0KDQpsaWJyYXJ5KEM1MCkNCmM1MC5kYXRhIDwtIHJlYWRSRFMoIm1vZGVscy9jNTBfZGF0YS5SZHMiKQ0KYzUwLnNldCA8LSByZWFkUkRTKCJtb2RlbHMvYzUwX3NldC5SZHMiKQ0KYzUwLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9jNTBfZHYuUmRzIikNCg0KbGlicmFyeSh4Z2Jvb3N0KQ0KeGdiLmR2IDwtIHJlYWRSRFMoIm1vZGVscy94Z2JfZHYuUmRzIikNCnhnYkwuZHYgPC0gcmVhZFJEUygibW9kZWxzL3hnYkxfZHYuUmRzIikNCg0KbGlicmFyeShnYm0pDQpnYm0uc2V0IDwtIHJlYWRSRFMoIm1vZGVscy9nYm1fc2V0LlJkcyIpDQpnYm0uZHYgPC0gcmVhZFJEUygibW9kZWxzL2dibV9kdi5SZHMiKQ0KYGBgDQoNCmBgYHtyfQ0KcmVzYW1wcyA8LSByZXNhbXBsZXMobGlzdChtYXJzID0gbWFycy5kdiwgc3ZtID0gc3ZtLmR2LCBzdm1MID0gc3ZtTC5kdiwgbm5ldCA9IG5uZXQuZHYsIHJmc2V0ID0gcmYuc2V0LCByZmR2ID0gcmYuZHYsIHJhbmdlcnNldCA9IHJhbmdlci5zZXQsIHJhbmdlcmR2ID0gcmFuZ2VyLmR2LCBjNTBkYXRhID0gYzUwLmRhdGEsIGM1MHNldCA9IGM1MC5zZXQsIGM1MGR2ID0gYzUwLmR2LCB4Z2IgPSB4Z2IuZHYsIHhnYkwgPSB4Z2JMLmR2LCBnYm1zZXQgPSBnYm0uc2V0LCBnYm1kdiA9IGdibS5kdikpDQptb2RlbENvcihyZXNhbXBzLCBtZXRyaWMgPSAiUk9DIikNCmBgYA0KDQpgYGB7cn0NCnByZWQueGdiTC5kdiA8LSBwcmVkaWN0KHhnYkwuZHYsIHZhbGlkLmR2WywgLTFdKQ0KcHJlZC5yZi5zZXQgPC0gcHJlZGljdChyZi5zZXQsIHZhbGlkLnNldFssIC0xXSkNCnByZWQubWFycyA8LSBwcmVkaWN0KG1hcnMuZHYsIHZhbGlkLmR2WywgLTFdKQ0KcHJlZC5jNTAuc2V0IDwtIHByZWRpY3QoYzUwLnNldCwgdmFsaWQuc2V0WywgLTFdKQ0KcHJlZC5zdm0uZHYgPC0gcHJlZGljdChzdm0uZHYsIHZhbGlkLmR2WywgLTFdKQ0KcHJlZC5ubmV0LmR2IDwtIHByZWRpY3Qobm5ldC5kdiwgdmFsaWQuZHZbLCAtMV0pDQoNCnZhbGlkLmF2ZyA8LSBkYXRhX2ZyYW1lKHhnYiA9IHByZWQueGdiTC5kdiwNCiAgICAgICAgICAgICAgICAgICAgICAgIHJmID0gcHJlZC5yZi5zZXQsDQogICAgICAgICAgICAgICAgICAgICAgICBtYXJzID0gcHJlZC5tYXJzLA0KICAgICAgICAgICAgICAgICAgICAgICAgYzUwID0gcHJlZC5jNTAuc2V0LA0KICAgICAgICAgICAgICAgICAgICAgICAgc3ZtID0gcHJlZC5zdm0uZHYsDQogICAgICAgICAgICAgICAgICAgICAgICBsZGEgPSBwcmVkLmxkYS5wY2EsDQogICAgICAgICAgICAgICAgICAgICAgICBwbHMgPSBwcmVkLnBscy5kdiwNCiAgICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldCA9IHByZWQuZ2xtbmV0Lm1jYSwNCiAgICAgICAgICAgICAgICAgICAgICAgIG5zYyA9IHByZWQubnNjKQ0KDQptaXgubW9kLmF2ZyA8LSB0cmFpbigNCiAgICB4ID0gdmFsaWQuYXZnLA0KICAgIHkgPSB2YWxpZC5wYXJ0eSwgDQogICAgbWV0aG9kID0gInJmIg0KKQ0KDQpwcmVkLm1peC5hdmcudmFsaWQgPC0gcHJlZGljdChtaXgubW9kLmF2ZywgdmFsaWQuYXZnKQ0KY29uZnVzaW9uTWF0cml4KHByZWQubWl4LmF2Zy52YWxpZCwgdmFsaWQucGFydHkpDQpgYGANCg0KIyMgVGVzdCBTZXQgU3VibWlzc2lvbg0KDQpgYGB7cn0NCnByZWQudGVzdC54Z2JMIDwtIHByZWRpY3QoeGdiTC5kdiwgdGVzdC5kdlssIC0xXSkNCnByZWQudGVzdC5yZiA8LSBwcmVkaWN0KHJmLnNldCwgdGVzdC5zZXRbLCAtMV0pDQpwcmVkLnRlc3QubWFycyA8LSBwcmVkaWN0KG1hcnMuZHYsIHRlc3QuZHZbLCAtMV0pDQpwcmVkLnRlc3QuYzUwIDwtIHByZWRpY3QoYzUwLnNldCwgdGVzdC5zZXRbLCAtMV0pDQpwcmVkLnRlc3Quc3ZtIDwtIHByZWRpY3Qoc3ZtLmR2LCB0ZXN0LmR2WywgLTFdKQ0KcHJlZC50ZXN0LmxkYSA8LSBwcmVkaWN0KGxkYS5wY2EsIHRlc3QuZHZbLCAtMV0pDQpwcmVkLnRlc3QucGxzIDwtIHByZWRpY3QocGxzLmR2LCB0ZXN0LmR2WywgLWMoMSwgaGMuZHYpXSkNCnByZWQudGVzdC5nbG1uZXQgPC0gcHJlZGljdChnbG1uZXQubWNhLCB0ZXN0Lm1jYSkNCnByZWQudGVzdC5uc2MgPC0gcHJlZGljdChuc2MuZHYsIHRlc3QuZHZbLCAtMV0pDQoNCnRlc3QuYXZnIDwtIGRhdGFfZnJhbWUoeGdiID0gcHJlZC50ZXN0LnhnYkwsDQogICAgICAgICAgICAgICAgICAgICAgIHJmID0gcHJlZC50ZXN0LnJmLA0KICAgICAgICAgICAgICAgICAgICAgICBtYXJzID0gcHJlZC50ZXN0Lm1hcnMsDQogICAgICAgICAgICAgICAgICAgICAgIGM1MCA9IHByZWQudGVzdC5jNTAsDQogICAgICAgICAgICAgICAgICAgICAgIHN2bSA9IHByZWQudGVzdC5zdm0sDQogICAgICAgICAgICAgICAgICAgICAgIGxkYSA9IHByZWQudGVzdC5sZGEsDQogICAgICAgICAgICAgICAgICAgICAgIHBscyA9IHByZWQudGVzdC5wbHMsDQogICAgICAgICAgICAgICAgICAgICAgIGdsbW5ldCA9IHByZWQudGVzdC5nbG1uZXQsDQogICAgICAgICAgICAgICAgICAgICAgIG5zYyA9IHByZWQudGVzdC5uc2MpDQoNCnByZWQubWl4LnRlc3QgPC0gcHJlZGljdChtaXgubW9kLmF2ZywgdGVzdC5hdmcpDQp0ZXN0X3N1Ym1pc3Npb24ocHJlZC5taXgudGVzdCkNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNvbXBhcmUgTW9kZWxzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQpzb3VyY2UoIjItbW9kZWxfdGVzdHMuUiIpDQpgYGANCg0KYGBge3J9DQpsZGEucGNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfcGNhLlJkcyIpDQpsZGEuaWNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfaWNhLlJkcyIpDQpsZGEubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9sZGFfbWNhLlJkcyIpDQoNCmxpYnJhcnkocGxzKQ0KcGxzLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9wbHNfZHYuUmRzIikNCnBscy5kdi5wY2EgPC0gcmVhZFJEUygibW9kZWxzL3Bsc19kdl9wY2EuUmRzIikNCnBscy5wdmFsLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9wbHNfcHZhbF9kdi5SZHMiKQ0KDQpsaWJyYXJ5KGdsbW5ldCkNCmdsbW5ldC5kdiA8LSByZWFkUkRTKCJtb2RlbHMvZ2xtbmV0X2R2LlJkcyIpDQpnbG1uZXQuZHYucGNhIDwtIHJlYWRSRFMoIm1vZGVscy9nbG1uZXRfZHZfcGNhLlJkcyIpDQpnbG1uZXQubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9nbG1uZXRfbWNhLlJkcyIpDQoNCmxpYnJhcnkocGFtcikNCm5zYy5kdiA8LSByZWFkUkRTKCJtb2RlbHMvbnNjX2R2LlJkcyIpDQpuc2MubWNhIDwtIHJlYWRSRFMoIm1vZGVscy9uc2NfbWNhLlJkcyIpDQoNCmxpYnJhcnkoZWFydGgpDQptYXJzLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9tYXJzX2R2LlJkcyIpDQoNCmxpYnJhcnkoa2VybmxhYikNCnN2bS5kdiA8LSByZWFkUkRTKCJtb2RlbHMvc3ZtX2R2LlJkcyIpDQpzdm1MLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9zdm1fZHYuUmRzIikNCg0Kbm5ldC5kdiA8LSByZWFkUkRTKCJtb2RlbHMvbm5ldF9kdi5SZHMiKQ0KDQpsaWJyYXJ5KHJhbmRvbUZvcmVzdCkNCnJmLnNldCA8LSByZWFkUkRTKCJtb2RlbHMvcmZfc2V0LlJkcyIpDQpyZi5kdiA8LSByZWFkUkRTKCJtb2RlbHMvcmZfZHYuUmRzIikNCg0KbGlicmFyeShyYW5nZXIpDQpyYW5nZXIuc2V0IDwtIHJlYWRSRFMoIm1vZGVscy9yYW5nZXJfc2V0LlJkcyIpDQpyYW5nZXIuZHYgPC0gcmVhZFJEUygibW9kZWxzL3Jhbmdlcl9kdi5SZHMiKQ0KDQpsaWJyYXJ5KEM1MCkNCmM1MC5kYXRhIDwtIHJlYWRSRFMoIm1vZGVscy9jNTBfZGF0YS5SZHMiKQ0KYzUwLnNldCA8LSByZWFkUkRTKCJtb2RlbHMvYzUwX3NldC5SZHMiKQ0KYzUwLmR2IDwtIHJlYWRSRFMoIm1vZGVscy9jNTBfZHYuUmRzIikNCg0KbGlicmFyeSh4Z2Jvb3N0KQ0KeGdiLmR2IDwtIHJlYWRSRFMoIm1vZGVscy94Z2JfZHYuUmRzIikNCnhnYkwuZHYgPC0gcmVhZFJEUygibW9kZWxzL3hnYkxfZHYuUmRzIikNCg0KbGlicmFyeShnYm0pDQpnYm0uc2V0IDwtIHJlYWRSRFMoIm1vZGVscy9nYm1fc2V0LlJkcyIpDQpnYm0uZHYgPC0gcmVhZFJEUygibW9kZWxzL2dibV9kdi5SZHMiKQ0KYGBgDQoNCmBgYHtyfQ0KcmVzYW1wcyA8LSByZXNhbXBsZXMobGlzdChtYXJzID0gbWFycy5kdiwgc3ZtID0gc3ZtLmR2LCBzdm1MID0gc3ZtTC5kdiwgbm5ldCA9IG5uZXQuZHYsIHJmc2V0ID0gcmYuc2V0LCByZmR2ID0gcmYuZHYsIHJhbmdlcnNldCA9IHJhbmdlci5zZXQsIHJhbmdlcmR2ID0gcmFuZ2VyLmR2LCBjNTBkYXRhID0gYzUwLmRhdGEsIGM1MHNldCA9IGM1MC5zZXQsIGM1MGR2ID0gYzUwLmR2LCBjNTBtaWNlID0gYzUwLm1pY2UsIHhnYiA9IHhnYi5kdiwgeGdiTCA9IHhnYkwuZHYsIGdibXNldCA9IGdibS5zZXQsIGdibWR2ID0gZ2JtLmR2KSkNCg0KcmVzYW1wcyA8LSByZXNhbXBsZXMobGlzdChjNTBtaWNlID0gYzUwLm1pY2UsIHJhbmdlck1pY2UgPSByYW5nZXIubWljZSkpDQoNCm1vZGVsQ29yKHJlc2FtcHMsIG1ldHJpYyA9ICJST0MiKQ0KYGBgDQoNCmBgYHtyfQ0KcHJlZC54Z2JMLmR2IDwtIHByZWRpY3QoeGdiTC5kdiwgdmFsaWQuZHZbLCAtMV0pDQpwcmVkLnJmLnNldCA8LSBwcmVkaWN0KHJmLnNldCwgdmFsaWQuc2V0WywgLTFdKQ0KcHJlZC5tYXJzIDwtIHByZWRpY3QobWFycy5kdiwgdmFsaWQuZHZbLCAtMV0pDQpwcmVkLmM1MC5zZXQgPC0gcHJlZGljdChjNTAuc2V0LCB2YWxpZC5zZXRbLCAtMV0pDQpwcmVkLnN2bS5kdiA8LSBwcmVkaWN0KHN2bS5kdiwgdmFsaWQuZHZbLCAtMV0pDQpwcmVkLm5uZXQuZHYgPC0gcHJlZGljdChubmV0LmR2LCB2YWxpZC5kdlssIC0xXSkNCg0KdmFsaWQuYXZnIDwtIGRhdGFfZnJhbWUoeGdiID0gcHJlZC54Z2JMLmR2LA0KICAgICAgICAgICAgICAgICAgICAgICAgcmYgPSBwcmVkLnJmLnNldCwNCiAgICAgICAgICAgICAgICAgICAgICAgIG1hcnMgPSBwcmVkLm1hcnMsDQogICAgICAgICAgICAgICAgICAgICAgICBjNTAgPSBwcmVkLmM1MC5zZXQsDQogICAgICAgICAgICAgICAgICAgICAgICBzdm0gPSBwcmVkLnN2bS5kdiwNCiAgICAgICAgICAgICAgICAgICAgICAgIGxkYSA9IHByZWQubGRhLnBjYSwNCiAgICAgICAgICAgICAgICAgICAgICAgIHBscyA9IHByZWQucGxzLmR2LA0KICAgICAgICAgICAgICAgICAgICAgICAgZ2xtbmV0ID0gcHJlZC5nbG1uZXQubWNhLA0KICAgICAgICAgICAgICAgICAgICAgICAgbnNjID0gcHJlZC5uc2MpDQoNCm1peC5tb2QuYXZnIDwtIHRyYWluKA0KICAgIHggPSB2YWxpZC5hdmcsDQogICAgeSA9IHZhbGlkLnBhcnR5LCANCiAgICBtZXRob2QgPSAicmYiDQopDQoNCnByZWQubWl4LmF2Zy52YWxpZCA8LSBwcmVkaWN0KG1peC5tb2QuYXZnLCB2YWxpZC5hdmcpDQpjb25mdXNpb25NYXRyaXgocHJlZC5taXguYXZnLnZhbGlkLCB2YWxpZC5wYXJ0eSkNCmBgYA0KDQojIyBUZXN0IFNldCBTdWJtaXNzaW9uDQoNCmBgYHtyfQ0KcHJlZC50ZXN0LnhnYkwgPC0gcHJlZGljdCh4Z2JMLmR2LCB0ZXN0LmR2WywgLTFdKQ0KcHJlZC50ZXN0LnJmIDwtIHByZWRpY3QocmYuc2V0LCB0ZXN0LnNldFssIC0xXSkNCnByZWQudGVzdC5tYXJzIDwtIHByZWRpY3QobWFycy5kdiwgdGVzdC5kdlssIC0xXSkNCnByZWQudGVzdC5jNTAgPC0gcHJlZGljdChjNTAuc2V0LCB0ZXN0LnNldFssIC0xXSkNCnByZWQudGVzdC5zdm0gPC0gcHJlZGljdChzdm0uZHYsIHRlc3QuZHZbLCAtMV0pDQpwcmVkLnRlc3QubGRhIDwtIHByZWRpY3QobGRhLnBjYSwgdGVzdC5kdlssIC0xXSkNCnByZWQudGVzdC5wbHMgPC0gcHJlZGljdChwbHMuZHYsIHRlc3QuZHZbLCAtYygxLCBoYy5kdildKQ0KcHJlZC50ZXN0LmdsbW5ldCA8LSBwcmVkaWN0KGdsbW5ldC5tY2EsIHRlc3QubWNhKQ0KcHJlZC50ZXN0Lm5zYyA8LSBwcmVkaWN0KG5zYy5kdiwgdGVzdC5kdlssIC0xXSkNCg0KdGVzdC5hdmcgPC0gZGF0YV9mcmFtZSh4Z2IgPSBwcmVkLnRlc3QueGdiTCwNCiAgICAgICAgICAgICAgICAgICAgICAgcmYgPSBwcmVkLnRlc3QucmYsDQogICAgICAgICAgICAgICAgICAgICAgIG1hcnMgPSBwcmVkLnRlc3QubWFycywNCiAgICAgICAgICAgICAgICAgICAgICAgYzUwID0gcHJlZC50ZXN0LmM1MCwNCiAgICAgICAgICAgICAgICAgICAgICAgc3ZtID0gcHJlZC50ZXN0LnN2bSwNCiAgICAgICAgICAgICAgICAgICAgICAgbGRhID0gcHJlZC50ZXN0LmxkYSwNCiAgICAgICAgICAgICAgICAgICAgICAgcGxzID0gcHJlZC50ZXN0LnBscywNCiAgICAgICAgICAgICAgICAgICAgICAgZ2xtbmV0ID0gcHJlZC50ZXN0LmdsbW5ldCwNCiAgICAgICAgICAgICAgICAgICAgICAgbnNjID0gcHJlZC50ZXN0Lm5zYykNCg0KcHJlZC5taXgudGVzdCA8LSBwcmVkaWN0KG1peC5tb2QuYXZnLCB0ZXN0LmF2ZykNCnRlc3Rfc3VibWlzc2lvbihwcmVkLm1peC50ZXN0KQ0KYGBgDQoNCg==</div>
 
 
 

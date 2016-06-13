@@ -171,6 +171,40 @@ pred.ranger.dv <- predict(ranger.dv, valid.dv[, -1])
 confusionMatrix(pred.ranger.dv, valid.party)
 ```
 
+### MICE
+
+```{r}
+d <- train.imp
+rfGrid <- data.frame(mtry = c(2:9, seq(10, ncol(d) - 2, length.out = 5)))
+```
+
+```{r}
+if (!file.exists("models/ranger_mice.Rds")) {
+    set.seed(1056)
+    ranger.mice <- train(
+        Party ~ .,
+        data = train.imp[, -1],
+        method = "ranger",
+        trControl = trCtrl,
+        tuneGrid = rfGrid,
+        metric = "ROC",
+        num.trees = 1000,
+        importance = "impurity"
+    )
+    
+    saveRDS(ranger.mice, "models/ranger_mice.Rds")
+
+} else {
+    library(ranger)
+    ranger.mice <- readRDS("models/ranger_mice.Rds")
+}
+```
+
+```{r}
+pred.ranger.mice <- predict(ranger.mice, valid.imp[, -1])
+confusionMatrix(pred.ranger.mice, valid.party)
+```
+
 ## Parallel Random Forest
 
 ### Grouped Categorical Data
